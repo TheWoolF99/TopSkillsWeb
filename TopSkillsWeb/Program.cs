@@ -8,7 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-string ConnString = "Prodaction";
+string ConnString = "Prodaction"
+    ;
 
 builder.Services.AddDbContext<ApplicationContext>(
                 options =>
