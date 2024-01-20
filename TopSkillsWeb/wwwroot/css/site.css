@@ -26,7 +26,7 @@ body {
     width: 100vw;
 }
 
-container {
+.page-wrapper {
     padding: 0rem 2.5rem 0rem 2.5rem !important;
 }
 
@@ -44,3 +44,45 @@ form#culture-switcher {
         text-align: start;
         width: 90%;
     }
+
+.TabUser{
+float: right;
+}
+
+/*.navbar-collapse.collapse {
+    margin-left: 30px;
+}*/
+
+.d-none.d-md-flex {
+    margin-right: 30px;
+}
+
+
+
+
+@media (min-width: 1265px) {
+    .double-navbar {
+        max-width: max-content !important;
+        margin: 0 auto;
+        top: -57px;
+        position: relative;
+    }
+}
+
+
+
+    /*@media not print {
+    @media (prefers-color-scheme: dark) {
+        .theme-dark-auto .navbar {
+            --tblr-navbar-border-color: #243049;
+            --tblr-navbar-bg: #1d273b;
+        }
+    }
+}
+.navbar-collapse, .collapse, .show {
+    --tblr-navbar-bg: #1d273b;
+    position: absolute;
+    top: 50px;
+    background: var(--tblr-navbar-bg);
+    )
+}*/

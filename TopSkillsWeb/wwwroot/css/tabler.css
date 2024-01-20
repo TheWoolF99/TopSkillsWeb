@@ -14312,6 +14312,7 @@ Navbar vertical
   .navbar-vertical.navbar-expand-md .navbar-collapse {
     align-items: stretch;
   }
+
 }
 @media (min-width: 768px) {
   .navbar-vertical.navbar-expand-md .navbar-nav {
