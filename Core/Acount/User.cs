@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace TopSkillsWeb.Models
+namespace Core
 {
     public class User: IdentityUser
     {
-
+        public string RoleName { get; set; } = "";
     }
 }

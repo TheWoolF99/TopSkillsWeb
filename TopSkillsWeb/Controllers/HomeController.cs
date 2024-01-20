@@ -1,5 +1,8 @@
+using Core;
+using Data.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+
 using TopSkillsWeb.Models;
 
 namespace TopSkillsWeb.Controllers
@@ -7,15 +10,18 @@ namespace TopSkillsWeb.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IRepository<User> us;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IRepository<User> us)
         {
             _logger = logger;
+            this.us = us;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var list = us.GetAll();
+            return View(list);
         }
 
         public IActionResult Privacy()

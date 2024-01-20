@@ -19,4 +19,28 @@ html {
 
 body {
   margin-bottom: 60px;
+  overflow: hidden;
 }
+
+.vw100{
+    width: 100vw;
+}
+
+container {
+    padding: 0rem 2.5rem 0rem 2.5rem !important;
+}
+
+a
+{
+    color: none !important;
+}
+form#culture-switcher {
+    padding: 0 10px 0 10px;
+    display: flex;
+    justify-content: center;
+}
+    form#culture-switcher > .culture-switcher {
+        font-size: 12px;
+        text-align: start;
+        width: 90%;
+    }

@@ -1,0 +1,30 @@
+﻿@model CultureSwitcherModel
+
+
+    <form id="culture-switcher">
+        <select name="culture" class="form-select culture-switcher" id="culture-options" aria-label="Default select example">
+            
+            @foreach (var culture in Model.SupportedCultures)
+            {
+                <option value="@culture.Name" selected="@(Model.CurrentUICulture.Name == culture.Name)">@culture.Name.ToUpper()@*@culture.DisplayName*@</option>
+            }
+        </select>
+    </form>
+
+
+
+<script>
+    const cultureOptions = document.getElementById("culture-options");
+    cultureOptions.addEventListener("change", () => {
+        const culture = cultureOptions.value;
+        document.cookie = `.AspNetCore.Culture=c=${culture}|uic=${culture}; path=/`;
+        location.reload()
+    });
+
+    //document.getElementById("culture-options").addEventListener("change", () => {
+    //    document.getElementById("culture-switcher").submit();
+    //    const culture = cultureOptions.value;
+    //    document.cookie = `.AspNetCore.Culture=c=${culture}|uic=${culture}`;
+    //    location.reload()
+    //});
+</script>
