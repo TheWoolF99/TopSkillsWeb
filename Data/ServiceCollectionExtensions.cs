@@ -1,5 +1,6 @@
 ﻿
 using Core;
+using Core.Account;
 using Data.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;

@@ -1,0 +1,48 @@
+﻿@model Core.Account.FeedBackModel
+
+
+
+<div class="card-body">
+    <div class="mb-3">
+        <label class="form-label">Your name</label>
+        <input type="text" class="form-control" placeholder="Name">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Description</label>
+        <form method="post">
+            <textarea id="tinymce-mytextarea"></textarea>
+        </form>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        let options = {
+            selector: '#tinymce-mytextarea',
+            height: 300,
+            menubar: false,
+            statusbar: false,
+            plugins: [
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',  'preview', 'anchor',
+                'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
+            ],
+    /*'paste', 'print',*/
+            toolbar: 'undo redo | formatselect | ' +
+                'bold italic backcolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | wordcount',
+            content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; -webkit-font-smoothing: antialiased; }'
+        }
+        if (localStorage.getItem("tablerTheme") === 'dark') {
+            options.skin = 'oxide-dark';
+            options.content_css = 'dark';
+        }
+        tinyMCE.init(options);
+    });
+
+
+    tinymce.activeEditor.getContent()
+</script>

@@ -1,0 +1,90 @@
+﻿@model Core.Account.User
+
+
+<div class="card-body">
+    <h2 class="mb-4">Учетная запись</h2>
+    <h3 class="card-title">Профиль</h3>
+    <div class="row align-items-center">
+        <div class="col-auto">
+        </div>
+        <div class="col-auto">
+            <a onclick="document.getElementById('avatart_fileForm').click();" class="btn">
+                Сменить аватар
+            </a>
+        </div>
+        <div class="col-auto">
+            <a onclick="ResetAvatarConfirmation()" class="btn btn-ghost-danger">
+                Удалить аватар
+            </a>
+        </div>
+    </div>
+    <h3 class="card-title mt-4">Данные</h3>
+    <div class="row g-3">
+        <div class="col-md">
+            <div class="form-label">Имя пользователя</div>
+            <input type="text" class="form-control" value="@Model.UserName" id="userName">
+        </div>
+        <div class="col-md">
+            <div class="form-label">Email</div>
+            <input type="email" class="form-control" value="@Model.Email" id="Email">
+        </div>
+    </div>
+    <h3 class="card-title mt-4">SecretPhrase</h3>
+    <p class="card-subtitle">Ключ, используемый для шифрования ваших данных.</p>
+    <div>
+        @if (ViewBag.SecretKey == null)
+        {
+            <div class="row g-2">
+                <div class="col-auto">
+                    <input type="password" class="form-control w-auto" value="**********" disabled>
+                </div>
+                <div class="col-auto">
+                    <a class="btn disabled">
+                        Показать
+                    </a>
+                </div>
+                <div class="col-auto">
+                    <a onclick="ShowModalSecretKey()" class="btn">
+                        Установить
+                    </a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row g-2">
+                <div class="col-auto">
+                    <input type="password" class="form-control w-auto" value="" id="notEmptySecretKey">
+                </div>
+                <div class="col-auto">
+                    <a onclick="onToggleInput('notEmptySecretKey');" class="btn" id="notEmptySecretKey_button">
+                        Показать
+                    </a>
+                </div>
+                <div class="col-auto">
+                    <a onclick="ShowModalSecretKey()" class="btn">
+                        Сменить
+                    </a>
+                </div>
+            </div>
+        }
+
+    </div>
+    <h3 class="card-title mt-4">Пароль</h3>
+    <p class="card-subtitle">Не менее 5 символов.</p>
+    <div>
+        <a onclick="ShowModalPasswordChange()" class="btn">
+            Установить новый пароль
+        </a>
+    </div>
+</div>
+<div class="card-footer bg-transparent mt-auto">
+    <div class="btn-list justify-content-end">
+        <a asp-controller="Home" asp-action="Index" class="btn">
+            Отмена
+        </a>
+        <a onclick="onSaveAccountChanges();" class="btn btn-primary">
+            Сохранить изменения
+        </a>
+    </div>
+</div>

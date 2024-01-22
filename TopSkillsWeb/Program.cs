@@ -8,17 +8,16 @@ using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
+using Core.Account;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+
 
 string ConnString = "production";
 
 builder.Services.AddEfRepositories(builder.Configuration.GetConnectionString(ConnString));
-builder.Services.AddDbContext<ApplicationContext>(
-                options =>
+builder.Services.AddDbContext<ApplicationContext>(options =>
                 {
                     options.UseSqlServer(builder.Configuration.GetConnectionString(ConnString));
                 } 
@@ -32,6 +31,7 @@ builder.Services.AddIdentity<User, IdentityRole>(opts =>
     opts.Password.RequireUppercase = false; // требуются ли символы в верхнем регистре
     opts.Password.RequireDigit = false; // требуются ли цифры
 }).AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
+
 
 builder.Services.AddMvc().AddJsonOptions(options =>
 {
@@ -67,7 +67,8 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.SupportedCultures = SuppotredCultures;
     options.SupportedUICultures = SuppotredCultures;
 });
-
+// Add services to the container.
+builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
