@@ -26,8 +26,10 @@
 </div>
 <script src="~/lib/tinymce/tinymce.js" defer></script>
 <script type="text/javascript">
+    var src = '';
+
     function onShowPreview(event) {
-        var src = URL.createObjectURL(event.target.files[0]);
+        src = URL.createObjectURL(event.target.files[0]);
         var avatar_container = document.getElementById('avatar_container');
         avatar_container.style.backgroundImage = 'url(' + src + ')';
     }
@@ -40,7 +42,6 @@
             ValidFields = false;
             AlertValidate('Имя пользователя должно иметь более 5 символов!');
         }
-        var Location = document.getElementById('LocationForm').value;
         var Email = document.getElementById('Email').value;
 
         if (ValidFields) {
@@ -52,12 +53,12 @@
                     AlertValidate('Email введен некорректно!');
                 }
                 else {
-                    $.get('@Url.Action("IsEmailFree", "Account")', { email: Email }, function (data) {
-                        if (data != null && data != '') {
-                            ValidFields = false;
-                            AlertValidate('Данный Email занят!');
-                        }
-                    });
+                    // $.get('@Url.Action("IsEmailFree", "Account")', { email: Email }, function (data) {
+                    //     if (data != null && data != '') {
+                    //         ValidFields = false;
+                    //         AlertValidate('Данный Email занят!');
+                    //     }
+                    // });
                 }
             }
             else {
@@ -70,45 +71,38 @@
             var model = {};
             model["UserName"] = UserName;
             model["Email"] = Email;
-            model["Location"] = Location;
             var fileform = document.getElementById('avatart_fileForm');
+            var data = new FormData();
+
             if (fileform.files.length > 0) {
-                var avatar = fileform.files[0];
-                var data = new FormData();
-                data.append("file", avatar);
-                $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("UploadAvatar","Account")',
-                    contentType:false,
-                    processData:false,
-                    data: data,
-                    success: function (data) {
-                        if (data != null && data != '') {
-                            AlertValidate(data);
-                        }
-                        
-                    },
-                    error: function () {
-                        AlertValidate(xhr.respomseText);
-                    }
-                });
+                data.append("file", fileform.files[0]);
             }
+            data.append("Model", JSON.stringify(model))
 
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("SaveAccountChanges","Account")',               
-                data: { profile: model },
+                url: '@Url.Action("SaveAccountChanges","Account")',
+                contentType: false,
+                processData: false,
+                data: data,
                 success: function (data) {
                     if (data != null && data != '')
                     {
                         AlertValidate(data);
                     }
-                    AlertSuccess('Выполнено успешно');
+                    else
+                    {
+                        AlertSuccess('Выполнено успешно');
+                        document.getElementById('avatar_login').style.backgroundImage = 'url(' + src + ')';
+                        
+                    }
                 },
-                error: function () {
+                error: function (xhr) {
                     AlertValidate(xhr.respomseText);
                 }
             });
+
+            
         }
     }
 
@@ -116,7 +110,7 @@
     {
         $.get('@Url.Action("ShowModalResetAvatarConfirmation", "Account")', null, function (data) {
             $('#modal_body').html(data);
-            globalOpenModal();
+            OpenModal();
         });
     }
     function ResetAvatar() {
@@ -137,7 +131,7 @@
     function ShowModalPasswordChange() {
         $.get('@Url.Action("ShowModalResetPassword", "Account")', null, function (data) {
             $('#modal_body').html(data);
-            globalOpenModal();
+            OpenModal();
         });
     }
 
@@ -218,7 +212,7 @@
     function ShowModalSecretKey() {
         $.get('@Url.Action("ShowModalSecretKey", "Account")', null, function (data) {
             $('#modal_body').html(data);
-            globalOpenModal();
+            OpenModal();
         });
     }
 

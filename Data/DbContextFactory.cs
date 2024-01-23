@@ -20,7 +20,7 @@ namespace Data
             var services = httpContextAccessor.HttpContext.RequestServices;
 
             var dbContexts = services.GetService<Dictionary<Type, ApplicationContext>>();
-            if (dbContexts != null && dbContexts.ContainsKey(repositoryType) != false)
+            if (!dbContexts.ContainsKey(repositoryType))
                 dbContexts[repositoryType] = services.GetService<ApplicationContext>();
             
             return dbContexts[repositoryType];

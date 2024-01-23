@@ -1,7 +1,10 @@
 ﻿using Core.Account;
+using Data.Repository;
+using Data.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace TopSkillsWeb.Controllers.Account
 {
@@ -9,11 +12,13 @@ namespace TopSkillsWeb.Controllers.Account
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly PhotoService _photo;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, PhotoService _photo)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
+            this._userManager = userManager;
+            this._signInManager = signInManager;
+            this._photo = _photo;
         }
         [HttpGet]
         public IActionResult Register()
@@ -106,35 +111,13 @@ namespace TopSkillsWeb.Controllers.Account
             return RedirectToAction("Index", "Home");
         }
 
-        
+        [Authorize]
         public async Task<IActionResult> AccountSettings()
         {
-
-            User Person = new()
-            {
-                UserName = "2423",
-                Email = "mail"
-            };
-            //var avatar = context.UserAvatars.Where(x => x.UserId.Equals(user.Id)).FirstOrDefault();
-            //if (avatar != null)
-            //{
-            //    ViewBag.Avatar = avatar.Avatar;
-            //}
-            //else
-            //{
-            //    ViewBag.Avatar = null;
-            //}
-            //var secretKey = context.UserSecretPhrases.Where(x=>x.UserId.Equals(user.Id)).FirstOrDefault();
-            //if(secretKey != null)
-            //{
-            //    ViewBag.SecretKey = secretKey.SecretPhrase;
-            //}
-            //else
-            //{
-            //    ViewBag.SecretKey = null;
-            //}
-
-            return View("AccountSettings", Person);
+            User? currentUser = await _userManager.GetUserAsync(User);
+            string? userId = currentUser?.Id;
+            ViewBag.Avatar = await _photo.GetAvatarUser(userId??"");
+            return View("AccountSettings", currentUser);
         }
 
 
@@ -152,26 +135,42 @@ namespace TopSkillsWeb.Controllers.Account
 
 
         [Authorize]
-        public async Task<IActionResult> SaveAccountChanges([Bind] Person profile)
+        public async Task<IActionResult> SaveAccountChanges()
         {
-            return new EmptyResult();
-            //try
-            //{
-            //    var user = await _userManager.GetUserAsync(User);                
-            //    user.UserName = profile.UserName;
-            //    user.Email = profile.Email;
-            //    user.Location = profile.Location;
-            //    await _userManager.UpdateAsync(user);
+            var FilesList = Request.Form.Files;
+            User profile = JsonConvert.DeserializeObject<User>(Request.Form["Model"]);
+
+            try
+            {
+
+                var user = await _userManager.GetUserAsync(User);
+                user.UserName = profile.UserName;
+                user.Email = profile.Email;
+                await _userManager.UpdateAsync(user);
+
+                if (FilesList.Any())
+                {
+                    var Avatar = FilesList[0];
+                    byte[] imageData = null;
+                    using (var binaryReader = new BinaryReader(Avatar.OpenReadStream()))
+                    {
+                        imageData = binaryReader.ReadBytes((int)Avatar.Length);
+                    }
+                    if(imageData != null)   
+                        await _photo.OnAddUpdateAvatarUser(user.Id, imageData);
+                }
 
 
 
-            //    return new EmptyResult();
-            //}
-            //catch (Exception ex)
-            //{
-            //    return Content($"{ex.Message}");
-            //}
+                return new EmptyResult();
+            }
+            catch (Exception ex)
+            {
+                return Content($"{ex.Message}");
+            }
         }
+
+
         [Authorize]
         public async Task<IActionResult> UploadAvatar()
         {

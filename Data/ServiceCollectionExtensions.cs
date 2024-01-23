@@ -2,6 +2,7 @@
 using Core;
 using Core.Account;
 using Data.Repository;
+using Interfaces.Photo;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,19 +21,13 @@ namespace Data
                 }
                 , ServiceLifetime.Transient
                 );
-
-
-
-
-
             services.AddScoped<Dictionary<Type, ApplicationContext>>();
 
-            services.AddSingleton<DbContextFactory>();
-
             #region Синглтоны 
-            services.AddTransient<IRepository<User>, UserRepository>();
+            services.AddSingleton<DbContextFactory>();
+            services.AddSingleton<IRepository<User>, UserRepository>();
+            services.AddSingleton<IPhotoRepository, PhotoRepository>();
             #endregion
-
 
             return services;
         }

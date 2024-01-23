@@ -33,5 +33,12 @@ namespace Data
             };
         }
 
+
+        public async Task UpdateAsync(User user)
+        {
+            var db = _context.Create(typeof(UserRepository));
+            db.Users.Update(user);
+            await db.SaveChangesAsync();
+        }
     }
 }

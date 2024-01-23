@@ -1,4 +1,7 @@
 ﻿using Core.Account;
+using Data.Repository;
+using Data.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,33 +9,26 @@ using Microsoft.Extensions.Localization;
 
 namespace TopSkillsWeb.ViewComponents
 {
+    [Authorize]
     public class UserComponent : ViewComponent
     {
         private readonly UserManager<User> _userManager;
+        private readonly PhotoService _photo;
 
-        public UserComponent(UserManager<User> _userManager)
+        public UserComponent(UserManager<User> _userManager, PhotoService _photo)
         {
             this._userManager = _userManager;
+            this._photo = _photo;
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            string NameUser = HttpContext.User.Identity.Name;
-            User? appUser = new();
-            IList<string> roles = new List<string>();
+            var contextUser = HttpContext.User;
+            User? currentUser = await _userManager.GetUserAsync(contextUser);
+            IList<string> currentUserRoles = await _userManager.GetRolesAsync(currentUser);
+            currentUser.RoleName = string.Join(", ", currentUserRoles.ToArray());
+            currentUser.Avatar = await _photo.GetAvatarUser(currentUser.Id);
 
-            if (!string.IsNullOrEmpty(NameUser))
-            {
-                appUser = await _userManager.FindByNameAsync(NameUser);
-                roles = await _userManager.GetRolesAsync(appUser);
-            }
-
-            User user1 = new()
-            {
-                UserName = appUser.UserName ??= "EmptyName",
-                RoleName = roles.Count()==0? "EmptyRole" :string.Join(" , ", roles.ToArray())
-            };
-
-            return View(user1);
+            return View(currentUser);
         }
         
     }

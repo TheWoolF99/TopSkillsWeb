@@ -89,6 +89,6 @@ float: right;
 
 
 
-a:-webkit-any-link{
+a{
     cursor: pointer !important;
 }

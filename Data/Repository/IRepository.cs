@@ -10,5 +10,6 @@ namespace Data.Repository
     {
         IQueryable<T> GetAll();
         Task<T> GetAsync(string id);
+        Task UpdateAsync(T entity);
     }
 }

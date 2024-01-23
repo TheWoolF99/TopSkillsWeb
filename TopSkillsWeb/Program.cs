@@ -9,20 +9,24 @@ using System.Globalization;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using Core.Account;
+using Data.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
-
-
 string ConnString = "production";
 
+
+builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(1440);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 builder.Services.AddEfRepositories(builder.Configuration.GetConnectionString(ConnString));
-builder.Services.AddDbContext<ApplicationContext>(options =>
-                {
-                    options.UseSqlServer(builder.Configuration.GetConnectionString(ConnString));
-                } 
-                , ServiceLifetime.Transient
-                );
 builder.Services.AddIdentity<User, IdentityRole>(opts =>
 {
     opts.Password.RequiredLength = 4;   // минимальная длина
@@ -37,23 +41,15 @@ builder.Services.AddMvc().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.MaxDepth = Int32.MaxValue;
 });
-builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.ConfigureApplicationCookie(options =>
 {
     // Cookie settings
     options.Cookie.HttpOnly = true;
     options.ExpireTimeSpan = TimeSpan.FromMinutes(2000);
-    options.LoginPath = "/Authorization/Login";
+    options.LoginPath = "/Account/Login";
     options.AccessDeniedPath = "/Home/AccesDenide";
     options.SlidingExpiration = true;
 });
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromMinutes(1440);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
-
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
     var SuppotredCultures = new[]
@@ -67,8 +63,12 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.SupportedCultures = SuppotredCultures;
     options.SupportedUICultures = SuppotredCultures;
 });
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+
+
+#region Servises
+builder.Services.AddSingleton<PhotoService>();
+#endregion
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

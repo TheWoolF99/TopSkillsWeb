@@ -1,7 +1,14 @@
 ﻿@model Core.Account.User
 
 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-    <span class="avatar avatar-sm" style="background-image: url(~/wwwroot/logo.ico)"></span>
+    @if (Model.Avatar!=null)
+    {
+        <span id="avatar_login" class="avatar" style="background-image: url(data:image/jpeg;base64,@(Convert.ToBase64String(ViewBag.Avatar)))"></span>
+    }
+    else
+    {
+        <span id="avatar_login" class="avatar"></span>
+    }
     <div class="d-none d-xl-block ps-2">
         <div>@Model.UserName</div>
         <div class="mt-1 small text-secondary">@Model.RoleName</div>

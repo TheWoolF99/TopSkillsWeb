@@ -1,6 +1,7 @@
 using Core;
 using Core.Account;
 using Data.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -8,6 +9,7 @@ using TopSkillsWeb.Models;
 
 namespace TopSkillsWeb.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -34,6 +36,19 @@ namespace TopSkillsWeb.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public async Task<IActionResult> ShowModalError(string message)
+        {
+            return PartialView("ModalError", message);
+        }
+        public async Task<IActionResult> ShowModalSuccess(string message)
+        {
+            return PartialView("ModalSuccess", message);
+        }
+        public async Task<IActionResult> ShowSpinner()
+        {
+            return PartialView("ModalSpinner");
         }
     }
 }

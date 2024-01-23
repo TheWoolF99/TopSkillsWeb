@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data
 {
-    public class ApplicationContext: IdentityDbContext<User>
+    public class ApplicationContext : IdentityDbContext<User>
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
            : base(options)
-        {
-            //Database.EnsureCreated();
-        }
+        { }
 
-        
+        public DbSet<UserAvatar> UserAvatars { get; set; }
+
+
     }
 }
