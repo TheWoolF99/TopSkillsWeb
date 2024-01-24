@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Core.Group>
+<div class="page-header d-print-none">
+    <div class="container-xl">
+        <div class="row g-2 align-items-center">
+            <div class="col">
+                <h2 class="page-title">
+                    @Resource.GroupsStudents
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-xl mt-3">
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table table-vcenter card-table">
+                <thead>
+                    <tr>
+                        <th>@Resource.GroupName</th>
+                        <th>@Resource.CourseName</th>
+                        <th>@Resource.TeacherName</th>
+                        <th class="w-1"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model!=null && Model.Count() > 0)
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td class="text-secondary">
+                                    @item.Cource?.Name
+                                </td>
+                                <td class="text-secondary">
+                                    @item.Teacher?.FullName
+                                </td>
+                                <td>
+                                    <a onclick="">@Resource.Edit</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="EmtyResultTd">@Resource.EmptyResult</td>
+                        </tr>
+                    }
+
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

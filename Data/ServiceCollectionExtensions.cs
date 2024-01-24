@@ -2,7 +2,11 @@
 using Core;
 using Core.Account;
 using Data.Repository;
+using Interfaces.Course;
+using Interfaces.Group;
 using Interfaces.Photo;
+using Interfaces.Student;
+using Interfaces.Teacher;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +31,10 @@ namespace Data
             services.AddSingleton<DbContextFactory>();
             services.AddSingleton<IRepository<User>, UserRepository>();
             services.AddSingleton<IPhotoRepository, PhotoRepository>();
+            services.AddSingleton<IGroup, GroupRepository>();
+            services.AddSingleton<ICourse, CourseRepository>();
+            services.AddSingleton<IStudent, StudentRepository>();
+            services.AddSingleton<ITeacher, TeacherRepository>();
             #endregion
 
             return services;

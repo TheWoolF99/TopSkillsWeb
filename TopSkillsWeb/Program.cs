@@ -67,6 +67,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 
 #region Servises
 builder.Services.AddSingleton<PhotoService>();
+builder.Services.AddSingleton<GroupService>();
 #endregion
 
 var app = builder.Build();

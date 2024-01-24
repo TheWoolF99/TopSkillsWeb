@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\Mailer\" />
     <Folder Include="Views\Shared\Components\CultureSwitcher\" />
   </ItemGroup>
 

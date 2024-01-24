@@ -92,3 +92,11 @@ float: right;
 a{
     cursor: pointer !important;
 }
+
+    a:hover{
+        text-decoration: underline !important;
+    }
+
+    .EmtyResultTd {
+        text-align: center;
+    }
