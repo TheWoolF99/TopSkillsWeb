@@ -21,18 +21,18 @@ namespace Data.Repository
         public async Task<IEnumerable<Student>> GetAllStudentsAsync()
         {
             var db = _context.Create(typeof(StudentRepository));
-            return await db.Students.ToListAsync();
+            return await db.Students.Include(x=>x.Groups).ToListAsync();
         }
 
 
         public async Task<Student> GetStudentAsync(int id)
         {
             var db = _context.Create(typeof(StudentRepository));
-            return await db.Students.SingleAsync(x => x.StudentId == id);
+            return await db.Students.Include(x => x.Groups).SingleAsync(x => x.StudentId == id);
         }
 
 
-        public async Task AddStudentsAsync(Student student)
+        public async Task AddStudentAsync(Student student)
         {
             var db = _context.Create(typeof(StudentRepository));
             await db.Students.AddAsync(student);
@@ -45,5 +45,21 @@ namespace Data.Repository
 
             await db.SaveChangesAsync();
         }
+
+        public async Task UpdateStudentAsync(Core.Student student)
+        {
+            var db = _context.Create(typeof(StudentRepository));
+            db.Students.Update(student);
+            await db.SaveChangesAsync();
+        }
+
+        public void UpdateRange(List<Core.Student> student)
+        {
+            var db = _context.Create(typeof(StudentRepository));
+            db.Students.UpdateRange(student);
+            db.SaveChanges();
+        }
+        
+
     }
 }

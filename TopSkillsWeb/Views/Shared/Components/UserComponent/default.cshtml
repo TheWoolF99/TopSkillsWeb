@@ -3,7 +3,7 @@
 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
     @if (Model.Avatar!=null)
     {
-        <span id="avatar_login" class="avatar" style="background-image: url(data:image/jpeg;base64,@(Convert.ToBase64String(ViewBag.Avatar)))"></span>
+        <span id="avatar_login" class="avatar" style="background-image: url(data:image/jpeg;base64,@(Convert.ToBase64String(Model.Avatar)))"></span>
     }
     else
     {

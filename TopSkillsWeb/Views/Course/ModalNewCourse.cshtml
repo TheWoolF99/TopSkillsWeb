@@ -1,0 +1,91 @@
+﻿@using Core
+@using Newtonsoft.Json
+@model Core.Course
+
+
+<div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">@ViewBag.Title</h5>
+            <button type="button" class="btn-close" onclick="CloseModal()"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-3">
+                <label class="form-label">@Resource.CourseName</label>
+                <input type="text" id="CourseNameInput" class="form-control" name="example-text-input" value="@(Model?.Name??"")" placeholder="@Resource.CourseName">
+            </div>
+            @* <div class="row">
+                <div class="mb-3">
+                    <label class="form-label">@Resource.TeacherName</label>
+                    @Html.DropDownListFor(x=>x.Teacher.TeacherId, (SelectList)ViewBag.TeacherList, htmlAttributes: new { @id = "TeacherSelectList", @class = "form-select" })
+                </div>
+            </div> *@
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn me-auto" onclick="CloseModal()">@Resource.Cancel</button>
+            <button type="button" class="btn btn-primary" onclick="OnChangeCourse()">
+                @if (Model?.CourseId != 0)
+                {
+                    @Resource.Save
+                }
+                else
+                {
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+                    @Resource.Create
+                }
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var CourseId = @Model?.CourseId;
+    // var Model = @Html.Raw(ViewBag.Serialize);
+
+
+    $(document).ready(function () {
+        // $("#TeacherSelectList").select2({
+        //     closeOnSelect: true,
+        //     dropdownParent: $('#modal_body'),
+        //     language: "@Resource.Lng",
+        //     placeholder: "@Html.Raw(Resource.TeacherName)",
+        //     allowHtml: true,
+        //     allowClear: true,
+        //     width: "100%"
+        // });
+    });
+
+
+    function OnChangeCourse() {
+
+        // let TeacherId = $("#TeacherSelectList").select2('val');
+
+        // let Teacher = {};
+        // if (TeacherId != null)
+        //     Teacher["TeacherId"] = TeacherId;
+        // else
+        //     Teacher = null;
+
+        let Course = {};
+        Course["CourseId"] = CourseId;
+        Course["Name"] = $('#CourseNameInput').val();
+        // Course["Teacher"] = Teacher;
+
+
+
+
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("OnAddUpdateCourse", "Course")',
+            data: { Course: Course },
+            success: function (data) {
+                $('#modal_body').html(data);
+                OpenModal();
+                OnUpdateTableRows();
+            }
+        });
+    }
+
+</script>

@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Core.Teacher>
+@if (Model != null && Model.Count() > 0)
+{
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.FullName</td>
+            <td>@item.Age</td>
+            <td>
+                <a onclick="OnGetModalEdit(@item.TeacherId)">@Resource.Edit</a>
+            </td>
+        </tr>
+    }
+}
+else
+{
+    <tr>
+        <td colspan="4" class="EmtyResultTd">@Resource.EmptyResult</td>
+    </tr>
+}

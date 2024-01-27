@@ -1,0 +1,168 @@
+﻿@using Core
+@using Newtonsoft.Json
+@model Core.Group
+@{
+    int[] StudentsIsGroup = Model.Students?.Select(x => x.StudentId).ToArray();
+    var StudentsList = (IEnumerable<Student>)ViewBag.StudentsList;
+}
+
+
+
+
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">@ViewBag.Title</h5>
+            <button type="button" class="btn-close" onclick="CloseModal()"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-3">
+                <label class="form-label">@Resource.GroupName</label>
+                <input type="text" id="GroupNameInput" class="form-control" name="example-text-input" value="@Model?.Name" placeholder="@Resource.GroupName">
+            </div>
+            <div class="row">
+                <div class="mb-3 col-lg-6">
+                    <label class="form-label">@Resource.Course</label>
+                    @Html.DropDownListFor(Model => Model.Cource.CourseId, (SelectList)ViewBag.CourseList, htmlAttributes: new { @id = "CourseSelectList", @class = "form-select" })
+                </div>
+                <div class="mb-3 col-lg-6">
+                    <label class="form-label">@Resource.TeacherName</label>
+                    @Html.DropDownListFor(Model => Model.Teacher.TeacherId, (SelectList)ViewBag.TeacherList, htmlAttributes: new { @id = "TeacherSelectList", @class = "form-select" })
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table table-vcenter card-table">
+                        <thead class="sticky-header">
+                            <tr>
+                                <th>@Resource.StudentName</th>
+                                <th>@Resource.VisitsLeft</th>
+                                <th class="w-1"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (StudentsList != null && StudentsList.Count() > 0)
+                            {
+                                @foreach (var item in StudentsList)
+                                {
+                                    <tr @item.Visits>
+                                        <td >@item.ShortName</td>
+                                        <td id="VisitsLeft-@item.StudentId">@item.Visits</td>
+                                        <td>
+                                            <input id="@item.StudentId" onchange="onChangeStudentCheckbox(event)" @(Convert.ToBoolean(StudentsIsGroup?.Contains(item.StudentId))?"checked":"") class="form-check-input StudentCheckbox" type="checkbox">
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn me-auto" onclick="CloseModal()">@Resource.Cancel</button>
+            <button type="button" class="btn btn-primary" onclick="OnChangeGroup()">
+                @if (Model?.GroupId != 0)
+                {
+                    @Resource.Save
+                }
+                else
+                {
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+                    @Resource.Create
+                }
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var GroupId = @Model?.GroupId;
+    // var Model = @Html.Raw(ViewBag.Serialize);
+
+
+    $(document).ready(function () {
+        $("#CourseSelectList").select2({
+            closeOnSelect: true,
+            dropdownParent: $('#modal_body'),
+            language: "@Resource.Lng",
+            placeholder: "@Html.Raw(Resource.Course)",
+            allowHtml: true,
+            allowClear: true,
+            width: "100%"
+        });
+
+        $("#TeacherSelectList").select2({
+            closeOnSelect: true,
+            dropdownParent: $('#modal_body'),
+            language: "@Resource.Lng",
+            placeholder: "@Html.Raw(Resource.TeacherName)",
+            allowHtml: true,
+            allowClear: true,
+            width: "100%"
+        });
+    });
+
+
+
+    function onChangeStudentCheckbox(e)
+    {
+        let currentElement = e.currentTarget;
+        let StudentId = currentElement.id;
+        let visitLeft = +$('#VisitsLeft-' + StudentId).html();
+
+        if (e.currentTarget.checked) {
+            $('#VisitsLeft-' + StudentId).html(--visitLeft)
+        }
+        else
+        {
+            $('#VisitsLeft-' + StudentId).html(++visitLeft)
+        }
+    }
+
+
+
+    function OnChangeGroup() {
+
+        let StudentsIds = $('input.StudentCheckbox:checked').map(function () {
+            return +$(this).prop('id');
+        }).get();
+        let CourseId = $("#CourseSelectList").select2('val');
+        let TeacherId = $("#TeacherSelectList").select2('val');
+
+        let Course = {};
+        if (CourseId != null)
+            Course["CourseId"] = CourseId;
+        else
+            Course = null;
+        
+        let Teacher = {};
+        if (TeacherId != null)
+            Teacher["TeacherId"] = TeacherId;
+        else
+            Teacher = null;
+
+
+        let Group = {}
+        Group["GroupId"] = GroupId;
+        Group["Name"] = $('#GroupNameInput').val();
+        Group["Cource"] = Course;
+        Group["Teacher"] = Teacher;
+        Group["Students"] = null;
+        
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("OnAddGroupStudents", "Group")',
+            data: { Group: Group, StudentsIds: StudentsIds },
+            success: function (data) {
+                $('#modal_body').html(data);
+                OpenModal();
+                OnUpdateTableRows();
+            }
+        });
+    }
+
+</script>

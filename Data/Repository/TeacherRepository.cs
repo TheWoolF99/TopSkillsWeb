@@ -39,6 +39,13 @@ namespace Data.Repository
             await db.SaveChangesAsync();
         }
 
+        public async Task UpdateTeacherAsync(Teacher teacher)
+        {
+            var db = _context.Create(typeof(TeacherRepository));
+            db.Teachers.Update(teacher);
+            await db.SaveChangesAsync();
+        }
+
         public async Task DeleteAsync(int id)
         {
             var db = _context.Create(typeof(TeacherRepository));

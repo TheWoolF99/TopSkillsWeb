@@ -11,7 +11,9 @@ namespace Interfaces.Group
     {
         Task<IEnumerable<Core.Group>> GetAllGroupsAsync();
         Task<Core.Group> GetGroupAsync(int id);
-        Task AddGroupAsync(Core.Group group);
-
+        Task<int> AddGroupAsync(Core.Group group);
+        Task Update(Core.Group group);
+        Task AddGroupStudentsAsync(IEnumerable<GroupStudent> groupStudents);
+        Task UpdateGroupWithStudents(int groupId, List<int> StudentsIds);
     }
 }

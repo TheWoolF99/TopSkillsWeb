@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace Core
 {
@@ -14,8 +15,8 @@ namespace Core
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TeacherId { get; set; }
-
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime DateCreate { get; set; }
         public IEnumerable<Course> Courses { get; set; }
-
     }
 }

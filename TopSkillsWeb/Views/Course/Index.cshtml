@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Core.Course>
+<div class="page-header d-print-none">
+    <div class="container-xl">
+        <div class="row g-2 align-items-center">
+            <div class="col">
+                <h2 class="page-title">
+                    @Resource.Courses
+                </h2>
+            </div>
+            <div class="col-auto ms-auto d-print-none">
+                <div class="btn-list">
+                    <a onclick="OnGetModalEdit()" class="btn btn-primary d-none d-sm-inline-block">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+                        @Resource.CreateCourse
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-xl mt-3">
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table table-vcenter card-table">
+                <thead>
+                    <tr>
+                        <th>@Resource.CourseName</th>
+                        <th class="w-1"></th>
+                    </tr>
+                </thead>
+                <tbody id="CourseTbody">
+                    @await Html.PartialAsync("RowsPart", Model)
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    function OnGetModalEdit(id){
+        $.get('@Url.Action("GetModalAddEditCourse", "Course")', { CourseId: id }, function (data) {
+            $('#modal_body').html(data);
+            OpenModal();
+        });
+    }
+
+    function OnUpdateTableRows() {
+        $.get('@Url.Action("OnUpdateTableRows", "Course")', null, function (data) {
+            $('#CourseTbody').html(data);
+        });
+    }
+
+
+
+</script>

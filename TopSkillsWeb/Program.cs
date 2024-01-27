@@ -68,6 +68,9 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 #region Servises
 builder.Services.AddSingleton<PhotoService>();
 builder.Services.AddSingleton<GroupService>();
+builder.Services.AddSingleton<CourseService>();
+builder.Services.AddSingleton<TeacherService>();
+builder.Services.AddSingleton<StudentService>();
 #endregion
 
 var app = builder.Build();

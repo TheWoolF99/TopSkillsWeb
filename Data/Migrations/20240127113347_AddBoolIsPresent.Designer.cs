@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240124203256_EditFK")]
-    partial class EditFK
+    [Migration("20240127113347_AddBoolIsPresent")]
+    partial class AddBoolIsPresent
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,24 @@ namespace Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("AttendanceGroupStudent", b =>
+                {
+                    b.Property<int>("attendancesAttendanceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("groupStudentsStudentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("groupStudentsGroupId")
+                        .HasColumnType("int");
+
+                    b.HasKey("attendancesAttendanceId", "groupStudentsStudentId", "groupStudentsGroupId");
+
+                    b.HasIndex("groupStudentsStudentId", "groupStudentsGroupId");
+
+                    b.ToTable("AttendanceGroupStudent");
+                });
 
             modelBuilder.Entity("Core.Account.User", b =>
                 {
@@ -137,20 +155,13 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AttendanceId"));
 
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("DateVisiting")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsPresent")
+                        .HasColumnType("bit");
 
                     b.HasKey("AttendanceId");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("StudentId");
 
                     b.ToTable("Attendance");
                 });
@@ -167,7 +178,7 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TeacherId")
+                    b.Property<int>("TeacherId")
                         .HasColumnType("int");
 
                     b.HasKey("CourseId");
@@ -192,16 +203,26 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TeacherId")
-                        .HasColumnType("int");
-
                     b.HasKey("GroupId");
 
                     b.HasIndex("CourceCourseId");
 
-                    b.HasIndex("TeacherId");
-
                     b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("Core.GroupStudent", b =>
+                {
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.HasKey("StudentId", "GroupId");
+
+                    b.HasIndex("GroupId");
+
+                    b.ToTable("GroupStudents");
                 });
 
             modelBuilder.Entity("Core.Student", b =>
@@ -222,9 +243,6 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("GroupId")
-                        .HasColumnType("int");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -236,8 +254,6 @@ namespace Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("StudentId");
-
-                    b.HasIndex("GroupId");
 
                     b.ToTable("Students");
                 });
@@ -402,6 +418,21 @@ namespace Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("AttendanceGroupStudent", b =>
+                {
+                    b.HasOne("Core.Attendance", null)
+                        .WithMany()
+                        .HasForeignKey("attendancesAttendanceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.GroupStudent", null)
+                        .WithMany()
+                        .HasForeignKey("groupStudentsStudentId", "groupStudentsGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Core.Account.User", b =>
                 {
                     b.HasOne("Core.Student", "Student")
@@ -417,56 +448,43 @@ namespace Data.Migrations
                     b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("Core.Attendance", b =>
-                {
-                    b.HasOne("Core.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Student");
-                });
-
             modelBuilder.Entity("Core.Course", b =>
                 {
-                    b.HasOne("Core.Teacher", null)
+                    b.HasOne("Core.Teacher", "Teacher")
                         .WithMany("Courses")
-                        .HasForeignKey("TeacherId");
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("Core.Group", b =>
                 {
                     b.HasOne("Core.Course", "Cource")
-                        .WithMany()
+                        .WithMany("Groups")
                         .HasForeignKey("CourceCourseId");
 
-                    b.HasOne("Core.Teacher", "Teacher")
-                        .WithMany()
-                        .HasForeignKey("TeacherId");
-
                     b.Navigation("Cource");
-
-                    b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("Core.Student", b =>
+            modelBuilder.Entity("Core.GroupStudent", b =>
                 {
                     b.HasOne("Core.Group", "Group")
-                        .WithMany("Students")
+                        .WithMany("GroupStudents")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Core.Student", "Student")
+                        .WithMany("GroupStudents")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Group");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -520,15 +538,21 @@ namespace Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Core.Course", b =>
+                {
+                    b.Navigation("Groups");
+                });
+
             modelBuilder.Entity("Core.Group", b =>
                 {
-                    b.Navigation("Students");
+                    b.Navigation("GroupStudents");
                 });
 
             modelBuilder.Entity("Core.Student", b =>
                 {
-                    b.Navigation("WebUser")
-                        .IsRequired();
+                    b.Navigation("GroupStudents");
+
+                    b.Navigation("WebUser");
                 });
 
             modelBuilder.Entity("Core.Teacher", b =>

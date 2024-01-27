@@ -129,14 +129,44 @@
   <data name="Administration" xml:space="preserve">
     <value>Администрирование</value>
   </data>
+  <data name="Age" xml:space="preserve">
+    <value>Возраст</value>
+  </data>
   <data name="AlreadyHaveAnAccount" xml:space="preserve">
     <value>Уже есть учетная запись?</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Отменить</value>
   </data>
   <data name="ConfrimPassword" xml:space="preserve">
     <value>Подтверждение пароля</value>
   </data>
+  <data name="Course" xml:space="preserve">
+    <value>Курс (направление)</value>
+  </data>
+  <data name="CourseAddDone" xml:space="preserve">
+    <value>Курс успешно создан</value>
+  </data>
   <data name="CourseName" xml:space="preserve">
     <value>Название курса</value>
+  </data>
+  <data name="Courses" xml:space="preserve">
+    <value>Курсы (направления)</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Создать</value>
+  </data>
+  <data name="CreateCourse" xml:space="preserve">
+    <value>Создать курс</value>
+  </data>
+  <data name="CreateGroup" xml:space="preserve">
+    <value>Создать группу</value>
+  </data>
+  <data name="CreateStudent" xml:space="preserve">
+    <value>Добавить студента</value>
+  </data>
+  <data name="CreateTeacher" xml:space="preserve">
+    <value>Добавить учителя</value>
   </data>
   <data name="DontHaveAccount" xml:space="preserve">
     <value>Нет акаунта?</value>
@@ -144,14 +174,32 @@
   <data name="Edit" xml:space="preserve">
     <value>Редактировать</value>
   </data>
+  <data name="EditCourse" xml:space="preserve">
+    <value>Изменить курс</value>
+  </data>
+  <data name="EditGroup" xml:space="preserve">
+    <value>Изменить группу</value>
+  </data>
+  <data name="EditStudent" xml:space="preserve">
+    <value>Изменить студента</value>
+  </data>
+  <data name="EditTeacher" xml:space="preserve">
+    <value>Изменить учителя</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
   <data name="EmptyResult" xml:space="preserve">
     <value>Нет результатов</value>
   </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>Имя</value>
+  </data>
   <data name="ForgetPassword" xml:space="preserve">
     <value>Забыли пароль?</value>
+  </data>
+  <data name="GroupAddDone" xml:space="preserve">
+    <value>Группа успешно создана</value>
   </data>
   <data name="GroupName" xml:space="preserve">
     <value>Название группы</value>
@@ -162,11 +210,20 @@
   <data name="Home" xml:space="preserve">
     <value>Главная</value>
   </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Фамилия</value>
+  </data>
+  <data name="Lng" xml:space="preserve">
+    <value>ru</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Вход</value>
   </data>
   <data name="LoginInAccount" xml:space="preserve">
     <value>Вход в учетную запись</value>
+  </data>
+  <data name="MiddleName" xml:space="preserve">
+    <value>Отчество</value>
   </data>
   <data name="NameApp" xml:space="preserve">
     <value>TopSkillWeb</value>
@@ -186,6 +243,9 @@
   <data name="RememberMe" xml:space="preserve">
     <value>Запомнить меня?</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
   <data name="Settings" xml:space="preserve">
     <value>Настройки</value>
   </data>
@@ -195,16 +255,34 @@
   <data name="SignUp" xml:space="preserve">
     <value>Зарегистрироваться</value>
   </data>
+  <data name="StudentAddDone" xml:space="preserve">
+    <value>Студент успешно создан</value>
+  </data>
+  <data name="StudentName" xml:space="preserve">
+    <value>ФИО студента</value>
+  </data>
+  <data name="Students" xml:space="preserve">
+    <value>Студенты</value>
+  </data>
   <data name="TakeMeHome" xml:space="preserve">
     <value>Отправьте меня домой</value>
   </data>
+  <data name="TeacherAddDone" xml:space="preserve">
+    <value>Учитель успешно создан</value>
+  </data>
   <data name="TeacherName" xml:space="preserve">
     <value>Преподаватель</value>
+  </data>
+  <data name="Teachers" xml:space="preserve">
+    <value>Учителя</value>
   </data>
   <data name="ToHome" xml:space="preserve">
     <value>На главную</value>
   </data>
   <data name="UserName" xml:space="preserve">
     <value>Имя пользователя</value>
+  </data>
+  <data name="VisitsLeft" xml:space="preserve">
+    <value>Осталось занятий</value>
   </data>
 </root>

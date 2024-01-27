@@ -1,6 +1,8 @@
 ﻿using Core;
+using Data.Repository;
 using Interfaces.Group;
 using Interfaces.Photo;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,9 +27,26 @@ namespace Data.Services
             return await _group.GetGroupAsync(id);
         }
 
-        public async Task AddGroupAsync(Group group)
+        public async Task<int> AddGroupAsync(Group group)
         {
-            await _group.AddGroupAsync(group);
+            return await _group.AddGroupAsync(group);
+        }
+
+        public async Task Update(Group group)
+        {
+            await _group.Update(group);
+        }
+
+        public async Task AddGroupStudentsAsync(IEnumerable<GroupStudent> groupStudents)
+        {
+            await _group.AddGroupStudentsAsync(groupStudents);
+        }
+
+        public async Task UpdateGroupWithStudents(int groupId, List<int> StudentsIds)
+        {
+            await _group.UpdateGroupWithStudents(groupId, StudentsIds);
         }
     }
+
+    
 }

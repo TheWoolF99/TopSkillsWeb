@@ -13,10 +13,11 @@ namespace Core
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AttendanceId { get; set; } 
-
         public DateTime DateVisiting {  get; set; }
-        public Student Student { get; set; } 
-        public Course Course { get; set;}
-
+        public Student Student { get; set; }
+        public Group Group { get; set; }
+        public bool IsPresent { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime DateCreate { get; set; }
     }
 }
