@@ -19731,7 +19731,7 @@ body.theme-dark .hide-theme-dark, body[data-bs-theme=dark] .hide-theme-dark {
 }
 
     [data-bs-theme=dark] .navbar-brand-autodark .navbar-brand-image {
-        filter: brightness(0) invert(1)
+        /*filter: brightness(0) invert(1)*/
     }
 
 .accordion {

@@ -30,7 +30,11 @@
                     @Html.DropDownListFor(Model => Model.Teacher.TeacherId, (SelectList)ViewBag.TeacherList, htmlAttributes: new { @id = "TeacherSelectList", @class = "form-select" })
                 </div>
             </div>
-
+            <div class="row">
+                <div class="mb-3 col-lg-6">
+                    <input id="ColorSelect" type="text" class="form-control d-block" value="@(Model.Color ??= String.Format("#{0:X6}", new Random().Next(0x1000000)))">
+                </div>
+            </div>
             <div class="card">
                 <div class="table-responsive">
                     <table class="table table-vcenter card-table">
@@ -47,10 +51,10 @@
                                 @foreach (var item in StudentsList)
                                 {
                                     <tr @item.Visits>
-                                        <td >@item.ShortName</td>
+                                        <td>@item.ShortName</td>
                                         <td id="VisitsLeft-@item.StudentId">@item.Visits</td>
                                         <td>
-                                            <input id="@item.StudentId" onchange="onChangeStudentCheckbox(event)" @(Convert.ToBoolean(StudentsIsGroup?.Contains(item.StudentId))?"checked":"") class="form-check-input StudentCheckbox" type="checkbox">
+                                            <input id="@item.StudentId" onchange="onChangeStudentCheckbox(event)" @(Convert.ToBoolean(StudentsIsGroup?.Contains(item.StudentId)) ? "checked" : "") class="form-check-input StudentCheckbox" type="checkbox">
                                         </td>
                                     </tr>
                                 }
@@ -103,12 +107,32 @@
             allowClear: true,
             width: "100%"
         });
+
+        window.Coloris && (Coloris({
+            el: "#ColorSelect",
+            selectInput: false,
+            alpha: false,
+            format: "hex",
+            swatches: [
+                "#0054a6",
+                "#45aaf2",
+                "#6574cd",
+                "#a55eea",
+                "#f66d9b",
+                "#fa4654",
+                "#fd9644",
+                "#f1c40f",
+                "#7bd235",
+                "#5eba00",
+                "#2bcbba",
+                "#17a2b8",
+            ],
+        }));
     });
 
 
 
-    function onChangeStudentCheckbox(e)
-    {
+    function onChangeStudentCheckbox(e) {
         let currentElement = e.currentTarget;
         let StudentId = currentElement.id;
         let visitLeft = +$('#VisitsLeft-' + StudentId).html();
@@ -116,8 +140,7 @@
         if (e.currentTarget.checked) {
             $('#VisitsLeft-' + StudentId).html(--visitLeft)
         }
-        else
-        {
+        else {
             $('#VisitsLeft-' + StudentId).html(++visitLeft)
         }
     }
@@ -137,7 +160,7 @@
             Course["CourseId"] = CourseId;
         else
             Course = null;
-        
+
         let Teacher = {};
         if (TeacherId != null)
             Teacher["TeacherId"] = TeacherId;
@@ -151,7 +174,7 @@
         Group["Cource"] = Course;
         Group["Teacher"] = Teacher;
         Group["Students"] = null;
-        
+        Group["Color"] = $('#ColorSelect').val();
 
         $.ajax({
             type: "POST",

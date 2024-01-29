@@ -24,6 +24,8 @@ namespace Core
         public Teacher? Teacher { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime DateCreate { get; set; }
+        [NotMapped]
+        public string? Color { get; set; }
         public IEnumerable<Student>? Students { get; set; }
         public IEnumerable<Attendance>? Attendances { get; set; }
 

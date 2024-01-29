@@ -115,6 +115,33 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Апрель.
+        /// </summary>
+        public static string April {
+            get {
+                return ResourceManager.GetString("April", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Посещения.
+        /// </summary>
+        public static string Attendance {
+            get {
+                return ResourceManager.GetString("Attendance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Август.
+        /// </summary>
+        public static string August {
+            get {
+                return ResourceManager.GetString("August", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Отменить.
         /// </summary>
         public static string Cancel {
@@ -214,6 +241,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Декабрь.
+        /// </summary>
+        public static string December {
+            get {
+                return ResourceManager.GetString("December", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Нет акаунта?.
         /// </summary>
         public static string DontHaveAccount {
@@ -286,6 +322,33 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Включить темную тему.
+        /// </summary>
+        public static string EnableDarkMode {
+            get {
+                return ResourceManager.GetString("EnableDarkMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Включить светлую тему.
+        /// </summary>
+        public static string EnableLightMode {
+            get {
+                return ResourceManager.GetString("EnableLightMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Февраль.
+        /// </summary>
+        public static string February {
+            get {
+                return ResourceManager.GetString("February", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Имя.
         /// </summary>
         public static string FirstName {
@@ -300,6 +363,15 @@ namespace TopSkillsWeb.Resources {
         public static string ForgetPassword {
             get {
                 return ResourceManager.GetString("ForgetPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Пт.
+        /// </summary>
+        public static string Fri {
+            get {
+                return ResourceManager.GetString("Fri", resourceCulture);
             }
         }
         
@@ -340,6 +412,33 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Январь.
+        /// </summary>
+        public static string January {
+            get {
+                return ResourceManager.GetString("January", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Июль.
+        /// </summary>
+        public static string July {
+            get {
+                return ResourceManager.GetString("July", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Июнь.
+        /// </summary>
+        public static string Juny {
+            get {
+                return ResourceManager.GetString("Juny", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Фамилия.
         /// </summary>
         public static string LastName {
@@ -376,6 +475,24 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Март.
+        /// </summary>
+        public static string March {
+            get {
+                return ResourceManager.GetString("March", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Май.
+        /// </summary>
+        public static string May {
+            get {
+                return ResourceManager.GetString("May", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Отчество.
         /// </summary>
         public static string MiddleName {
@@ -385,11 +502,47 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Пн.
+        /// </summary>
+        public static string Mon {
+            get {
+                return ResourceManager.GetString("Mon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на TopSkillWeb.
         /// </summary>
         public static string NameApp {
             get {
                 return ResourceManager.GetString("NameApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Следущий.
+        /// </summary>
+        public static string Next {
+            get {
+                return ResourceManager.GetString("Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Ноябрь.
+        /// </summary>
+        public static string November {
+            get {
+                return ResourceManager.GetString("November", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Октябрь.
+        /// </summary>
+        public static string October {
+            get {
+                return ResourceManager.GetString("October", resourceCulture);
             }
         }
         
@@ -408,6 +561,15 @@ namespace TopSkillsWeb.Resources {
         public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Предыдущий.
+        /// </summary>
+        public static string Previous {
+            get {
+                return ResourceManager.GetString("Previous", resourceCulture);
             }
         }
         
@@ -439,11 +601,29 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Сб.
+        /// </summary>
+        public static string Sat {
+            get {
+                return ResourceManager.GetString("Sat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Сохранить.
         /// </summary>
         public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Сентябрь.
+        /// </summary>
+        public static string September {
+            get {
+                return ResourceManager.GetString("September", resourceCulture);
             }
         }
         
@@ -502,6 +682,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Вс.
+        /// </summary>
+        public static string Sun {
+            get {
+                return ResourceManager.GetString("Sun", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Отправьте меня домой.
         /// </summary>
         public static string TakeMeHome {
@@ -538,11 +727,38 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Чт.
+        /// </summary>
+        public static string Thurs {
+            get {
+                return ResourceManager.GetString("Thurs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Сегодня.
+        /// </summary>
+        public static string Today {
+            get {
+                return ResourceManager.GetString("Today", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на На главную.
         /// </summary>
         public static string ToHome {
             get {
                 return ResourceManager.GetString("ToHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Вт.
+        /// </summary>
+        public static string Tues {
+            get {
+                return ResourceManager.GetString("Tues", resourceCulture);
             }
         }
         
@@ -561,6 +777,15 @@ namespace TopSkillsWeb.Resources {
         public static string VisitsLeft {
             get {
                 return ResourceManager.GetString("VisitsLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Ср.
+        /// </summary>
+        public static string Wed {
+            get {
+                return ResourceManager.GetString("Wed", resourceCulture);
             }
         }
     }

@@ -99,7 +99,7 @@ a{
 }
 
     a:hover{
-        text-decoration: underline !important;
+        /*text-decoration: underline !important;*/
     }
 
     .EmtyResultTd {
@@ -137,4 +137,23 @@ a{
 ::-webkit-scrollbar {
     width: 5px;
     height: 5px;
+}
+
+
+.clr-field button {
+    width: 1.5rem;
+    height: 1.5rem;
+    left: 6px;
+    right: auto;
+    border-radius: var(--tblr-border-radius);
+}
+
+.clr-field input {
+    padding-left: 2.5rem;
+    margin: 0;
+    direction: ltr;
+}
+
+.UserNameDiv:hover{
+    text-decoration:underline;
 }
