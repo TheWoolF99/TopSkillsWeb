@@ -126,6 +126,9 @@
   <data name="AccountRegistration" xml:space="preserve">
     <value>Регистрация учетной записи</value>
   </data>
+  <data name="AddAttendanceOn" xml:space="preserve">
+    <value>Добавить занятие на </value>
+  </data>
   <data name="Administration" xml:space="preserve">
     <value>Администрирование</value>
   </data>

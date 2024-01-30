@@ -5,8 +5,7 @@
     <div id="divCal"></div>
 </div>
 <script type="text/javascript">
-    var ListData;
-
+    var c;
    
     
     
@@ -173,13 +172,16 @@
             var chk = new Date();
             var chkY = chk.getFullYear();
             var chkM = chk.getMonth();
+
+            let DtForClick = new Date(y, m, i).toLocaleDateString()
+
             if (chkY == this.currYear && chkM == this.currMonth && i == this.currDay) {
-                html += '<td class="today maday" onclick="onDefaultCalendarClick(\'' + new Date(y, m, i).toLocaleDateString() + '\')"> <div class="flex">';
+                html += '<td class="today maday"  ondblclick="OnGetModalAddAttendance(\'' + DtForClick + '\')"  onclick="onDefaultCalendarClick(\'' + DtForClick + '\')"> <div class="flex">';
                 html += '<div class="DayNumber"><span style="position: relative !important;transform: none;" class="badge bg-azure text-azure-fg badge-notification badge-pill">' + i + '</span></div>';
                 html += '<div id="TaskLst-' + (m + 1) + '-' + i + '"class="TaskList"> </div>'
                 html += '</div></td>';
             } else {
-                html += '<td class="normal maday" onclick="onDefaultCalendarClick(\'' + new Date(y, m, i).toLocaleDateString() + '\')"><div class="flex">';
+                html += '<td class="normal maday"  ondblclick="OnGetModalAddAttendance(\'' + DtForClick + '\')" onclick="onDefaultCalendarClick(\'' + DtForClick + '\')"><div class="flex">';
                 html += '<div class="DayNumber">' + i + '</div>';
                 html += '<div id="TaskLst-' + (m + 1) + '-' + i + '"class="TaskList"> </div>'
                 html += '</div></td>';
@@ -218,6 +220,8 @@
 
         this.AddEventBtn();
 
+
+        UpdateCalendarData();
     };
 
     // On Load of the window
@@ -238,32 +242,61 @@
     //Fix on document.ready
     $(document).ready(function () {
         // Start calendar
-        var c = new Cal("divCal");
+        c = new Cal("divCal");
         let Year = c.getCurrentYear();
         let Mounth = c.getCurrentMonth();
         c.showcurr();
-
-        $.get('@Url.Action("GetCalendarData", "Attendance")', null, function (data) {
-            FiilCalendarData(data);
-        });
+        // UpdateCalendarData();
         // Bind next and previous button clicks
     });
 
-    function FiilCalendarData(data){
-        data.forEach((e) => {
-            let dt = new Date(e.dateVisiting);
-            let mounth = dt.getMonth();
-            let day = dt.getDay();
+    function UpdateCalendarData() {
+        let year = c.getCurrentYear();
+        let mounth = c.getCurrentMonth();
 
-            let html = '<div class="taskElement" style="background-color: ' + e.group.color + '70">';
-            html += '<span class="taskName">' + e.group.name + '</span>'
+        $.get('@Url.Action("GetCalendarData", "Attendance")', { CurrentYear: year, CurrentMounth: (mounth+1) }, function (data) {
+            if (typeof data === 'string') {
+                data = JSON.parse(data);
+            }
+            
+            FilCalendarData(data);
+        });
+    }
+
+
+    function FilCalendarData(data){
+        data.forEach((e) => {
+            let dt = new Date(e.DateVisiting);
+            let mounth = dt.getMonth();
+            let day = dt.getDate();
+            console.log(dt, 'background: #222; color: #bada55');
+            console.log(mounth, 'background: #222; color: #bada55');
+            console.log(day, 'background: #222; color: #bada55');
+            let color = e.Group.Color;
+            color ??= getRandomColor();
+            let html = '<div class="taskElement" onclick="OnGetModalEditTask(' + e.AttendanceId + ')" style="background-color: ' + color + '70">';
+            html += '<span class="taskName">' + e.Group.Name + '</span>'
             html +='</div>'
 
+            $('#TaskLst-' + (mounth + 1) + '-' + day).html('');
             $('#TaskLst-' + (mounth+1) + '-' + day).append(html);
 
         })
         console.log(data);
     }
+
+    function OnGetModalAddAttendance(date){
+        $.get('@Url.Action("GetModalAddAttendance", "Attendance")', { date: date }, function (data) {
+            $('#modal_body').html(data);
+            OpenModal();
+        });
+    }
+
+    function OnGetModalEditTask(id) {
+        console.log(id);
+    }
+
+
     //Fix jn document.ready
     // Get element by id
     function getId(id) {

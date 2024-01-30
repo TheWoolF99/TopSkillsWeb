@@ -1,0 +1,76 @@
+﻿<div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">@ViewBag.Title</h5>
+            <button type="button" class="btn-close" onclick="CloseModal()"></button>
+        </div>
+        <div class="modal-body">
+            @* <div class="mb-3">
+                <label class="form-label">@Resource.GroupName</label>
+                <input type="text" id="GroupNameInput" class="form-control" name="example-text-input" value="@Model?.Name" placeholder="@Resource.GroupName">
+            </div> *@
+            <div class="row">
+                <div class="mb-3">
+                    <label class="form-label">@Resource.GroupsStudents</label>
+                    @Html.DropDownList("GroupSelectList", (SelectList)ViewBag.GroupList, htmlAttributes: new { @id = "GroupSelectList", @class = "form-select" })
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn me-auto" onclick="CloseModal()">@Resource.Cancel</button>
+            <button type="button" class="btn btn-primary" onclick="OnSavePlanAttendance()">
+                @if (Model?.GroupId != 0)
+                {
+                    @Resource.Save
+                }
+                else
+                {
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+                    @Resource.Create
+                }
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#GroupSelectList").select2({
+            closeOnSelect: true,
+            dropdownParent: $('#modal_body'),
+            language: "@Resource.Lng",
+            placeholder: "@Html.Raw(Resource.GroupsStudents)",
+            allowHtml: true,
+            allowClear: true,
+            width: "100%"
+        });
+    });
+
+    function OnSavePlanAttendance() {
+        let Attendance = {}
+        let GroupId = $("#GroupSelectList").select2('val');
+
+        let Group = {};
+        if (GroupId != null)
+            Group["GroupId"] = GroupId;
+        else
+            Group = null;
+
+        Attendance["DateVisiting"] = '@ViewBag.Date';
+        Attendance['Group'] = Group;
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CreateNewAttendance", "Attendance")',
+            data: { model: Attendance },
+            success: function (data) {
+                $('#modal_body').html(data);
+                CloseModal();
+                UpdateCalendarData();
+            }
+        });
+    }
+
+</script>

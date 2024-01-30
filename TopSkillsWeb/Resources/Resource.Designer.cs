@@ -88,6 +88,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Добавить занятие на .
+        /// </summary>
+        public static string AddAttendanceOn {
+            get {
+                return ResourceManager.GetString("AddAttendanceOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Администрирование.
         /// </summary>
         public static string Administration {

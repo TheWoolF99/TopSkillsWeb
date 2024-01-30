@@ -71,6 +71,7 @@ builder.Services.AddSingleton<GroupService>();
 builder.Services.AddSingleton<CourseService>();
 builder.Services.AddSingleton<TeacherService>();
 builder.Services.AddSingleton<StudentService>();
+builder.Services.AddSingleton<AttendanceService>();
 #endregion
 
 var app = builder.Build();

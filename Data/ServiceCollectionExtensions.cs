@@ -2,6 +2,8 @@
 using Core;
 using Core.Account;
 using Data.Repository;
+using Data.Services;
+using Interfaces.Attendance;
 using Interfaces.Course;
 using Interfaces.Group;
 using Interfaces.Photo;
@@ -35,6 +37,7 @@ namespace Data
             services.AddSingleton<ICourse, CourseRepository>();
             services.AddSingleton<IStudent, StudentRepository>();
             services.AddSingleton<ITeacher, TeacherRepository>();
+            services.AddSingleton<IAttendance, AttendanceRepository>();
             #endregion
 
             return services;
