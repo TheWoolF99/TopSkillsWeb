@@ -224,23 +224,8 @@
         UpdateCalendarData();
     };
 
-    // On Load of the window
-    //window.onload = function () {
-
-    //    // Start calendar
-    //    var c = new Cal("divCal");
-    //    c.showcurr();
-
-    //    // Bind next and previous button clicks
-    //    getId('btnNext').onclick = function () {
-    //        c.nextMonth();
-    //    };
-    //    getId('btnPrev').onclick = function () {
-    //        c.previousMonth();
-    //    };
-    //}
-    //Fix on document.ready
     $(document).ready(function () {
+        var $contextMenu = $("#contextMenu");
         // Start calendar
         c = new Cal("divCal");
         let Year = c.getCurrentYear();
@@ -265,6 +250,7 @@
 
 
     function FilCalendarData(data){
+        $('.TaskList').html('');
         data.forEach((e) => {
             let dt = new Date(e.DateVisiting);
             let mounth = dt.getMonth();
@@ -274,13 +260,10 @@
             console.log(day, 'background: #222; color: #bada55');
             let color = e.Group.Color;
             color ??= getRandomColor();
-            let html = '<div class="taskElement" onclick="OnGetModalEditTask(' + e.AttendanceId + ')" style="background-color: ' + color + '70">';
+            let html = '<div class="taskElement" oncontextmenu="OnGetContextMenuTask(' + e.AttendanceId + ', event); return false;"   onclick="OnGetModalEditTask(' + e.AttendanceId + ')" style="background-color: ' + color + '70">';
             html += '<span class="taskName">' + e.Group.Name + '</span>'
             html +='</div>'
-
-            $('#TaskLst-' + (mounth + 1) + '-' + day).html('');
             $('#TaskLst-' + (mounth+1) + '-' + day).append(html);
-
         })
         console.log(data);
     }
@@ -294,6 +277,18 @@
 
     function OnGetModalEditTask(id) {
         console.log(id);
+    }
+
+    function OnGetContextMenuTask(id, e){
+        $.get('@Url.Action("ShowContextMenu", "Attendance")', { id: id }, function (data) {
+            document.getElementById("contextMenu").innerHTML = data;
+        });
+        $("#contextMenu").css({
+            display: "block",
+            left: e.pageX,
+            top: e.pageY
+        });
+        return false;
     }
 
 

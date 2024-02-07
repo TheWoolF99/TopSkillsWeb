@@ -3,13 +3,14 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>@ViewData["Title"] - TopSkillsWeb</title>
+    <title>@ViewData["Title"] @* - TopSkillsWeb *@</title>
     @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> *@
     <link rel="stylesheet" href="~/css/partTwo.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/tabler.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/coloris/coloris.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TopSkillsWeb.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/boxicon/fonts/boxicons.css" />
     <link runat="server" rel="shortcut icon" href="~/logo.ico" type="image/x-icon" />
     <link runat="server" rel="icon" href="~/logo.ico" type="image/ico" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.css" crossorigin="anonymous" />
@@ -181,6 +182,7 @@
         </div>
 
         <div class="page-wrapper">
+            <div id="contextMenu" class="dropdown clearfix"> </div>
             @RenderBody()
         </div>
 
@@ -248,6 +250,11 @@
 
     });
 
+    $("html").click(function () {
+        $("#contextMenu").css({
+            display: "none"
+        });
+    });
 
     function CloseModal() {
         $('#modal_body').hide();

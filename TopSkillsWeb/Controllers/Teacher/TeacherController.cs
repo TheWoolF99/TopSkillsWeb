@@ -42,7 +42,8 @@ namespace TopSkillsWeb.Controllers.Teacher
         }
         public async Task<IActionResult> OnAddUpdateTeacher(TeacherModel Teacher)
         {
-            if (Teacher.TeacherId == 0)
+            bool add = Teacher.TeacherId == 0;
+            if (add)
             {
                 await _teacher.AddTeacherAsync(Teacher);
             }
@@ -50,7 +51,7 @@ namespace TopSkillsWeb.Controllers.Teacher
             {
                 await _teacher.UpdateTeacherAsync(Teacher);
             }
-            return RedirectToAction("ShowModalSuccess", "Home", new { message = Resource.TeacherAddDone });
+            return RedirectToAction("ShowModalSuccess", "Home", new { message = add? Resource.TeacherAddDone : Resource.TeacherEditDone });
         }
 
         public async Task<IActionResult> OnUpdateTableRows()

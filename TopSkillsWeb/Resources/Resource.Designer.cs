@@ -142,6 +142,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Начало посещения.
+        /// </summary>
+        public static string AttendanceStart {
+            get {
+                return ResourceManager.GetString("AttendanceStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Август.
         /// </summary>
         public static string August {
@@ -183,6 +192,15 @@ namespace TopSkillsWeb.Resources {
         public static string CourseAddDone {
             get {
                 return ResourceManager.GetString("CourseAddDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Курс успешно изменен.
+        /// </summary>
+        public static string CourseEditDone {
+            get {
+                return ResourceManager.GetString("CourseEditDone", resourceCulture);
             }
         }
         
@@ -394,6 +412,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Группа успешно изменена.
+        /// </summary>
+        public static string GroupEditDone {
+            get {
+                return ResourceManager.GetString("GroupEditDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Название группы.
         /// </summary>
         public static string GroupName {
@@ -417,6 +444,33 @@ namespace TopSkillsWeb.Resources {
         public static string Home {
             get {
                 return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Уважительная причина.
+        /// </summary>
+        public static string IsGoodReason {
+            get {
+                return ResourceManager.GetString("IsGoodReason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Не посетил.
+        /// </summary>
+        public static string IsNotPresent {
+            get {
+                return ResourceManager.GetString("IsNotPresent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Посетил.
+        /// </summary>
+        public static string IsPresent {
+            get {
+                return ResourceManager.GetString("IsPresent", resourceCulture);
             }
         }
         
@@ -673,6 +727,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Студент успешно изменен.
+        /// </summary>
+        public static string StudentEditDone {
+            get {
+                return ResourceManager.GetString("StudentEditDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на ФИО студента.
         /// </summary>
         public static string StudentName {
@@ -714,6 +777,15 @@ namespace TopSkillsWeb.Resources {
         public static string TeacherAddDone {
             get {
                 return ResourceManager.GetString("TeacherAddDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Учитель успешно изменен.
+        /// </summary>
+        public static string TeacherEditDone {
+            get {
+                return ResourceManager.GetString("TeacherEditDone", resourceCulture);
             }
         }
         

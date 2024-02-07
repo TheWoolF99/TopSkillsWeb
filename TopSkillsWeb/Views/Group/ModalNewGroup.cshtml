@@ -136,7 +136,9 @@
         let currentElement = e.currentTarget;
         let StudentId = currentElement.id;
         let visitLeft = +$('#VisitsLeft-' + StudentId).html();
-
+        if (visitLeft == 0){
+            return false;
+        }
         if (e.currentTarget.checked) {
             $('#VisitsLeft-' + StudentId).html(--visitLeft)
         }

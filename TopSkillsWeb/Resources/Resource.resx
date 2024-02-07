@@ -144,6 +144,9 @@
   <data name="Attendance" xml:space="preserve">
     <value>Посещения</value>
   </data>
+  <data name="AttendanceStart" xml:space="preserve">
+    <value>Начало посещения</value>
+  </data>
   <data name="August" xml:space="preserve">
     <value>Август</value>
   </data>
@@ -158,6 +161,9 @@
   </data>
   <data name="CourseAddDone" xml:space="preserve">
     <value>Курс успешно создан</value>
+  </data>
+  <data name="CourseEditDone" xml:space="preserve">
+    <value>Курс успешно изменен</value>
   </data>
   <data name="CourseName" xml:space="preserve">
     <value>Название курса</value>
@@ -228,6 +234,9 @@
   <data name="GroupAddDone" xml:space="preserve">
     <value>Группа успешно создана</value>
   </data>
+  <data name="GroupEditDone" xml:space="preserve">
+    <value>Группа успешно изменена</value>
+  </data>
   <data name="GroupName" xml:space="preserve">
     <value>Название группы</value>
   </data>
@@ -236,6 +245,15 @@
   </data>
   <data name="Home" xml:space="preserve">
     <value>Главная</value>
+  </data>
+  <data name="IsGoodReason" xml:space="preserve">
+    <value>Уважительная причина</value>
+  </data>
+  <data name="IsNotPresent" xml:space="preserve">
+    <value>Не посетил</value>
+  </data>
+  <data name="IsPresent" xml:space="preserve">
+    <value>Посетил</value>
   </data>
   <data name="January" xml:space="preserve">
     <value>Январь</value>
@@ -321,6 +339,9 @@
   <data name="StudentAddDone" xml:space="preserve">
     <value>Студент успешно создан</value>
   </data>
+  <data name="StudentEditDone" xml:space="preserve">
+    <value>Студент успешно изменен</value>
+  </data>
   <data name="StudentName" xml:space="preserve">
     <value>ФИО студента</value>
   </data>
@@ -335,6 +356,9 @@
   </data>
   <data name="TeacherAddDone" xml:space="preserve">
     <value>Учитель успешно создан</value>
+  </data>
+  <data name="TeacherEditDone" xml:space="preserve">
+    <value>Учитель успешно изменен</value>
   </data>
   <data name="TeacherName" xml:space="preserve">
     <value>Преподаватель</value>

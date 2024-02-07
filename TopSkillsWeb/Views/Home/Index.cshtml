@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Core.Account.User>
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = Resource.Home;
 }
 
 
@@ -36,6 +36,15 @@
                         </div>
                     </div>
                     <div id="chart-revenue-bg" class="chart-sm"></div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card" style="height: 28rem">
+                    <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+                        <div id="Attendance" class="divide-y">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -105,5 +114,14 @@
                 show: false,
             },
         })).render();
+        
+        OnGetAttendanceToday();
     });
+
+    function OnGetAttendanceToday(){
+        $.get('@Url.Action("GetListAttendance", "Attendance")', null, function (data) {
+            $('#Attendance').html(data);
+        });
+    }
+
 </script>

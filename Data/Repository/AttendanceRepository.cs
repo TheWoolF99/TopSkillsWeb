@@ -18,13 +18,10 @@ namespace Data.Repository
             this._context = context;
         }
 
-        public async Task<Attendance> GetAttendanceByGroupIdAndDate(int GroupId, DateTime Date)
+        public async Task<IEnumerable<Attendance>> GetAttendanceByGroupIdAndDate(int GroupId, DateTime Date)
         {
             var db = _context.Create(typeof(CourseRepository));
-
-            var Attendance = await db.Attendance.Include(s => s.Student).Include(g => g.Group).FirstOrDefaultAsync();
-
-
+            var Attendance = await db.Attendance.Include(s => s.Student).Include(g => g.Group).Where(x=>x.Group.GroupId == GroupId & x.DateVisiting == Date).ToListAsync();
             return Attendance;
         }
 
@@ -63,6 +60,15 @@ namespace Data.Repository
                 .Include(g => g.Group).Include(s => s.Student).Where(x => x.DateVisiting >= start & x.DateVisiting <= end).ToListAsync();
                 //.DistinctBy(x => x.Group)
                 //.AsEnumerable();
+        }
+
+        public async Task<IEnumerable<Attendance>> GetAttendancesByDateRange(DateTime date)
+        {
+            var db = _context.Create(typeof(CourseRepository));
+            return await db.Attendance
+                .Include(g => g.Group).Include(s => s.Student).Where(x => x.DateVisiting.Date == date.Date).ToListAsync();
+            //.DistinctBy(x => x.Group)
+            //.AsEnumerable();
         }
 
 

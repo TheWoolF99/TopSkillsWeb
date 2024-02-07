@@ -69,7 +69,8 @@ namespace TopSkillsWeb.Controllers.Group
 
         public async Task<IActionResult> OnAddGroupStudents(GroupModel Group, List<int> StudentsIds)
         {
-            if (Group.GroupId == 0)
+            bool add = Group.GroupId == 0;
+            if (add)
             {
                 int NewId = _gS.AddGroupAsync(Group).Result;
                 await _gS.UpdateGroupWithStudents(NewId, StudentsIds);
@@ -79,8 +80,7 @@ namespace TopSkillsWeb.Controllers.Group
                 await _gS.Update(Group);
                 await _gS.UpdateGroupWithStudents(Group.GroupId, StudentsIds);
             }
-
-            return RedirectToAction("ShowModalSuccess", "Home", new { message = Resource.GroupAddDone });
+            return RedirectToAction("ShowModalSuccess", "Home", new { message = add ? Resource.GroupAddDone : Resource.GroupEditDone });
         }
 
         public async Task<IActionResult> OnUpdateTableRows()

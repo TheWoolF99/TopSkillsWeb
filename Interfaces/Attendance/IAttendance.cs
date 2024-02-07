@@ -8,8 +8,9 @@ namespace Interfaces.Attendance
 {
     public interface IAttendance
     {
-        Task<AttendanceModel> GetAttendanceByGroupIdAndDate(int GroupId, DateTime Date);
+        Task<IEnumerable<AttendanceModel>> GetAttendanceByGroupIdAndDate(int GroupId, DateTime Date);
         Task<IEnumerable<AttendanceModel>> GetAttendancesByDateRange(DateTime start, DateTime end);
+        Task<IEnumerable<AttendanceModel>> GetAttendancesByDateRange(DateTime date);
         Task<bool> OnAddAttendanceByDateAndGroupId(AttendanceModel attendance);
     }
 }

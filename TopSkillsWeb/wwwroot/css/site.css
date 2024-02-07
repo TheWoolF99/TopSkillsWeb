@@ -157,3 +157,23 @@ a{
 .UserNameDiv:hover{
     text-decoration:underline;
 }
+
+
+#contextMenu {
+    display: none;
+    position: absolute;
+    min-width: max-content;
+}
+
+    #contextMenu .dropdown-menu{
+        display: block;
+    }
+
+ul.contextMenu, li.dropdown-item, .dropdown-item {
+    min-width: max-content;
+}
+    .contextMenu,
+    .contextMenu ul {
+        list-style-type: none;
+    }
+

@@ -72,5 +72,30 @@ namespace TopSkillsWeb.Controllers.Attendance
             return new JsonResult(serialize);
         }
 
+
+        public async Task<IActionResult> ShowContextMenu(int id)
+        {
+
+            return PartialView("ContextMenu", id);
+            return new EmptyResult();
+        }
+
+        public async Task<IActionResult> GetListAttendance(DateTime? date)
+        {
+            date ??= DateTime.Today;
+            var lst = await _aS.GetAttendancesByDateRange((DateTime)date);
+            if (lst.Count() > 0)
+                lst = lst?.DistinctBy(x => new { x.Group, x.DateVisiting }).ToList();
+            return PartialView("AttendanceTable", lst);
+        }
+
+        public async Task<IActionResult> GetStartAttendance(int GroupId, string date)
+        {
+            ViewBag.Title = Resource.AttendanceStart;
+            var lst = await _aS.GetAttendanceByGroupIdAndDate(GroupId, DateTime.Parse(date));
+            return PartialView("ModalStartAttendance", lst);
+        }
+
+
     }
 }

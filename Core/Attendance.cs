@@ -16,8 +16,9 @@ namespace Core
         public DateTime DateVisiting {  get; set; }
         public Student Student { get; set; }
         public Group Group { get; set; }
-        public bool IsPresent { get; set; }
+        public int IsPresent { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime DateCreate { get; set; }
+        public DateTime? DateClose { get; set; }
     }
 }

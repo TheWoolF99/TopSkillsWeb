@@ -1,0 +1,46 @@
+﻿.AttendanceUL, .AttendanceItem {
+    list-style-type: none;
+    margin-bottom: 0;
+    padding-right: 1.5rem;
+}
+li.AttendanceItem {
+    padding: 5px;
+}
+
+li.AttendanceItem:not(:first-child) {
+    border-top: var(--tblr-border-width) var(--tblr-border-style) var(--tblr-border-color-translucent) !important;
+}
+
+.AttendanceNameGroup, .AttendanceItem {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    align-items: center;
+}
+    .AttendanceNameGroup{
+    justify-content: space-between;
+    }
+
+.AttendanceItem .BtnContainer {
+    text-align: end;
+}
+
+input.StudentCheckbox{
+    display:none;
+}
+input.StudentCheckbox:not(:checked) + label {
+    background: transparent;
+}
+
+input.StudentCheckbox:checked + label {
+    color: var(--tblr-primary);
+    background: rgba(var(--tblr-primary-rgb),.04);
+    border-color: var(--tblr-primary);
+}
+.form-selectgroup-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+}

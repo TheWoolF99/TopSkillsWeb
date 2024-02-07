@@ -54,7 +54,7 @@ namespace TopSkillsWeb.Controllers.Course
             {
                 await _course.UpdateCourseAsync(Course);
             }
-            return RedirectToAction("ShowModalSuccess", "Home", new { message = Resource.CourseAddDone });
+            return RedirectToAction("ShowModalSuccess", "Home", new { message = Course.CourseId == 0? Resource.CourseAddDone : Resource.CourseEditDone });
         }
 
         public async Task<IActionResult>  OnUpdateTableRows()

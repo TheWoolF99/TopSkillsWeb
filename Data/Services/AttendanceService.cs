@@ -2,6 +2,7 @@
 using Interfaces.Attendance;
 using Interfaces.Course;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace Data.Services
 
 
 
-        public async Task<Attendance> GetAttendanceByGroupIdAndDate(int GroupId, DateTime Date)
+        public async Task<IEnumerable<Attendance>> GetAttendanceByGroupIdAndDate(int GroupId, DateTime Date)
         {
             return await _attendance.GetAttendanceByGroupIdAndDate(GroupId, Date);
         }
@@ -25,6 +26,11 @@ namespace Data.Services
         public async Task<IEnumerable<Attendance>> GetAttendancesByDateRange(DateTime start, DateTime end)
         {
             return await _attendance.GetAttendancesByDateRange(start, end);
+        }
+
+        public async Task<IEnumerable<Attendance>> GetAttendancesByDateRange(DateTime date)
+        {
+            return await _attendance.GetAttendancesByDateRange(date);
         }
 
         public async Task<bool> OnAddAttendanceByDateAndGroupId(Attendance attendance)

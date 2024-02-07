@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Core.Attendance>
+
+
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">@ViewBag.Title</h5>
+            <button type="button" class="btn-close" onclick="CloseModal()"></button>
+        </div>
+        <div class="modal-body">
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table table-vcenter card-table">
+                        <thead class="sticky-header">
+                            <tr>
+                                <th>@Resource.StudentName</th>
+                                <th>@Resource.GroupName</th>
+                                <th>@Resource.IsPresent</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.Count() > 0)
+                            {
+                                @foreach (var item in Model)
+                                {
+                                    <tr id="@item.Student.StudentId" class="rowStudent">
+                                        <td>@item.Student.FullNameIinitials</td>
+                                        <td>@item.Group.Name</td>
+                                        <td>
+                                            <div class="form-selectgroup">
+                                                <span class="form-selectgroup-item">
+                                                    <input id="IsPresent-@item.Student.StudentId" onchange="OnChangeIsPresent(event)" class="form-check-input StudentCheckbox @item.Student.StudentId" type="checkbox">
+                                                    <label class="form-selectgroup-label" for="IsPresent-@item.Student.StudentId" title="@Resource.IsPresent"><i class='bx bx-check'></i></label>
+                                                </span>
+                                                <span class="form-selectgroup-item">
+                                                    <input id="IsGoodReason-@item.Student.StudentId" onchange="OnChangeIsPresent(event)" class="form-check-input StudentCheckbox @item.Student.StudentId" type="checkbox">
+                                                    <label class="form-selectgroup-label" for="IsGoodReason-@item.Student.StudentId" title="@Resource.IsGoodReason"><i class='bx bxs-virus'></i></label>
+                                                </span>
+                                                <span class="form-selectgroup-item">
+                                                    <input id="IsNotPresent-@item.Student.StudentId" onchange="OnChangeIsPresent(event)" class="form-check-input StudentCheckbox @item.Student.StudentId" checked type="checkbox">
+                                                    <label class="form-selectgroup-label" for="IsNotPresent-@item.Student.StudentId" title="@Resource.IsNotPresent"><i class='bx bx-x'></i></label>
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn me-auto" onclick="CloseModal()">@Resource.Cancel</button>
+            <button type="button" class="btn btn-primary" onclick="OnChangeStartAttendance()">
+                @Resource.Save
+                @* }
+                else
+                {
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+                @Resource.Create
+                } *@
+            </button>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    function OnChangeIsPresent(e) {
+        let classes = e.currentTarget.classList;
+        $('.StudentCheckbox.' + classes[classes.length - 1]).prop('checked', false);
+        // console.log(e.currentTarget.checked);
+        if (!e.currentTarget.checked) {
+            e.currentTarget.checked = true;
+        }
+    }
+
+    function OnChangeStartAttendance() {
+
+    }
+</script>
