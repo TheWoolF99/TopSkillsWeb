@@ -22,6 +22,11 @@ namespace Data.Services
             return await _group.GetAllGroupsAsync();
         }
 
+        public async Task<IEnumerable<Group>> GetAllGroupsAsync(DateTime date)
+        {
+            return await _group.GetAllGroupsAsync(date);
+        }
+
         public async Task<Group> GetGroupAsync(int id)
         {
             return await _group.GetGroupAsync(id);

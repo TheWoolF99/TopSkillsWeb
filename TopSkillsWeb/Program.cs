@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using Core.Account;
 using Data.Services;
 
+
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -18,8 +19,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 string ConnString = "production";
 
-
-builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddHttpContextAccessor();
+//builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(1440);
@@ -72,6 +73,7 @@ builder.Services.AddSingleton<CourseService>();
 builder.Services.AddSingleton<TeacherService>();
 builder.Services.AddSingleton<StudentService>();
 builder.Services.AddSingleton<AttendanceService>();
+builder.Services.AddSingleton<LoggerService>();
 #endregion
 
 var app = builder.Build();

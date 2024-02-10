@@ -23,21 +23,21 @@
                             {
                                 @foreach (var item in Model)
                                 {
-                                    <tr id="@item.Student.StudentId" class="rowStudent">
+                                    <tr id="@item.Student.StudentId" attendanceId="@item.AttendanceId"  class="rowStudent">
                                         <td>@item.Student.FullNameIinitials</td>
                                         <td>@item.Group.Name</td>
                                         <td>
                                             <div class="form-selectgroup">
                                                 <span class="form-selectgroup-item">
-                                                    <input id="IsPresent-@item.Student.StudentId" onchange="OnChangeIsPresent(event)" class="form-check-input StudentCheckbox @item.Student.StudentId" type="checkbox">
+                                                    <input id="IsPresent-@item.Student.StudentId" IspresentId="1" onchange="OnChangeIsPresent(event)" class="form-check-input StudentCheckbox @item.Student.StudentId" @(item.IsPresent == 1 ? "checked" : "") type="checkbox">
                                                     <label class="form-selectgroup-label" for="IsPresent-@item.Student.StudentId" title="@Resource.IsPresent"><i class='bx bx-check'></i></label>
                                                 </span>
                                                 <span class="form-selectgroup-item">
-                                                    <input id="IsGoodReason-@item.Student.StudentId" onchange="OnChangeIsPresent(event)" class="form-check-input StudentCheckbox @item.Student.StudentId" type="checkbox">
+                                                    <input id="IsGoodReason-@item.Student.StudentId" IspresentId="2"  onchange="OnChangeIsPresent(event)" class="form-check-input StudentCheckbox @item.Student.StudentId" @(item.IsPresent == 2 ? "checked" : "") type="checkbox">
                                                     <label class="form-selectgroup-label" for="IsGoodReason-@item.Student.StudentId" title="@Resource.IsGoodReason"><i class='bx bxs-virus'></i></label>
                                                 </span>
                                                 <span class="form-selectgroup-item">
-                                                    <input id="IsNotPresent-@item.Student.StudentId" onchange="OnChangeIsPresent(event)" class="form-check-input StudentCheckbox @item.Student.StudentId" checked type="checkbox">
+                                                    <input id="IsNotPresent-@item.Student.StudentId" IspresentId="0"  onchange="OnChangeIsPresent(event)" class="form-check-input StudentCheckbox @item.Student.StudentId" @(item.IsPresent == 0 ? "checked" : "") type="checkbox">
                                                     <label class="form-selectgroup-label" for="IsNotPresent-@item.Student.StudentId" title="@Resource.IsNotPresent"><i class='bx bx-x'></i></label>
                                                 </span>
                                             </div>
@@ -79,5 +79,21 @@
 
     function OnChangeStartAttendance() {
 
+        let ListAttendance = $('.rowStudent').map(function () {
+            return { "AttendanceId": +$(this).attr('attendanceId'), "IsPresent": $('.StudentCheckbox.' + $(this).attr('id') + ':checked').attr('IspresentId') }
+        }).toArray();
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("OnStartAttendance", "Attendance")',
+            data: { attendances: ListAttendance },
+            success: function (data) {
+                $('#modal_body').html(data);
+                OpenModal();
+                OnGetAttendanceToday();
+            }
+        });
+
+        console.log(ListAttendance);
     }
 </script>

@@ -144,6 +144,9 @@
   <data name="Attendance" xml:space="preserve">
     <value>Посещения</value>
   </data>
+  <data name="AttendanceEnd" xml:space="preserve">
+    <value>Занятие прошло</value>
+  </data>
   <data name="AttendanceStart" xml:space="preserve">
     <value>Начало посещения</value>
   </data>
@@ -323,6 +326,9 @@
   </data>
   <data name="Save" xml:space="preserve">
     <value>Сохранить</value>
+  </data>
+  <data name="Saved" xml:space="preserve">
+    <value>Сохранено</value>
   </data>
   <data name="September" xml:space="preserve">
     <value>Сентябрь</value>

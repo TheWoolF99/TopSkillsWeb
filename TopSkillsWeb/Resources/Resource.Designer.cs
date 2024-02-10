@@ -142,6 +142,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Занятие прошло.
+        /// </summary>
+        public static string AttendanceEnd {
+            get {
+                return ResourceManager.GetString("AttendanceEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Начало посещения.
         /// </summary>
         public static string AttendanceStart {
@@ -678,6 +687,15 @@ namespace TopSkillsWeb.Resources {
         public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Сохранено.
+        /// </summary>
+        public static string Saved {
+            get {
+                return ResourceManager.GetString("Saved", resourceCulture);
             }
         }
         

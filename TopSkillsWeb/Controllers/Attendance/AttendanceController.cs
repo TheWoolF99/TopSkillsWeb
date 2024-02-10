@@ -32,7 +32,7 @@ namespace TopSkillsWeb.Controllers.Attendance
         public async Task<IActionResult> GetModalAddAttendance(string date)
         {
             
-            ViewBag.GroupList = new SelectList(await _gS.GetAllGroupsAsync(), "GroupId", "Name");
+            ViewBag.GroupList = new SelectList(await _gS.GetAllGroupsAsync(DateTime.Parse(date)), "GroupId", "Name");
             ViewBag.Date = date;
             ViewBag.Title = $"{Resource.AddAttendanceOn} {date}";
             return PartialView("AddPlanAttendance");
@@ -91,9 +91,23 @@ namespace TopSkillsWeb.Controllers.Attendance
 
         public async Task<IActionResult> GetStartAttendance(int GroupId, string date)
         {
-            ViewBag.Title = Resource.AttendanceStart;
+            
             var lst = await _aS.GetAttendanceByGroupIdAndDate(GroupId, DateTime.Parse(date));
+            ViewBag.Title = Resource.AttendanceStart + " - " + lst?.ElementAt(1).Group.Name;
             return PartialView("ModalStartAttendance", lst);
+        }
+
+        public async Task<IActionResult> OnStartAttendance(List<AttendanceModel> attendances)
+        {
+            try
+            {
+                await _aS.OnStartAttendance(attendances);
+                return RedirectToAction("ShowModalSuccess", "Home", new { message = Resource.Saved });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("ShowModalError", "Home", new { message = ex.Message });
+            }
         }
 
 

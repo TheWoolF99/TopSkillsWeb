@@ -10,6 +10,7 @@ namespace Interfaces.Group
     public interface IGroup
     {
         Task<IEnumerable<Core.Group>> GetAllGroupsAsync();
+        Task<IEnumerable<Core.Group>> GetAllGroupsAsync(DateTime date);
         Task<Core.Group> GetGroupAsync(int id);
         Task<int> AddGroupAsync(Core.Group group);
         Task Update(Core.Group group);

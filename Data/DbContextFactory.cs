@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Data.Migrations;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using Z.EntityFramework.Plus;
 
 
 namespace Data
@@ -23,6 +25,8 @@ namespace Data
             if (!dbContexts.ContainsKey(repositoryType))
                 dbContexts[repositoryType] = services.GetService<ApplicationContext>();
             
+            AuditManager.DefaultConfiguration.AutoSavePreAction = (context, audit) => { dbContexts[repositoryType].AuditEntries.AddRange(audit.Entries); };
+
             return dbContexts[repositoryType];
         }
 

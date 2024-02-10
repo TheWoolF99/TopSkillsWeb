@@ -32,6 +32,15 @@ namespace Data.Repository
             return ls;
         }
 
+        public async Task<IEnumerable<Group>> GetAllGroupsAsync(DateTime date)
+        {
+            var db = _context.Create(typeof(GroupRepository));
+            var AttendanceToday = db.Attendance.Where(x=>x.DateVisiting == date).Include(x=>x.Group).Select(x=>x.Group.GroupId).ToList()?.Distinct();
+            var ls = db.Groups.Include(s => s.Students)
+                .Include(c => c.Cource)
+                .Include(t => t.Teacher).Where(x => !AttendanceToday.Contains(x.GroupId)).ToList();
+            return ls;
+        }
 
         public async Task<Group> GetGroupAsync(int id)
         {
@@ -46,6 +55,15 @@ namespace Data.Repository
         public async Task<int> AddGroupAsync(Group group)
         {
             var db = _context.Create(typeof(GroupRepository));
+            if (group.Cource != null)
+            {
+                group.Cource = db.Courses.Where(x => x.CourseId == group.Cource.CourseId).FirstOrDefault();
+            }
+            if (group.Teacher != null)
+            {
+                group.Teacher = db.Teachers.Where(x => x.TeacherId == group.Teacher.TeacherId).FirstOrDefault();
+            }
+            
             await db.Groups.AddAsync(group);
             await db.SaveChangesAsync();
             return group.GroupId;

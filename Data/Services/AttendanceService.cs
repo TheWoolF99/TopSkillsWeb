@@ -39,5 +39,10 @@ namespace Data.Services
         }
 
 
+        public async Task OnStartAttendance(List<Attendance> attendances)
+        {
+            await _attendance.OnStartAttendance(attendances);
+        }
+
     }
 }

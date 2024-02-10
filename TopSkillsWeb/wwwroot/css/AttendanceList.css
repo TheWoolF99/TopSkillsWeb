@@ -13,11 +13,11 @@ li.AttendanceItem:not(:first-child) {
 
 .AttendanceNameGroup, .AttendanceItem {
     display: grid;
-    grid-template-columns: repeat(2, auto);
+    grid-template-columns: repeat(2, 50%);
     align-items: center;
 }
     .AttendanceNameGroup{
-    justify-content: space-between;
+        justify-content: space-between;
     }
 
 .AttendanceItem .BtnContainer {

@@ -6,12 +6,14 @@ using Data.Services;
 using Interfaces.Attendance;
 using Interfaces.Course;
 using Interfaces.Group;
+using Interfaces.Logger;
 using Interfaces.Photo;
 using Interfaces.Student;
 using Interfaces.Teacher;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.DependencyInjection;
+using Z.EntityFramework.Plus;
 
 
 namespace Data
@@ -38,6 +40,7 @@ namespace Data
             services.AddSingleton<IStudent, StudentRepository>();
             services.AddSingleton<ITeacher, TeacherRepository>();
             services.AddSingleton<IAttendance, AttendanceRepository>();
+            services.AddSingleton<ILoggerRep, LoggerRepository>();
             #endregion
 
             return services;

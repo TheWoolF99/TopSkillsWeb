@@ -19,6 +19,10 @@
                         {
                             <a class="btn btn-ghost-success" onclick="OnStartAttendance(@item.Group.GroupId, '@item.DateVisiting.ToShortDateString()')">@Resource.AttendanceStart</a>
                         }
+                        else
+                        {
+                            <a class="btn btn-ghost-success disabled">@Resource.AttendanceEnd</a>
+                        }
                     </div>
                 </li>
             }

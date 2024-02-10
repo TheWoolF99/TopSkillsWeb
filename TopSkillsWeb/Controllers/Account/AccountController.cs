@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using UAParser;
 
 namespace TopSkillsWeb.Controllers.Account
 {
@@ -13,12 +14,14 @@ namespace TopSkillsWeb.Controllers.Account
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly PhotoService _photo;
+        private readonly LoggerService _log;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, PhotoService _photo)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, PhotoService _photo, LoggerService log)
         {
             this._userManager = userManager;
             this._signInManager = signInManager;
             this._photo = _photo;
+            this._log = log;
         }
         [HttpGet]
         public IActionResult Register()
@@ -39,6 +42,11 @@ namespace TopSkillsWeb.Controllers.Account
                 {
 
                     await _signInManager.SignInAsync(user, false);
+                    
+                    //запишем в лог
+                    var UserAgentParse = Parser.GetDefault().Parse(HttpContext.Request.Headers.UserAgent).UA;
+
+                    _log.AddLog(new() { });
 
                     return RedirectToAction("Index", "Home");
                 }

@@ -4,6 +4,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20240210085607_AddLoggTable")]
+    partial class AddLoggTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -485,88 +488,6 @@ namespace Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Z.EntityFramework.Plus.AuditEntry", b =>
-                {
-                    b.Property<int>("AuditEntryID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnOrder(0);
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AuditEntryID"));
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnOrder(5);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnOrder(6);
-
-                    b.Property<string>("EntitySetName")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnOrder(1);
-
-                    b.Property<string>("EntityTypeName")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnOrder(2);
-
-                    b.Property<int>("State")
-                        .HasColumnType("int")
-                        .HasColumnOrder(3);
-
-                    b.Property<string>("StateName")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnOrder(4);
-
-                    b.HasKey("AuditEntryID");
-
-                    b.ToTable("AuditEntries");
-                });
-
-            modelBuilder.Entity("Z.EntityFramework.Plus.AuditEntryProperty", b =>
-                {
-                    b.Property<int>("AuditEntryPropertyID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnOrder(0);
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AuditEntryPropertyID"));
-
-                    b.Property<int>("AuditEntryID")
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
-
-                    b.Property<string>("NewValueFormatted")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("NewValue")
-                        .HasColumnOrder(5);
-
-                    b.Property<string>("OldValueFormatted")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("OldValue")
-                        .HasColumnOrder(4);
-
-                    b.Property<string>("PropertyName")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnOrder(3);
-
-                    b.Property<string>("RelationName")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnOrder(2);
-
-                    b.HasKey("AuditEntryPropertyID");
-
-                    b.HasIndex("AuditEntryID");
-
-                    b.ToTable("AuditEntryProperties");
-                });
-
             modelBuilder.Entity("Core.Account.User", b =>
                 {
                     b.HasOne("Core.Student", "Student")
@@ -689,17 +610,6 @@ namespace Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Z.EntityFramework.Plus.AuditEntryProperty", b =>
-                {
-                    b.HasOne("Z.EntityFramework.Plus.AuditEntry", "Parent")
-                        .WithMany("Properties")
-                        .HasForeignKey("AuditEntryID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Parent");
-                });
-
             modelBuilder.Entity("Core.Course", b =>
                 {
                     b.Navigation("Groups");
@@ -720,11 +630,6 @@ namespace Data.Migrations
             modelBuilder.Entity("Core.Teacher", b =>
                 {
                     b.Navigation("Courses");
-                });
-
-            modelBuilder.Entity("Z.EntityFramework.Plus.AuditEntry", b =>
-                {
-                    b.Navigation("Properties");
                 });
 #pragma warning restore 612, 618
         }
