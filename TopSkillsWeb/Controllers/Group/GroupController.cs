@@ -9,9 +9,11 @@ using TopSkillsWeb.Resources;
 using Core;
 using Newtonsoft.Json;
 using Interfaces.Course;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TopSkillsWeb.Controllers.Group
 {
+    [Authorize]
     public class GroupController : Controller
     {
         /// <summary>

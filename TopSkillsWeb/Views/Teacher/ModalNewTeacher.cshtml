@@ -29,12 +29,12 @@
                         <input id="MiddleNameInp" type="text" value="@(Model.MiddleName ??="")" class="form-control">
                     </div>
                 </div>
-                <div class="col-lg-5">
+                @* <div class="col-lg-5">
                     <div class="mb-3">
                         <label class="form-label">@Resource.Age</label>
                         <input id="AgeInp" onkeypress="if (isNaN(String.fromCharCode(event.keyCode))) return false;" max="80" type="number" value="@(Model.Age)" class="form-control disablecopypaste">
                     </div>
-                </div>
+                </div> *@
             </div>
         </div>
         <div class="modal-footer">
@@ -79,8 +79,6 @@
         Teacher["FirstName"] = $('#FirstNameInp').val();
         Teacher["MiddleName"] = $('#MiddleNameInp').val();
         Teacher["LastName"] = $('#LastNameInp').val();
-        Teacher["Age"] = $('#AgeInp').val();
-
 
         $.ajax({
             type: "POST",

@@ -1,4 +1,5 @@
 ﻿using Data.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TopSkillsWeb.Resources;
@@ -6,6 +7,7 @@ using TeacherModel = Core.Teacher;
 
 namespace TopSkillsWeb.Controllers.Teacher
 {
+    [Authorize]
     public class TeacherController : Controller
     {
         /// <summary>

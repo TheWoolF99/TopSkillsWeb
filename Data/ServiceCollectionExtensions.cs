@@ -3,6 +3,7 @@ using Core;
 using Core.Account;
 using Data.Repository;
 using Data.Services;
+using Interfaces.Abonement;
 using Interfaces.Attendance;
 using Interfaces.Course;
 using Interfaces.Group;
@@ -41,6 +42,7 @@ namespace Data
             services.AddSingleton<ITeacher, TeacherRepository>();
             services.AddSingleton<IAttendance, AttendanceRepository>();
             services.AddSingleton<ILoggerRep, LoggerRepository>();
+            services.AddSingleton<IAbonement, AbonementRepository>();
             #endregion
 
             return services;

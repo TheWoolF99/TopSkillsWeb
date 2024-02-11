@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Abonement;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,6 @@ namespace Interfaces.Student
         Task AddStudentAsync(Core.Student student);
         Task UpdateStudentAsync(Core.Student student);
         void UpdateRange(List<Core.Student> student);
+        
     }
 }

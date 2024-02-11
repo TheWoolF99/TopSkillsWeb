@@ -5,10 +5,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using UAParser;
+//using UAParser;
 
 namespace TopSkillsWeb.Controllers.Account
 {
+    
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -43,10 +44,10 @@ namespace TopSkillsWeb.Controllers.Account
 
                     await _signInManager.SignInAsync(user, false);
                     
-                    //запишем в лог
-                    var UserAgentParse = Parser.GetDefault().Parse(HttpContext.Request.Headers.UserAgent).UA;
+                    ////запишем в лог
+                    //var UserAgentParse = Parser.GetDefault().Parse(HttpContext.Request.Headers.UserAgent).UA;
 
-                    _log.AddLog(new() { });
+                    //_log.AddLog(new() { });
 
                     return RedirectToAction("Index", "Home");
                 }

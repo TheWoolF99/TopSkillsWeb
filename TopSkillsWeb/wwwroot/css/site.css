@@ -134,10 +134,10 @@ a{
         border-top-width: 0px !important;
     }
 
-::-webkit-scrollbar {
+/*::-webkit-scrollbar {
     width: 5px;
     height: 5px;
-}
+}*/
 
 
 .clr-field button {
@@ -177,3 +177,8 @@ ul.contextMenu, li.dropdown-item, .dropdown-item {
         list-style-type: none;
     }
 
+
+
+.AbenementTBody td:first-child{
+    text-indent: 10%;
+}

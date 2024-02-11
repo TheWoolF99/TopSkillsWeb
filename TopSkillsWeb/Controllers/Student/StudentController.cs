@@ -1,11 +1,14 @@
 ﻿using Core;
+using Core.Abonement;
 using Data.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TopSkillsWeb.Resources;
 using StudentModel = Core.Student;
 
 namespace TopSkillsWeb.Controllers.Student
 {
+    [Authorize]
     public class StudentController : Controller
     {
         /// <summary>
@@ -16,10 +19,12 @@ namespace TopSkillsWeb.Controllers.Student
         /// Сервис для работы с преподавателями
         /// </summary>
         private readonly StudentService _student;
-        public StudentController(StudentService _sS, TeacherService _tS)
+        private readonly AbonementService _abonement;
+        public StudentController(StudentService _sS, TeacherService _tS, AbonementService abonement)
         {
             this._student = _sS;
             this._teacher = _tS;
+            this._abonement = abonement;
         }
 
         public async Task<IActionResult> Index()
@@ -45,13 +50,16 @@ namespace TopSkillsWeb.Controllers.Student
             if (add)
             {
                 await _student.AddStudentAsync(Student);
+                
             }
             else
             {
                 await _student.UpdateStudentAsync(Student);
+
             }
             return RedirectToAction("ShowModalSuccess", "Home", new { message = add? Resource.StudentAddDone : Resource.StudentEditDone });
         }
+
 
         public async Task<IActionResult> OnUpdateTableRows()
         {

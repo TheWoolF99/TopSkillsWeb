@@ -1,4 +1,5 @@
 ﻿using Core;
+using Core.Abonement;
 using Interfaces.Photo;
 using Interfaces.Student;
 using System;
@@ -39,6 +40,8 @@ namespace Data.Services
         {
             _student.UpdateRange(student);
         }
+
+        
 
     }
 }

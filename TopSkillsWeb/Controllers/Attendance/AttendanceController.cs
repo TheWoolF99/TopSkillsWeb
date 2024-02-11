@@ -5,9 +5,11 @@ using Data.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TopSkillsWeb.Resources;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TopSkillsWeb.Controllers.Attendance
 {
+    [Authorize]
     public class AttendanceController : Controller
     {
         /// <summary>
@@ -41,7 +43,9 @@ namespace TopSkillsWeb.Controllers.Attendance
 
         public async Task<IActionResult> CreateNewAttendance(AttendanceModel model)
         {
+
             var AddDone = await _aS.OnAddAttendanceByDateAndGroupId(model);
+
             return new EmptyResult();
         }
 
@@ -49,16 +53,7 @@ namespace TopSkillsWeb.Controllers.Attendance
 
         public async Task<JsonResult> GetCalendarData(string CurrentYear, string CurrentMounth)
         {
-            //List<AttendanceModel> lst = new();
-            //var DateStart = DateTime.Parse($"{CurrentYear}.{CurrentMounth}.01");
-
-            //for (int i = 0; i < 31; i++)
-            //{
-            //    for (int j = 0; j < new Random().Next(5); j++)
-            //    {
-            //        lst.Add(new() { DateVisiting = DateStart.AddDays(i), Group = new() { Name = "Группа " + i, Color = System.String.Format("#{0:X6}", new Random().Next(0x1000000)) } });
-            //    }
-            //}
+            
             var DateStart = DateTime.Parse($"{CurrentYear}.{CurrentMounth}.01");
             var DateEnd = DateStart.AddMonths(1).AddDays(5);
 
@@ -68,7 +63,7 @@ namespace TopSkillsWeb.Controllers.Attendance
                 lst = lst.DistinctBy(x => new { x.Group, x.DateVisiting}).ToList();
             }
 
-            var serialize = JsonConvert.SerializeObject(lst, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
+            var serialize = JsonConvert.SerializeObject(lst, new JsonSerializerSettings() { MaxDepth= Int32.MaxValue, ReferenceLoopHandling = ReferenceLoopHandling.Ignore});
             return new JsonResult(serialize);
         }
 

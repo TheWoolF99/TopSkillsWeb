@@ -1,5 +1,12 @@
 ﻿<link rel="stylesheet" href="~/css/CalendarTask.css" />
 <div class="calendar-wrapper">
+    <span class="loadingCalendar">
+        <div class="SpinnerTextContainer">
+            <div class="spinner-border spinner-border-sm text-secondary" role="status"></div>
+            <span>@Resource.LoadingCalendar</span>
+        </div>
+        
+    </span>
     <div class="Btn-PN">
     </div>
     <div id="divCal"></div>
@@ -238,7 +245,7 @@
     function UpdateCalendarData() {
         let year = c.getCurrentYear();
         let mounth = c.getCurrentMonth();
-
+        $('.loadingCalendar').show();
         $.get('@Url.Action("GetCalendarData", "Attendance")', { CurrentYear: year, CurrentMounth: (mounth+1) }, function (data) {
             if (typeof data === 'string') {
                 data = JSON.parse(data);
@@ -266,6 +273,7 @@
             $('#TaskLst-' + (mounth+1) + '-' + day).append(html);
         })
         console.log(data);
+        $('.loadingCalendar').hide();
     }
 
     function OnGetModalAddAttendance(date){

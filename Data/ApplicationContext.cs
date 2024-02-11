@@ -1,4 +1,5 @@
 ﻿using Core;
+using Core.Abonement;
 using Core.Account;
 using Core.Logger;
 using Microsoft.AspNetCore.Http;
@@ -40,6 +41,10 @@ namespace Data
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Attendance> Attendance { get; set; }
         public DbSet<LoggerItem> Logger { get; set; }
+        public DbSet<Abonement> Abonements { get; set; }
+
+        public DbSet<GlobalOptions> GlobalOptions { get; set; }
+
         //Логирование
         public DbSet<AuditEntry> AuditEntries { get; set; }
         public DbSet<AuditEntryProperty> AuditEntryProperties { get; set; }
@@ -113,11 +118,9 @@ namespace Data
             //    .HasForeignKey(sc => sc.GroupId);
 
 
-            //modelBuilder.Entity<Attendance>()
-            //    .HasMany(s => s.groupStudents)
-            //    .WithMany(s => s.attendances);
-                
-
+            modelBuilder.Entity<Abonement>()
+                .HasOne(s => s.Student)
+                .WithOne(s => s.Abonement);
             modelBuilder.Entity<Course>().Property(b => b.DateCreate)
             .HasDefaultValueSql("getdate()");
             modelBuilder.Entity<Group>().Property(b => b.DateCreate)
@@ -128,7 +131,6 @@ namespace Data
             .HasDefaultValueSql("getdate()");
             modelBuilder.Entity<Attendance>().Property(b => b.DateCreate)
             .HasDefaultValueSql("getdate()");
-
         }
 
 

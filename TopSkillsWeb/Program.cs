@@ -10,11 +10,13 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using Core.Account;
 using Data.Services;
+using Newtonsoft;
+using Newtonsoft.Json;
 
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddNewtonsoftJson(o => { o.SerializerSettings.MaxDepth = Int32.MaxValue; o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; });
 
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 string ConnString = "production";
@@ -74,6 +76,7 @@ builder.Services.AddSingleton<TeacherService>();
 builder.Services.AddSingleton<StudentService>();
 builder.Services.AddSingleton<AttendanceService>();
 builder.Services.AddSingleton<LoggerService>();
+builder.Services.AddSingleton<AbonementService>();
 #endregion
 
 var app = builder.Build();

@@ -28,7 +28,7 @@ namespace Data.Repository
         public async Task<bool> OnAddAttendanceByDateAndGroupId(Attendance attendance)
         {
             var db = _context.Create(typeof(AttendanceRepository));
-            var Group = db.Groups.Include(s=>s.Students).Where(x => x.GroupId == attendance.Group.GroupId).FirstOrDefault();
+            var Group = db.Groups.Include(s=>s.Students).ThenInclude(a=>a.Abonement).Where(x => x.GroupId == attendance.Group.GroupId).FirstOrDefault();
             List<Attendance> attendances = new();
             foreach (var item in Group.Students)
             {
@@ -39,6 +39,7 @@ namespace Data.Repository
                     Student = item
                 });
             }
+
             try
             {
                 if(db.Attendance.Where(x=>x.Group == Group && x.DateVisiting == attendance.DateVisiting).Count() == 0)
@@ -63,10 +64,17 @@ namespace Data.Repository
         public async Task<IEnumerable<Attendance>> GetAttendancesByDateRange(DateTime start, DateTime end)
         {
             var db = _context.Create(typeof(AttendanceRepository));
-            return await db.Attendance
-                .Include(g => g.Group).Include(s => s.Student).Where(x => x.DateVisiting >= start & x.DateVisiting <= end).ToListAsync();
-                //.DistinctBy(x => x.Group)
-                //.AsEnumerable();
+
+            var Atts = await db.Attendance
+                .Include(g => g.Group).Where(x => x.DateVisiting >= start & x.DateVisiting <= end)
+                .Select(x => new Attendance{
+                    AttendanceId = x.AttendanceId,
+                    DateClose = x.DateClose,
+                    DateVisiting = x.DateVisiting,
+                    Group = new Group() { GroupId = x.Group.GroupId, Color = x.Group.Color, Name = x.Group.Name }
+                })
+                .ToListAsync();
+            return Atts;
         }
 
         public async Task<IEnumerable<Attendance>> GetAttendancesByDateRange(DateTime date)
@@ -74,8 +82,6 @@ namespace Data.Repository
             var db = _context.Create(typeof(AttendanceRepository));
             return await db.Attendance
                 .Include(g => g.Group).Include(s => s.Student).Where(x => x.DateVisiting.Date == date.Date).ToListAsync();
-            //.DistinctBy(x => x.Group)
-            //.AsEnumerable();
         }
 
         public async Task OnStartAttendance(List<Attendance> attendances)
@@ -87,10 +93,18 @@ namespace Data.Repository
             {
                 x.DateClose = DateTime.Now;
                 var attendanceNew = attendances.Where(a => a.AttendanceId == x.AttendanceId).FirstOrDefault();
+                ///вычтем занятие из абонемента
+                if (attendanceNew!=null && attendanceNew.IsPresent==1)
+                {
+                    
+                }
                 x.IsPresent = attendanceNew != null ? attendanceNew.IsPresent : 0;
             });
             await db.SaveChangesAsync();
         }
+
+
+
 
 
     }

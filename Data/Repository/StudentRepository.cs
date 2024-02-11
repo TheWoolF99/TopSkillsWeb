@@ -1,4 +1,5 @@
 ﻿using Core;
+using Core.Abonement;
 using Interfaces.Student;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -28,7 +29,7 @@ namespace Data.Repository
         public async Task<Student> GetStudentAsync(int id)
         {
             var db = _context.Create(typeof(StudentRepository));
-            return await db.Students.Include(x => x.Groups).SingleAsync(x => x.StudentId == id);
+            return await db.Students.Include(x => x.Groups).Include(x=>x.Abonement).SingleAsync(x => x.StudentId == id);
         }
 
 
@@ -59,7 +60,6 @@ namespace Data.Repository
             db.Students.UpdateRange(student);
             db.SaveChanges();
         }
-        
 
     }
 }

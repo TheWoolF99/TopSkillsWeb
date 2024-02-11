@@ -1,4 +1,5 @@
 ﻿using Data.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Org.BouncyCastle.Pqc.Crypto.Lms;
@@ -7,6 +8,7 @@ using CourseModel = Core.Course;
 
 namespace TopSkillsWeb.Controllers.Course
 {
+    [Authorize]
     public class CourseController : Controller
     {
         /// <summary>

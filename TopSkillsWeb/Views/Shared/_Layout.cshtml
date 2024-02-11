@@ -205,6 +205,7 @@
     <script src="~/lib/apexcharts/dist/apexcharts.min.js" asp-append-version="true"></script>
     <script src="~/js/LocaleChart.js" asp-append-version="true"></script>
     <script src="~/lib/coloris/coloris.min.js"></script>
+    <script src="~/lib/jquery-maskedinput/jquery.maskedinput.min.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
@@ -249,6 +250,17 @@
         });
 
     });
+
+    function containsTextOrNumbers(inputString) {
+        if (inputString && inputString.trim() !== "") {
+            return true; // строка не пустая
+        } else {
+            return false; // строка пустая
+        }
+        // const regex = /^[a-zA-Z0-9\s]*$/; // регулярное выражение, которое проверяет наличие текста или цифр
+        // return regex.test(inputString);
+    }
+
 
     $("html").click(function () {
         $("#contextMenu").css({

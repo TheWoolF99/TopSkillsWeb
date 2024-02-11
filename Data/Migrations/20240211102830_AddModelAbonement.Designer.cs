@@ -4,6 +4,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20240211102830_AddModelAbonement")]
+    partial class AddModelAbonement
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -206,29 +209,6 @@ namespace Data.Migrations
                     b.ToTable("Courses");
                 });
 
-            modelBuilder.Entity("Core.GlobalOptions", b =>
-                {
-                    b.Property<int>("OptionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OptionId"));
-
-                    b.Property<string>("OptionName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OptionType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OptionValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("OptionId");
-
-                    b.ToTable("GlobalOptions");
-                });
-
             modelBuilder.Entity("Core.Group", b =>
                 {
                     b.Property<int>("GroupId")
@@ -334,9 +314,11 @@ namespace Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ParentFIO")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ParentPhoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("StudentId");
@@ -762,7 +744,8 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Core.Student", b =>
                 {
-                    b.Navigation("Abonement");
+                    b.Navigation("Abonement")
+                        .IsRequired();
 
                     b.Navigation("Attendances");
 

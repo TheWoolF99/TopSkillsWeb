@@ -61,6 +61,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Абонемент.
+        /// </summary>
+        public static string Abonement {
+            get {
+                return ResourceManager.GetString("Abonement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Обратитесь к администратору для доступа в данный модуль приложения..
         /// </summary>
         public static string AccessDenideMessage {
@@ -273,6 +282,15 @@ namespace TopSkillsWeb.Resources {
         public static string CreateTeacher {
             get {
                 return ResourceManager.GetString("CreateTeacher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Дата абонемента.
+        /// </summary>
+        public static string DateAbonementStart {
+            get {
+                return ResourceManager.GetString("DateAbonementStart", resourceCulture);
             }
         }
         
@@ -529,6 +547,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Загрузка календаря.
+        /// </summary>
+        public static string LoadingCalendar {
+            get {
+                return ResourceManager.GetString("LoadingCalendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Вход.
         /// </summary>
         public static string Login {
@@ -624,6 +651,24 @@ namespace TopSkillsWeb.Resources {
         public static string OopsAccessDenide {
             get {
                 return ResourceManager.GetString("OopsAccessDenide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ФИО Родителя.
+        /// </summary>
+        public static string ParentFIO {
+            get {
+                return ResourceManager.GetString("ParentFIO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Телефон Родителя.
+        /// </summary>
+        public static string ParentNumberPhone {
+            get {
+                return ResourceManager.GetString("ParentNumberPhone", resourceCulture);
             }
         }
         
@@ -867,6 +912,15 @@ namespace TopSkillsWeb.Resources {
         public static string UserName {
             get {
                 return ResourceManager.GetString("UserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Посещения.
+        /// </summary>
+        public static string Visits {
+            get {
+                return ResourceManager.GetString("Visits", resourceCulture);
             }
         }
         
