@@ -73,6 +73,7 @@ namespace Data.Repository
                     DateVisiting = x.DateVisiting,
                     Group = new Group() { GroupId = x.Group.GroupId, Color = x.Group.Color, Name = x.Group.Name }
                 })
+                .OrderBy(x => x.DateClose)
                 .ToListAsync();
             return Atts;
         }

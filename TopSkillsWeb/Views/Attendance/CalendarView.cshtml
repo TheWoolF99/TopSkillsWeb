@@ -267,7 +267,8 @@
             console.log(day, 'background: #222; color: #bada55');
             let color = e.Group.Color;
             color ??= getRandomColor();
-            let html = '<div class="taskElement" oncontextmenu="OnGetContextMenuTask(' + e.AttendanceId + ', event); return false;"   onclick="OnGetModalEditTask(' + e.AttendanceId + ')" style="background-color: ' + color + '70">';
+            let passed = e.DateClose != null ? "passed" : "";
+            let html = '<div class="taskElement ' + passed + '" oncontextmenu="OnGetContextMenuTask(' + e.AttendanceId + ', event); return false;"   onclick="OnGetModalEditTask(' + e.AttendanceId + ')" style="background-color: ' + color + '70">';
             html += '<span class="taskName">' + e.Group.Name + '</span>'
             html +='</div>'
             $('#TaskLst-' + (mounth+1) + '-' + day).append(html);

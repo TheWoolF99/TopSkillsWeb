@@ -38,15 +38,27 @@
                     <div id="chart-revenue-bg" class="chart-sm"></div>
                 </div>
             </div>
-            <div class="col-12">
-                <div class="card" style="height: 28rem">
-                    <div class="card-body card-body-scrollable card-body-scrollable-shadow">
-                        <div id="Attendance" class="divide-y">
-                            
+            <div class="col-12 pr-10">
+                <div class="col-6">
+                    <div class="card" style="height: 28rem">
+                        <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+                            <span class="card-title">@Resource.ClassesToday</span>
+                            <div id="Attendance" class="divide-y">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 pl-10">
+                    <div class="card" style="height: 28rem">
+                        <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+                            <span class="card-title">@Resource.AbonementLeft</span>
+                            <div id="ListExpiredStudent" class="divide-y">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
@@ -114,13 +126,20 @@
                 show: false,
             },
         })).render();
-        
+
         OnGetAttendanceToday();
+        OnGetListExpiredStudent();
     });
 
-    function OnGetAttendanceToday(){
+    function OnGetAttendanceToday() {
         $.get('@Url.Action("GetListAttendance", "Attendance")', null, function (data) {
             $('#Attendance').html(data);
+        });
+    }
+
+    function OnGetListExpiredStudent() {
+        $.get('@Url.Action("GetListExpiredStudent", "Attendance")', null, function (data) {
+            $('#ListExpiredStudent').html(data);
         });
     }
 

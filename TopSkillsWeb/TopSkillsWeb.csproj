@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <Folder Include="Views\Shared\Components\CultureSwitcher\" />
+    <Folder Include="Views\Accesses\" />
     <Folder Include="wwwroot\css\Новая папка\" />
   </ItemGroup>
 

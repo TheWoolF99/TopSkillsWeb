@@ -1,0 +1,60 @@
+﻿ul.ListExpiredAbonement {
+    margin:0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    list-style-type: none;
+}
+
+.ExpiredAbonementAlert {
+    width: max-content;
+    color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+    .ExpiredAbonementAlert > i {
+        scale: 1.2;
+    }
+
+.ExpiredAbonementGroup {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr) );
+    justify-items: stretch;
+    align-items: center;
+    font-size: 15px;
+}
+
+
+    .ExpiredAbonementItem {
+        padding: 10px 0 10px 0;
+    }
+    .ExpiredAbonementItem{
+        border-bottom: var(--tblr-border-width) var(--tblr-border-style) var(--tblr-border-color-translucent);
+    }
+        .ExpiredAbonementItem:last-child{
+            border-bottom: none
+        }
+
+.ExpiredAbonementRefresh {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+}
+
+.card-body:has(#ListExpiredStudent) {
+    overflow-y: hidden;
+}
+
+#ListExpiredStudent .container-xl {
+    padding: 0;
+    overflow-y: auto;
+    max-height: 30vh;
+    height: 28.5vh;
+}
+
+.btnExpiredContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-right: 5px;
+}

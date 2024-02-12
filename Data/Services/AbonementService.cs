@@ -1,4 +1,5 @@
-﻿using Core.Abonement;
+﻿using Core;
+using Core.Abonement;
 using Interfaces.Abonement;
 using Interfaces.Student;
 using System;
@@ -23,6 +24,11 @@ namespace Data.Services
         {
             return await _abonement.GetAbonementStudent(StudentId);
         }
+        public async Task<IEnumerable<Abonement>> GetAbonementGroupStudents(int groupId)
+        {
+            return await _abonement.GetAbonementGroupStudents(groupId);
+        }
+
         public async Task AddNewAbonement(Abonement abonement)
         {
             await _abonement.AddNewAbonement(abonement);

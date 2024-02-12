@@ -376,15 +376,22 @@ td ::-webkit-scrollbar-thumb {
 }
 
     .taskElement:hover {
-        opacity: 0.7;
+        opacity: 0.8;
         /*background-color: #9d9d9d38;*/
     }
 
-.taskName {
-    display: inline-block;
-    line-height: 22px;
-    white-space: break-spaces;
-}
+    .taskElement.passed {
+        opacity: 0.5;
+    }
+
+    .taskName {
+        display: inline-block;
+        line-height: 22px;
+        white-space: break-spaces;
+    }
+
+
+
 
 /*.taskName:hover {
         animation: trey 5s infinite;
@@ -535,3 +542,10 @@ td ::-webkit-scrollbar-thumb {
             height: 32px;
             width: 32px;
         }
+
+
+.form-check.form-switch {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}

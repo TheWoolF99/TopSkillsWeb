@@ -50,9 +50,9 @@
                             {
                                 @foreach (var item in StudentsList)
                                 {
-                                    <tr @item.Abonement.RemainingVisits>
+                                    <tr @item.Abonement?.RemainingVisits>
                                         <td>@item.ShortName</td>
-                                        <td id="VisitsLeft-@item.StudentId">@item.Abonement.RemainingVisits</td>
+                                        <td id="VisitsLeft-@item.StudentId">@item.Abonement?.RemainingVisits</td>
                                         <td>
                                             <input id="@item.StudentId" onchange="onChangeStudentCheckbox(event)" @(Convert.ToBoolean(StudentsIsGroup?.Contains(item.StudentId)) ? "checked" : "") class="form-check-input StudentCheckbox" type="checkbox">
                                         </td>

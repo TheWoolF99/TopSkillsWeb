@@ -10,6 +10,7 @@ namespace Interfaces.Abonement
     public interface IAbonement
     {
         Task<IEnumerable<AbonementModel>> GetAllAbonements();
+        Task<IEnumerable<AbonementModel>> GetAbonementGroupStudents(int groupId);
         Task<AbonementModel?> GetAbonementStudent(int StudentId);
         Task AddNewAbonement(AbonementModel abonement);
         Task UpdateAbonement(AbonementModel abonement);

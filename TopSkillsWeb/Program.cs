@@ -12,6 +12,7 @@ using Core.Account;
 using Data.Services;
 using Newtonsoft;
 using Newtonsoft.Json;
+using Data.WebUser;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -69,14 +70,17 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 
 
 #region Servises
-builder.Services.AddSingleton<PhotoService>();
-builder.Services.AddSingleton<GroupService>();
-builder.Services.AddSingleton<CourseService>();
-builder.Services.AddSingleton<TeacherService>();
-builder.Services.AddSingleton<StudentService>();
-builder.Services.AddSingleton<AttendanceService>();
-builder.Services.AddSingleton<LoggerService>();
-builder.Services.AddSingleton<AbonementService>();
+builder.Services.AddScoped<PhotoService>();
+builder.Services.AddScoped<GroupService>();
+builder.Services.AddScoped<CourseService>();
+builder.Services.AddScoped<TeacherService>();
+builder.Services.AddScoped<StudentService>();
+builder.Services.AddScoped<AttendanceService>();
+builder.Services.AddScoped<LoggerService>();
+builder.Services.AddScoped<AbonementService>();
+builder.Services.AddScoped<GlobalOptionsService>();
+builder.Services.AddScoped<WebUserService>();
+builder.Services.AddScoped<AccessesService>();
 #endregion
 
 var app = builder.Build();

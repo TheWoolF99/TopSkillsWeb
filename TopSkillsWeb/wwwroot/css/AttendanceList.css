@@ -1,10 +1,11 @@
 ﻿.AttendanceUL, .AttendanceItem {
+    margin: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
     list-style-type: none;
-    margin-bottom: 0;
-    padding-right: 1.5rem;
 }
 li.AttendanceItem {
-    padding: 5px;
+    padding: 10px 0 10px 0;
 }
 
 li.AttendanceItem:not(:first-child) {
@@ -13,8 +14,10 @@ li.AttendanceItem:not(:first-child) {
 
 .AttendanceNameGroup, .AttendanceItem {
     display: grid;
-    grid-template-columns: repeat(2, 50%);
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr) );
+    justify-items: stretch;
     align-items: center;
+    font-size: 15px;
 }
     .AttendanceNameGroup{
         justify-content: space-between;
@@ -22,6 +25,10 @@ li.AttendanceItem:not(:first-child) {
 
 .AttendanceItem .BtnContainer {
     text-align: end;
+}
+
+.BtnContainer .btn {
+    padding:8px;
 }
 
 input.StudentCheckbox{
@@ -44,3 +51,15 @@ input.StudentCheckbox:checked + label {
     min-width: 32px;
     height: 32px;
 }
+
+.card-body:has(#Attendance) {
+    overflow-y: hidden;
+}
+
+#Attendance .container-xl {
+    padding: 0;
+    overflow-y: auto;
+    max-height: 30vh;
+    height: 28.5vh;
+}
+

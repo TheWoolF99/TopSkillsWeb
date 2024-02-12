@@ -15,10 +15,15 @@
                     @Html.DropDownList("GroupSelectList", (SelectList)ViewBag.GroupList, htmlAttributes: new { @id = "GroupSelectList", @class = "form-select" })
                 </div>
             </div>
+            <div id="ListExpiredStudent" class="mb-3"></div>
+            <label class="form-check form-switch AgreeTextAlert" style="display: none;">
+                <input class="form-check-input" onchange="onChangeAgreeInput(event)" type="checkbox">
+                <span class="form-check-label">@Resource.IreadItContinue</span>
+            </label>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn me-auto" onclick="CloseModal()">@Resource.Cancel</button>
-            <button type="button" class="btn btn-primary" onclick="OnSavePlanAttendance()">
+            <button type="button" id="SavePlanBtn" class="btn btn-primary" onclick="OnSavePlanAttendance()">
                 @if (Model?.GroupId != 0)
                 {
                     @Resource.Save
@@ -46,7 +51,46 @@
             allowClear: true,
             width: "100%"
         });
+        $('#GroupSelectList').val(null).trigger('change');
+
+        $('#GroupSelectList').on('change', GetExpiredAbonementStudents);
     });
+
+    function GetExpiredAbonementStudents() 
+    {
+        let GroupId = $('#GroupSelectList').select2('val');
+        if(GroupId == null)
+            return false;
+        else
+        {
+            $.get('@Url.Action("GetListExpiredGroupStudent", "Attendance")', { groupId: GroupId }, function (data) {
+                if (data != null && data.length > 0) {
+                    $('#ListExpiredStudent').html(data);
+                    $('#SavePlanBtn').addClass('disabled');
+                    $('.AgreeTextAlert').show();
+                }
+                else
+                {
+                    $('#ListExpiredStudent').html('');
+                    $('#SavePlanBtn').removeClass('disabled');
+                    $('.AgreeTextAlert').hide();
+                }
+            });
+        }
+    }
+
+    function onChangeAgreeInput(e) 
+    { 
+        let CurrT = e.currentTarget;
+        if (CurrT.checked) 
+        {
+            $('#SavePlanBtn').removeClass('disabled');
+        }
+        else
+        {
+            $('#SavePlanBtn').addClass('disabled');
+        }
+    };
 
     function OnSavePlanAttendance() {
         let Attendance = {}

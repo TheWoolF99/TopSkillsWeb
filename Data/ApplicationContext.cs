@@ -1,12 +1,16 @@
 ﻿using Core;
 using Core.Abonement;
+using Core.Accesses;
 using Core.Account;
 using Core.Logger;
+using Data.Migrations;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Drawing;
+using System.Security;
 using Z.EntityFramework.Plus;
 
 
@@ -48,6 +52,15 @@ namespace Data
         //Логирование
         public DbSet<AuditEntry> AuditEntries { get; set; }
         public DbSet<AuditEntryProperty> AuditEntryProperties { get; set; }
+
+        #region Accesses
+        public DbSet<User> AspNetUsers { get; set; }
+        public DbSet<IdentityRole> AspNetRoles { get; set; }
+        public DbSet<UserPermissions> Permissions { get; set; }
+        public DbSet<AccessTypes> AccessTypes { get; set; }
+        public DbSet<RolePermissions> RolePermissions { get; set; }
+        #endregion
+
         //public DbSet<GroupStudent> GroupStudents { get; set; }
 
 
@@ -131,6 +144,17 @@ namespace Data
             .HasDefaultValueSql("getdate()");
             modelBuilder.Entity<Attendance>().Property(b => b.DateCreate)
             .HasDefaultValueSql("getdate()");
+
+
+            modelBuilder.Entity<AccessTypes>().HasData(
+                [
+                    new AccessTypes(1, "Полный доступ",     "All"), 
+                    new AccessTypes(2, "Просмотр",          "read"),
+                    new AccessTypes(3, "Добавление",        "create"),
+                    new AccessTypes(4, "Редактирование",    "edit"),
+                    new AccessTypes(5, "Удаление",          "delete") 
+                ]);
+
         }
 
 

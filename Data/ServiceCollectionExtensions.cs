@@ -3,6 +3,8 @@ using Core;
 using Core.Account;
 using Data.Repository;
 using Data.Services;
+using Data.WebUser;
+using Interfaces;
 using Interfaces.Abonement;
 using Interfaces.Attendance;
 using Interfaces.Course;
@@ -33,16 +35,19 @@ namespace Data
             services.AddScoped<Dictionary<Type, ApplicationContext>>();
 
             #region Синглтоны 
-            services.AddSingleton<DbContextFactory>();
-            services.AddSingleton<IRepository<User>, UserRepository>();
-            services.AddSingleton<IPhotoRepository, PhotoRepository>();
-            services.AddSingleton<IGroup, GroupRepository>();
-            services.AddSingleton<ICourse, CourseRepository>();
-            services.AddSingleton<IStudent, StudentRepository>();
-            services.AddSingleton<ITeacher, TeacherRepository>();
-            services.AddSingleton<IAttendance, AttendanceRepository>();
-            services.AddSingleton<ILoggerRep, LoggerRepository>();
-            services.AddSingleton<IAbonement, AbonementRepository>();
+            services.AddScoped<DbContextFactory>();
+            services.AddScoped<IRepository<User>, UserRepository>();
+            services.AddScoped<IPhotoRepository, PhotoRepository>();
+            services.AddScoped<IGroup, GroupRepository>();
+            services.AddScoped<ICourse, CourseRepository>();
+            services.AddScoped<IStudent, StudentRepository>();
+            services.AddScoped<ITeacher, TeacherRepository>();
+            services.AddScoped<IAttendance, AttendanceRepository>();
+            services.AddScoped<ILoggerRep, LoggerRepository>();
+            services.AddScoped<IAbonement, AbonementRepository>();
+            services.AddScoped<IGlobalOptions, GlobalOptionsRepository>();
+            services.AddScoped<IWebUser, WebUserRepository>();
+            services.AddScoped<IAccessesRepository, AccessesRepository>();
             #endregion
 
             return services;

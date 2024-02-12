@@ -25,7 +25,7 @@ namespace Data.Repository
         {
             var db = _context.Create(typeof(GroupRepository));
 
-            var ls = db.Groups.Include(s=>s.Students)
+            var ls = db.Groups.Include(s=>s.Students).ThenInclude(a=>a.Abonement)
                 .Include(c=>c.Cource)
                 .Include(t=>t.Teacher).ToList();
             //Выбираем со связью
@@ -36,7 +36,7 @@ namespace Data.Repository
         {
             var db = _context.Create(typeof(GroupRepository));
             var AttendanceToday = db.Attendance.Where(x=>x.DateVisiting == date).Include(x=>x.Group).Select(x=>x.Group.GroupId).ToList()?.Distinct();
-            var ls = db.Groups.Include(s => s.Students)
+            var ls = db.Groups.Include(s => s.Students).ThenInclude(a => a.Abonement)
                 .Include(c => c.Cource)
                 .Include(t => t.Teacher).Where(x => !AttendanceToday.Contains(x.GroupId)).ToList();
             return ls;
@@ -45,7 +45,7 @@ namespace Data.Repository
         public async Task<Group> GetGroupAsync(int id)
         {
             var db = _context.Create(typeof(GroupRepository));
-            var lst = await db.Groups.Include(s => s.Students)
+            var lst = await db.Groups.Include(s => s.Students).ThenInclude(a => a.Abonement)
                 .Include(c => c.Cource)
                 .Include(x=>x.Teacher).SingleAsync(x => x.GroupId == id);
             return lst;

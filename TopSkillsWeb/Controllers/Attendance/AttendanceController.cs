@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using TopSkillsWeb.Resources;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
+using Data.WebUser;
 
 namespace TopSkillsWeb.Controllers.Attendance
 {
@@ -17,11 +18,16 @@ namespace TopSkillsWeb.Controllers.Attendance
         /// </summary>
         private readonly GroupService _gS;
         private readonly AttendanceService _aS;
+        private readonly AbonementService _abonement;
+        private readonly WebUserService _webUser;
 
-        public AttendanceController(GroupService groupService, AttendanceService attendanceService)
+        public AttendanceController(GroupService groupService, AttendanceService attendanceService, AbonementService abonement, WebUserService webUserService )
         {
             this._gS = groupService;
             this._aS = attendanceService;
+            this._abonement = abonement;
+            _webUser = webUserService;
+
         }
 
         public IActionResult Index()
@@ -60,7 +66,7 @@ namespace TopSkillsWeb.Controllers.Attendance
             var lst = await _aS.GetAttendancesByDateRange(DateStart.AddDays(-5), DateEnd);
             if (lst.Count() > 0)
             {
-                lst = lst.DistinctBy(x => new { x.Group, x.DateVisiting}).ToList();
+                lst = lst.DistinctBy(x => new { x.Group.GroupId, x.DateVisiting}).ToList();
             }
 
             var serialize = JsonConvert.SerializeObject(lst, new JsonSerializerSettings() { MaxDepth= Int32.MaxValue, ReferenceLoopHandling = ReferenceLoopHandling.Ignore});
@@ -80,7 +86,7 @@ namespace TopSkillsWeb.Controllers.Attendance
             date ??= DateTime.Today;
             var lst = await _aS.GetAttendancesByDateRange((DateTime)date);
             if (lst.Count() > 0)
-                lst = lst?.DistinctBy(x => new { x.Group, x.DateVisiting }).ToList();
+                lst = lst?.DistinctBy(x => new { x.Group.GroupId, x.DateVisiting }).ToList();
             return PartialView("AttendanceTable", lst);
         }
 
@@ -103,6 +109,24 @@ namespace TopSkillsWeb.Controllers.Attendance
             {
                 return RedirectToAction("ShowModalError", "Home", new { message = ex.Message });
             }
+        }
+
+        public async Task<IActionResult> GetListExpiredStudent()
+        {
+            ViewBag.UpdateAbonementAccess = await _webUser.HasAccess(User.Identity.Name,"edit","RefreshAbonement");
+            return PartialView("ListExpiredAbonement", (await _abonement.GetAllAbonements())?.Where(x => x.RemainingVisits <= 0).ToList());
+        }
+
+
+        public async Task<IActionResult> GetListExpiredGroupStudent(int groupId)
+        {
+            var StudentsAbonementExpired = (await _abonement.GetAbonementGroupStudents(groupId))?.Where(x => x.RemainingVisits <= 0).ToList();
+            
+            if(StudentsAbonementExpired.Count>0) 
+                return PartialView("ListExpiredAbonement", StudentsAbonementExpired); 
+            else
+                return new EmptyResult(); 
+
         }
 
 

@@ -120,6 +120,15 @@
   <data name="Abonement" xml:space="preserve">
     <value>Абонемент</value>
   </data>
+  <data name="AbonementIsOver" xml:space="preserve">
+    <value>Абонемент закончился!</value>
+  </data>
+  <data name="AbonementLeft" xml:space="preserve">
+    <value>Закончившиеся абонементы</value>
+  </data>
+  <data name="AbonementRefresh" xml:space="preserve">
+    <value>Обновить абонемент</value>
+  </data>
   <data name="AccessDenideMessage" xml:space="preserve">
     <value>Обратитесь к администратору для доступа в данный модуль приложения.</value>
   </data>
@@ -158,6 +167,9 @@
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Отменить</value>
+  </data>
+  <data name="ClassesToday" xml:space="preserve">
+    <value>Занятия на сегодня</value>
   </data>
   <data name="ConfrimPassword" xml:space="preserve">
     <value>Подтверждение пароля</value>
@@ -219,6 +231,12 @@
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="EmptyAbonement" xml:space="preserve">
+    <value>Абонементы отсутствуют</value>
+  </data>
+  <data name="EmptyAttendance" xml:space="preserve">
+    <value>Занятия отсутствуют</value>
+  </data>
   <data name="EmptyResult" xml:space="preserve">
     <value>Нет результатов</value>
   </data>
@@ -254,6 +272,9 @@
   </data>
   <data name="Home" xml:space="preserve">
     <value>Главная</value>
+  </data>
+  <data name="IreadItContinue" xml:space="preserve">
+    <value>Я ознакомился, продолжить</value>
   </data>
   <data name="IsGoodReason" xml:space="preserve">
     <value>Уважительная причина</value>
@@ -329,6 +350,9 @@
   </data>
   <data name="References" xml:space="preserve">
     <value>Справочники</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Обновить</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>Регистрация</value>

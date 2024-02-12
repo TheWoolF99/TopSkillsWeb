@@ -22,7 +22,7 @@ namespace Data.Repository
         public async Task<IEnumerable<Student>> GetAllStudentsAsync()
         {
             var db = _context.Create(typeof(StudentRepository));
-            return await db.Students.Include(x=>x.Groups).ToListAsync();
+            return await db.Students.Include(a=>a.Abonement).Include(x=>x.Groups).ToListAsync();
         }
 
 

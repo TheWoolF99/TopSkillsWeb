@@ -1,4 +1,5 @@
-﻿using Core.Account;
+﻿using Core;
+using Core.Account;
 using Data.Repository;
 using Data.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -16,13 +17,15 @@ namespace TopSkillsWeb.Controllers.Account
         private readonly SignInManager<User> _signInManager;
         private readonly PhotoService _photo;
         private readonly LoggerService _log;
+        private readonly GlobalOptionsService _options;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, PhotoService _photo, LoggerService log)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, PhotoService _photo, LoggerService log, GlobalOptionsService opts)
         {
             this._userManager = userManager;
             this._signInManager = signInManager;
             this._photo = _photo;
             this._log = log;
+            this._options = opts;
         }
         [HttpGet]
         public IActionResult Register()
@@ -119,6 +122,9 @@ namespace TopSkillsWeb.Controllers.Account
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+
+
 
         [Authorize]
         public async Task<IActionResult> AccountSettings()

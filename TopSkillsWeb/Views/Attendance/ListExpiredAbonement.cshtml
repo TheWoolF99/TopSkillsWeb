@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Core.Abonement.Abonement>
+@{
+    bool Update = ViewBag.UpdateAbonementAccess??=false;
+}
+<link rel="stylesheet" href="~/css/ListExpiredAbonement.css" />
+
+<div class="container-xl mt-3">
+    <div class="card">
+        <ul class="ListExpiredAbonement">
+            @if(Model.Count() > 0)
+            {
+                @foreach (var item in Model)
+                {
+                    <li class="ExpiredAbonementItem">
+                        <div class="ExpiredAbonementGroup">
+                            <span>@item.Student?.ShortName</span>
+                            <span>@item.StartDate</span>
+                            <div class="btnExpiredContainer">
+                                <span title="@Resource.AbonementIsOver" class="ExpiredAbonementAlert"><i class='bx bx-error-alt'></i></span>
+                                @if (Update)
+                                {
+                                    <span title="@Resource.AbonementRefresh" class="ExpiredAbonementRefresh btn btn-ghost-success"><i class='bx bx-refresh'></i> @Resource.Refresh</span>
+                                }
+                            </div>
+                            
+                        </div>
+                    </li>
+                }
+            }
+            else
+            {
+                <li class="ExpiredAbonementItem">
+                    <span>@Resource.EmptyAbonement</span>
+                </li>
+            }
+            
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // function OnStartAttendance(GroupId, date) {
+    //     $.get('@Url.Action("GetStartAttendance", "Attendance")', { GroupId: GroupId, Date: date }, function (data) {
+    //         $('#modal_body').html(data);
+    //         OpenModal();
+    //     });
+    // }
+
+</script>

@@ -70,6 +70,33 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Абонемент закончился!.
+        /// </summary>
+        public static string AbonementIsOver {
+            get {
+                return ResourceManager.GetString("AbonementIsOver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Закончившиеся абонементы.
+        /// </summary>
+        public static string AbonementLeft {
+            get {
+                return ResourceManager.GetString("AbonementLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Обновить абонемент.
+        /// </summary>
+        public static string AbonementRefresh {
+            get {
+                return ResourceManager.GetString("AbonementRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Обратитесь к администратору для доступа в данный модуль приложения..
         /// </summary>
         public static string AccessDenideMessage {
@@ -183,6 +210,15 @@ namespace TopSkillsWeb.Resources {
         public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Занятия на сегодня.
+        /// </summary>
+        public static string ClassesToday {
+            get {
+                return ResourceManager.GetString("ClassesToday", resourceCulture);
             }
         }
         
@@ -367,6 +403,24 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Абонементы отсутствуют.
+        /// </summary>
+        public static string EmptyAbonement {
+            get {
+                return ResourceManager.GetString("EmptyAbonement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Занятия отсутствуют.
+        /// </summary>
+        public static string EmptyAttendance {
+            get {
+                return ResourceManager.GetString("EmptyAttendance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Нет результатов.
         /// </summary>
         public static string EmptyResult {
@@ -471,6 +525,15 @@ namespace TopSkillsWeb.Resources {
         public static string Home {
             get {
                 return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Я ознакомился, продолжить.
+        /// </summary>
+        public static string IreadItContinue {
+            get {
+                return ResourceManager.GetString("IreadItContinue", resourceCulture);
             }
         }
         
@@ -696,6 +759,15 @@ namespace TopSkillsWeb.Resources {
         public static string References {
             get {
                 return ResourceManager.GetString("References", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Обновить.
+        /// </summary>
+        public static string Refresh {
+            get {
+                return ResourceManager.GetString("Refresh", resourceCulture);
             }
         }
         
