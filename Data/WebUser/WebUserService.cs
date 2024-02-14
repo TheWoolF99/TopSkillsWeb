@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Account;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,5 +31,11 @@ namespace Data.WebUser
         {
             return await webUser.HasExtraAccess(UserName);
         }
+
+        public async Task<IEnumerable<UserRolePermissions>> GetUserRolesPermissions(string UserName)
+        {
+            return await webUser.GetUserRolesPermissions(UserName);
+        }
+
     }
 }

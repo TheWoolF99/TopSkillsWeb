@@ -1,0 +1,14 @@
+﻿li.PermissionElement {
+    list-style-type: circle;
+    
+}
+    li.PermissionElement > div {
+        display: grid;
+        grid-template-columns: repeat( auto-fit, minmax(150px, auto));
+        padding:8px;
+    }
+
+
+    li.PermissionElement:not(:first-child) {
+        border-top: var(--tblr-border-width) var(--tblr-border-style) var(--tblr-border-color-translucent) !important;
+    }

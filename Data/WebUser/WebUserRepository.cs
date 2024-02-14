@@ -1,6 +1,7 @@
 ﻿using Core.Accesses;
 using Core.Account;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,5 +80,29 @@ namespace Data.WebUser
             }
             return false;
         }
+
+
+        public async Task<IEnumerable<UserRolePermissions>> GetUserRolesPermissions(string UserName)
+        {
+            var dbContext = dbContextFactory.Create(typeof(WebUserRepository));
+
+            var query = from u in dbContext.AspNetUsers
+                        join ur in dbContext.AspNetUserRoles on u.Id equals ur.UserId into urGroup
+                        from ur in urGroup.DefaultIfEmpty()
+                        join r in dbContext.AspNetRoles on ur.RoleId equals r.Id into rGroup
+                        from r in rGroup.DefaultIfEmpty()
+                        join rp in dbContext.RolePermissions on  Convert.ToInt32(ur.RoleId)  equals rp.RoleId into rpGroup
+                        from rp in rpGroup.DefaultIfEmpty()
+                        join p in dbContext.Permissions on rp.PermisionId equals p.PermissionId into pGroup
+                        from p in pGroup.DefaultIfEmpty()
+                        join aty in dbContext.AccessTypes on rp.AccessTypeId equals aty.TypeId into atyGroup
+                        from aty in atyGroup.DefaultIfEmpty()
+                        where u.UserName == UserName
+                        select new UserRolePermissions { UserName= u.UserName, RoleName = r.Name, PermissionName = p.Description, AccessTypeName = aty.Name };
+
+            var list =  await query.ToListAsync();
+            return list;
+        }
+
     }
 }

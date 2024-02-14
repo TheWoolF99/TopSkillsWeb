@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Account;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,6 @@ namespace Data.WebUser
         public Task<string> GetUserGuid(string UserName);
         public Task<string> GetUserRoles(string UserName);
         public Task<bool> HasExtraAccess(string UserName);
+        public Task<IEnumerable<UserRolePermissions>> GetUserRolesPermissions(string UserName);
     }
 }

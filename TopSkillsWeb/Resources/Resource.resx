@@ -321,6 +321,9 @@
   <data name="Mon" xml:space="preserve">
     <value>Пн</value>
   </data>
+  <data name="MyRoles" xml:space="preserve">
+    <value>Мои роли</value>
+  </data>
   <data name="NameApp" xml:space="preserve">
     <value>TopSkillWeb</value>
   </data>
@@ -395,6 +398,9 @@
   </data>
   <data name="Sun" xml:space="preserve">
     <value>Вс</value>
+  </data>
+  <data name="Support" xml:space="preserve">
+    <value>Поддержка</value>
   </data>
   <data name="TakeMeHome" xml:space="preserve">
     <value>Отправьте меня домой</value>

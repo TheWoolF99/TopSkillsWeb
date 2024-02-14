@@ -31,7 +31,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 builder.Services.AddEfRepositories(builder.Configuration.GetConnectionString(ConnString));
-builder.Services.AddIdentity<User, IdentityRole>(opts =>
+builder.Services.AddIdentity<User, UserRole>(opts =>
 {
     opts.Password.RequiredLength = 4;   // минимальная длина
     opts.Password.RequireNonAlphanumeric = false;   // требуются ли не алфавитно-цифровые символы

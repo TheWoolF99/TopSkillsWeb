@@ -49,11 +49,11 @@
                         <div class="nav-item dropdown">
                             <vc:user-component />
                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                <a href="#" class="dropdown-item">Status</a>
+                                @* <a href="#" class="dropdown-item">Status</a>
                                 <a href="./profile.html" class="dropdown-item">Profile</a>
-                                <a href="#" class="dropdown-item">Feedback</a>
-                                <div class="dropdown-divider"></div>
-                                <vc:culture-switcher />
+                                <a href="#" class="dropdown-item">Feedback</a> 
+                                <div class="dropdown-divider"></div>*@
+                                <vc:culture-switcher class="mt-3" />
                                 <div class="dropdown-divider"></div>
                                 <a asp-action="AccountSettings" asp-controller="Account" class="dropdown-item">@Resource.Settings</a>
                                 <a href="./sign-in.html" class="dropdown-item">Logout</a>

@@ -16,7 +16,7 @@ using Z.EntityFramework.Plus;
 
 namespace Data
 {
-    public class ApplicationContext : IdentityDbContext<User>
+    public class ApplicationContext : IdentityDbContext<User, UserRole, string>
     {
         private readonly IHttpContextAccessor httpContextAccessor;
 
@@ -55,7 +55,9 @@ namespace Data
 
         #region Accesses
         public DbSet<User> AspNetUsers { get; set; }
-        public DbSet<IdentityRole> AspNetRoles { get; set; }
+        public DbSet<UserRole> AspNetRoles { get; set; }
+        public virtual DbSet<IdentityUserRole<string>> AspNetUserRoles { get; set; }
+
         public DbSet<UserPermissions> Permissions { get; set; }
         public DbSet<AccessTypes> AccessTypes { get; set; }
         public DbSet<RolePermissions> RolePermissions { get; set; }
@@ -130,7 +132,7 @@ namespace Data
             //    .WithMany(c => c.GroupStudents)
             //    .HasForeignKey(sc => sc.GroupId);
 
-
+            
             modelBuilder.Entity<Abonement>()
                 .HasOne(s => s.Student)
                 .WithOne(s => s.Abonement);
@@ -146,14 +148,14 @@ namespace Data
             .HasDefaultValueSql("getdate()");
 
 
-            modelBuilder.Entity<AccessTypes>().HasData(
-                [
-                    new AccessTypes(1, "Полный доступ",     "All"), 
-                    new AccessTypes(2, "Просмотр",          "read"),
-                    new AccessTypes(3, "Добавление",        "create"),
-                    new AccessTypes(4, "Редактирование",    "edit"),
-                    new AccessTypes(5, "Удаление",          "delete") 
-                ]);
+            //modelBuilder.Entity<AccessTypes>().HasData(
+            //    [
+            //        new AccessTypes(1, "Полный доступ",     "All"), 
+            //        new AccessTypes(2, "Просмотр",          "read"),
+            //        new AccessTypes(3, "Добавление",        "create"),
+            //        new AccessTypes(4, "Редактирование",    "edit"),
+            //        new AccessTypes(5, "Удаление",          "delete") 
+            //    ]);
 
         }
 

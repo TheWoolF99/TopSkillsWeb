@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Core.Account.UserRolePermissions>
+@{
+    var groupUserRole = Model.GroupBy(x => x.RoleName);
+}
+<link rel="stylesheet" href="~/css/MyRoleTab.css" />
+
+<div class="card-body">
+    <h2 class="mb-4">@Resource.MyRoles</h2>
+    <div class="accordion" id="accordion-example">
+
+        @foreach (var item in groupUserRole)
+        {
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="head-@item.Key">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"  data-bs-target="#@item.Key" aria-expanded="false">
+                        @item.Key
+                    </button>
+                </h2>
+                <div id="@item.Key" class="accordion-collapse collapse"style="">
+                    <div class="accordion-body pt-0">
+                        <ul class="PermissionList">
+                            @foreach (var Permissions in item)
+                            {
+                                <li class="PermissionElement">
+                                    <div>
+                                        <span>@Permissions.PermissionName</span>
+                                        <span>@Permissions.AccessTypeName</span>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -673,6 +673,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Мои роли.
+        /// </summary>
+        public static string MyRoles {
+            get {
+                return ResourceManager.GetString("MyRoles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на TopSkillWeb.
         /// </summary>
         public static string NameApp {
@@ -894,6 +903,15 @@ namespace TopSkillsWeb.Resources {
         public static string Sun {
             get {
                 return ResourceManager.GetString("Sun", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Поддержка.
+        /// </summary>
+        public static string Support {
+            get {
+                return ResourceManager.GetString("Support", resourceCulture);
             }
         }
         

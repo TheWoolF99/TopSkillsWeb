@@ -2,6 +2,7 @@
 using Core.Account;
 using Data.Repository;
 using Data.Services;
+using Data.WebUser;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,14 +19,16 @@ namespace TopSkillsWeb.Controllers.Account
         private readonly PhotoService _photo;
         private readonly LoggerService _log;
         private readonly GlobalOptionsService _options;
+        private readonly WebUserService _webUser;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, PhotoService _photo, LoggerService log, GlobalOptionsService opts)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, PhotoService _photo, LoggerService log, GlobalOptionsService opts, WebUserService webUser )
         {
             this._userManager = userManager;
             this._signInManager = signInManager;
             this._photo = _photo;
             this._log = log;
             this._options = opts;
+            this._webUser = webUser;
         }
         [HttpGet]
         public IActionResult Register()
@@ -141,7 +144,11 @@ namespace TopSkillsWeb.Controllers.Account
             switch (Tabs)
             {
                 case 0:
-                    return PartialView("Tabs/MyAccountTabs", new User() { UserName = "TEs", Email = "TESTSTST@awd.eu" });
+                    ViewBag.Avatar = await _photo.GetAvatarUser((await _userManager.GetUserAsync(User)).Id ?? "");
+                    return PartialView("Tabs/MyAccountTabs", await _userManager.GetUserAsync(User));
+                case 1:
+                    var RolesPermissions = await _webUser.GetUserRolesPermissions(User.Identity.Name);
+                    return PartialView("Tabs/MyRolesAndPermissions", RolesPermissions);
                 case 3:
                     return PartialView("Tabs/FeedBackTabs", new FeedBackModel());
                 default: return PartialView();
