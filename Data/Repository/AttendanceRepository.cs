@@ -21,7 +21,7 @@ namespace Data.Repository
         public async Task<IEnumerable<Attendance>> GetAttendanceByGroupIdAndDate(int GroupId, DateTime Date)
         {
             var db = _context.Create(typeof(AttendanceRepository));
-            var Attendance = await db.Attendance.Include(s => s.Student).Include(g => g.Group).Where(x=>x.Group.GroupId == GroupId & x.DateVisiting == Date).ToListAsync();
+            var Attendance = await db.Attendance.Include(s => s.Student).ThenInclude(a=>a.Abonement).Include(g => g.Group).Where(x=>x.Group.GroupId == GroupId & x.DateVisiting == Date).ToListAsync();
             return Attendance;
         }
 
@@ -89,15 +89,18 @@ namespace Data.Repository
         {
             var db = _context.Create(typeof(AttendanceRepository));
             var attendanceIds = attendances.Select(x => x.AttendanceId);
-            var attendancesDB = db.Attendance.Where(x => attendanceIds.Contains(x.AttendanceId));
-            await attendancesDB.ForEachAsync(x =>
+            var attendancesDB = db.Attendance.Include(s => s.Student).Include(g => g.Group).Where(x => attendanceIds.Contains(x.AttendanceId)).ToList();
+            var abonements = db.Abonements.ToList();
+            attendancesDB.ForEach(x =>
             {
                 x.DateClose = DateTime.Now;
                 var attendanceNew = attendances.Where(a => a.AttendanceId == x.AttendanceId).FirstOrDefault();
-                ///вычтем занятие из абонемента
-                if (attendanceNew!=null && attendanceNew.IsPresent==1)
+                ///вычтем занятие из абонемента если IsPresent не 2(по уважительной причине)
+                if (attendanceNew!=null && attendanceNew.IsPresent != 2)
                 {
-                    
+                    var abonement = abonements.Where(ab => ab.StudentId == x.Student.StudentId).FirstOrDefault();
+                    if(abonement!=null && !(abonement.RemainingVisits <= 0))
+                        abonement.RemainingVisits = --abonement.RemainingVisits;
                 }
                 x.IsPresent = attendanceNew != null ? attendanceNew.IsPresent : 0;
             });

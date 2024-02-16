@@ -1,0 +1,35 @@
+﻿
+<div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel2">@Resource.AddAccesses</h5>
+            <button type="button"
+                    class="btn-close"
+                                onclick="CloseModal()"
+                    aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-3" id="alert_container" style="display: none;">
+                <div class="alert alert-danger" role="alert">Не заполнены обязательные поля!</div>
+            </div>
+            <div class="mb-3" id="alert_container_exists" style="display: none;">
+                <div class="alert alert-danger" role="alert">Доступ с таким кодом или названием уже существует!</div>
+            </div>
+            <div class="col mb-3">
+                <label for="nameLarge" class="form-label">Код</label>
+                <input type="text" id="PermissionCode" class="form-control" placeholder="От 8 латинских символов" minlength="8" pattern="^[a-zA-Z]+$">
+            </div>
+            <div class="col mb-3">
+                <label for="nameLarge" class="form-label">Название доступа</label>
+                <input type="text" id="PermissionName" class="form-control" minlength="5" placeholder="От 5 символов">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" onclick="CloseModal()">
+                @Resource.Cancel
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="onCreatePermission()">@Resource.AddAccesses</button>
+        </div>
+    </div>
+</div>
+

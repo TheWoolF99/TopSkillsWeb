@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<Core.Attendance>
-
+<link rel="stylesheet" href="~/css/AttendanceStart.css" />
 
 <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -16,6 +16,7 @@
                                 <th>@Resource.StudentName</th>
                                 <th>@Resource.GroupName</th>
                                 <th>@Resource.IsPresent</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -23,7 +24,9 @@
                             {
                                 @foreach (var item in Model)
                                 {
-                                    <tr id="@item.Student.StudentId" attendanceId="@item.AttendanceId"  class="rowStudent">
+                                    bool AbonementExpired = item.Student?.Abonement?.RemainingVisits == 0;
+
+                                    <tr id="@item.Student.StudentId" attendanceId="@item.AttendanceId" class="rowStudent @(AbonementExpired?"Expired":"")">
                                         <td>@item.Student.FullNameIinitials</td>
                                         <td>@item.Group.Name</td>
                                         <td>
@@ -42,12 +45,22 @@
                                                 </span>
                                             </div>
                                         </td>
+                                        <td>
+                                            @if (AbonementExpired)
+                                            {
+                                                <span title="@Resource.AbonementIsOver" class="ExpiredAbonementAlert"><i class='bx bx-error-alt'></i></span>
+                                            }
+                                        </td>
                                     </tr>
                                 }
                             }
                         </tbody>
                     </table>
                 </div>
+                <label class="form-check form-switch AgreeTextAlert">
+                    <input id="IgnoreExpiredAbonements" class="form-check-input" type="checkbox">
+                    <span class="form-check-label">@Resource.IgnoreExpiredAbonements</span>
+                </label>
             </div>
         </div>
         <div class="modal-footer">
@@ -68,6 +81,7 @@
 
 
 <script type="text/javascript">
+
     function OnChangeIsPresent(e) {
         let classes = e.currentTarget.classList;
         $('.StudentCheckbox.' + classes[classes.length - 1]).prop('checked', false);
@@ -78,8 +92,15 @@
     }
 
     function OnChangeStartAttendance() {
+        let ignoreExpired = $('#IgnoreExpiredAbonements').prop('checked');
+        let StudentsList = $('.rowStudent:not(.Expired)');
 
-        let ListAttendance = $('.rowStudent').map(function () {
+        if (ignoreExpired)
+        {
+            StudentsList = $('.rowStudent')
+        }
+
+        let ListAttendance = StudentsList.map(function () {
             return { "AttendanceId": +$(this).attr('attendanceId'), "IsPresent": $('.StudentCheckbox.' + $(this).attr('id') + ':checked').attr('IspresentId') }
         }).toArray();
 

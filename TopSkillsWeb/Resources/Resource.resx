@@ -132,11 +132,17 @@
   <data name="AccessDenideMessage" xml:space="preserve">
     <value>Обратитесь к администратору для доступа в данный модуль приложения.</value>
   </data>
+  <data name="Accesses" xml:space="preserve">
+    <value>Доступы</value>
+  </data>
   <data name="Account" xml:space="preserve">
     <value>Учетная запись</value>
   </data>
   <data name="AccountRegistration" xml:space="preserve">
     <value>Регистрация учетной записи</value>
+  </data>
+  <data name="AddAccesses" xml:space="preserve">
+    <value>Добавить доступ</value>
   </data>
   <data name="AddAttendanceOn" xml:space="preserve">
     <value>Добавить занятие на </value>
@@ -165,6 +171,9 @@
   <data name="August" xml:space="preserve">
     <value>Август</value>
   </data>
+  <data name="Calendar" xml:space="preserve">
+    <value>Календарь</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Отменить</value>
   </data>
@@ -191,6 +200,9 @@
   </data>
   <data name="Create" xml:space="preserve">
     <value>Создать</value>
+  </data>
+  <data name="CreateAccess" xml:space="preserve">
+    <value>Создать доступ</value>
   </data>
   <data name="CreateCourse" xml:space="preserve">
     <value>Создать курс</value>
@@ -237,6 +249,9 @@
   <data name="EmptyAttendance" xml:space="preserve">
     <value>Занятия отсутствуют</value>
   </data>
+  <data name="EmptyEntry" xml:space="preserve">
+    <value>Записи отсутствуют</value>
+  </data>
   <data name="EmptyResult" xml:space="preserve">
     <value>Нет результатов</value>
   </data>
@@ -272,6 +287,9 @@
   </data>
   <data name="Home" xml:space="preserve">
     <value>Главная</value>
+  </data>
+  <data name="IgnoreExpiredAbonements" xml:space="preserve">
+    <value>Проигнорировать истекшие абонементы</value>
   </data>
   <data name="IreadItContinue" xml:space="preserve">
     <value>Я ознакомился, продолжить</value>
@@ -372,6 +390,9 @@
   <data name="Saved" xml:space="preserve">
     <value>Сохранено</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>Поиск</value>
+  </data>
   <data name="September" xml:space="preserve">
     <value>Сентябрь</value>
   </data>
@@ -380,6 +401,9 @@
   </data>
   <data name="ShowPassword" xml:space="preserve">
     <value>Показать пароль</value>
+  </data>
+  <data name="ShowRolesList" xml:space="preserve">
+    <value>Список ролей</value>
   </data>
   <data name="SignUp" xml:space="preserve">
     <value>Зарегистрироваться</value>

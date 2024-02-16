@@ -13,6 +13,7 @@ using Data.Services;
 using Newtonsoft;
 using Newtonsoft.Json;
 using Data.WebUser;
+using AutoMapper;
 
 
 var builder = WebApplication.CreateBuilder(args);

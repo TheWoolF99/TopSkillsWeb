@@ -1,0 +1,13 @@
+﻿
+.card:has(.rowStudent:not(.Expired)) .AgreeTextAlert {
+    display: none;
+}
+
+
+.AgreeTextAlert{
+    margin: 10px 0 10px 10px;
+}
+
+/*.card:has(.rowStudent.Expired) .AgreeTextAlert {
+    display: block;
+}*/

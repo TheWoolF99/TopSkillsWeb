@@ -32,6 +32,12 @@ namespace Data
                 }
                 , ServiceLifetime.Transient
                 );
+
+            AuditManager.DefaultConfiguration.AutoSavePreAction = (context, audit) => {
+
+                (context as ApplicationContext).AuditEntries.AddRange(audit.Entries);
+            };
+
             services.AddScoped<Dictionary<Type, ApplicationContext>>();
 
             #region Синглтоны 

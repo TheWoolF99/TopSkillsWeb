@@ -22,13 +22,18 @@ namespace Data
             var services = httpContextAccessor.HttpContext.RequestServices;
 
             var dbContexts = services.GetService<Dictionary<Type, ApplicationContext>>();
-            if (!dbContexts.ContainsKey(repositoryType))
-                dbContexts[repositoryType] = services.GetService<ApplicationContext>();
-            
-            AuditManager.DefaultConfiguration.AutoSavePreAction = (context, audit) => { dbContexts[repositoryType].AuditEntries.AddRange(audit.Entries); };
 
+            if (!dbContexts.ContainsKey(repositoryType))
+            {
+                dbContexts[repositoryType] = services.GetService<ApplicationContext>();
+            }
+
+            
             return dbContexts[repositoryType];
         }
+
+
+        
 
     }
 

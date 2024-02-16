@@ -42,7 +42,8 @@ namespace Data.Repository
         public async Task UpdateTeacherAsync(Teacher teacher)
         {
             var db = _context.Create(typeof(TeacherRepository));
-            db.Teachers.Update(teacher);
+            var dbt = db.Teachers.FirstOrDefault(x => x.TeacherId == teacher.TeacherId);
+            teacher.UpdateFieldTo(dbt);
             await db.SaveChangesAsync();
         }
 

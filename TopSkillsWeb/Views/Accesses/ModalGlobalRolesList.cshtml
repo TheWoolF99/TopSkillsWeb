@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model List<Core.Account.UserRole>
+<div class="modal-dialog modal-dm" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel2">@Resource.ShowRolesList</h5>
+            <button type="button"
+                    class="btn-close"
+                    onclick="CloseModal()"
+                    aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="demo-inline-spacing mt-3">
+                <ol class="list-group list-group-numbered" style="max-height: 35vh;overflow-y: auto;">
+                    @foreach (var item in Model)
+                    {
+                        <li class="list-group-item">@item.Name</li>
+                    }
+                </ol>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" onclick="CloseModal()">
+                Закрыть
+            </button>
+
+        </div>
+    </div>
+</div>

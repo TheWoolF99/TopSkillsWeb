@@ -1,0 +1,183 @@
+﻿@{
+    ViewData["Title"] = Resource.Accesses;
+}
+
+<link rel="stylesheet" href="~/css/Accesses/Accesses.css" />
+
+<div class="page-header d-print-none">
+    <div class="container-xl">
+        <div class="row g-2 align-items-center">
+            <div class="col">
+                <h2 class="page-title">
+                    @Resource.Accesses
+                </h2>
+            </div>
+            <div class="col-auto ms-auto d-print-none">
+                <div class="btn-list">
+                    @* <a onclick="OnGetModalEdit()" class="btn btn-primary d-none d-sm-inline-block">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+                    @Resource.CreateGroup
+                    </a> *@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-xl mt-3">
+<div class="row">
+    <div class="col-lg-3">
+        <div class="card mb-4">
+            <div class="card-body leftPart">
+
+                <div class="mb-3" style="margin: 0rem 1.5rem;">
+                    <label class="form-label" for="basic-default-fullname">@Resource.Search</label>
+                    <input type="text" class="form-control" id="serach_permissionsList_input" placeholder="@Resource.Search" onkeyup="onSearchForPermissionsList()" />
+                </div>
+                <div class="mb-3" style="margin: 1rem 1.5rem;">
+                    <button type="button" class="btn btn-outline-secondary" style="    width: 100%;" onclick="ShowModalGlobalRoles()">
+                        <span class="tf-icons bx bx-crown"></span>&nbsp; @Resource.ShowRolesList
+                    </button>
+                </div>
+                @if (ViewBag.Create)
+                {
+                    <div class="mb-3" style="margin: 1rem 1.5rem;">
+                        <button type="button" class="btn btn-outline-secondary" style="    width: 100%;" onclick="onShowPermissionAddModal()">
+                            <span class="tf-icons bx bx-plus"></span>&nbsp; @Resource.CreateAccess
+                        </button>
+                    </div>
+                }
+
+                <div class="">
+                    <div class="col-xxl">
+                        <div class="demo-inline-spacing mt-3">
+                            <div class="list-group"  id="permissionsListPartial">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-9">
+        <div class="card mb-4" id="roles_list_partial">
+            <div class="alert alert-warning alert-dismissible" role="alert" style="    margin-bottom: 0;">
+                Для начала работы выберите доступ из списка!
+                @* <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> *@
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script type="text/javascript">
+
+    //Рендер списка доступов
+    function RenderPermissionList() {
+        $.get('@Url.Action("RenderPermissionList", "Accesses")', null, function(data) {
+            if (data != "" && data != null) {
+                $('#permissionsListPartial').html(data);
+            }
+        });
+
+    }
+
+    //Отображение детализации доступа по ролям
+    function onShowPermissionDetail(PermissionId) {
+        $('#Loading').show();
+        $.get('@Url.Action("GetRolePermissionDetailPartial", "Accesses")', { PermissionId: PermissionId }, function(data) {
+            if (data != "" && data != null) {
+                $('#roles_list_partial').html(data);
+            }
+            $('#Loading').hide();
+        });
+
+    }
+
+    //Модальное окно создания доступа
+    function onShowPermissionAddModal() {
+        $('#Loading').show();
+        $.get('@Url.Action("ShowAddPermissionModal", "Accesses")', null, function(data) {
+            if (data != "" && data != null) {
+                $('#modal_body').html(data);
+                OpenModal();
+
+            }
+            $('#Loading').hide();
+        });
+
+    }
+
+    //Изменение значения типа доступа у роли в доступе
+    function onToggleAccessTypeValue(PermissionID, RoleID, AccessTypeID) {
+        $.get('@Url.Action("TogglePermissionAccessType", "Accesses")', { PermissionID: PermissionID, RoleID: RoleID, AccessTypeID: AccessTypeID }, function(data) {
+            onShowPermissionDetail(PermissionID);
+        });
+    }
+
+    //Создание доступа
+    function onCreatePermission() {
+        var PermissionCode = document.getElementById('PermissionCode').value;
+        var PermissionName = document.getElementById('PermissionName').value;
+        if ((PermissionCode != null && PermissionCode != '') && (PermissionName != null && PermissionName != '')) {
+            $.get('@Url.Action("CreatePermission", "Accesses")', { PermissionCode: PermissionCode, PermissionName: PermissionName }, function(data) {
+                if (data != "" && data != null) {
+                    var alert = document.getElementById('alert_container_exists');
+                    alert.style.cssText = 'display:block !important;';
+                }
+                else {
+                    CloseModal();
+                    RenderPermissionList();
+                }
+
+            });
+        }
+        else {
+            var alert = document.getElementById('alert_container');
+            alert.style.cssText = 'display:block !important;';
+        }
+
+    }
+
+    //Список Ролей
+    function ShowModalGlobalRoles() {
+        $('#Loading').show();
+        $.get('@Url.Action("ShowModalGlobalRolesList", "Accesses")', null, function(data) {
+            if (data != "" && data != null) {
+                $('#modal_body').html(data);
+                OpenModal();
+
+            }
+            $('#Loading').hide();
+        });
+    }
+
+    //Поиск по списку доступов
+    function onSearchForPermissionsList() {
+        var input = document.getElementById('serach_permissionsList_input');
+        var filter = input.value.toUpperCase();
+        var lis = document.getElementsByClassName('permission_item');
+        var regPhrase = new RegExp(input.value, 'i');
+        var flag = false;
+        for (var i = 0; i < lis.length; i++) {
+            flag = false;
+            for (var j = lis.length - 1; j >= 0; j--) {
+                flag = regPhrase.test(lis[i].innerHTML);
+                if (flag) break;
+            }
+            if (flag) {
+                lis[i].style.display = 'block';
+            } else {
+                lis[i].style.display = 'none';
+            }
+
+        }
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        RenderPermissionList();
+    });
+</script>

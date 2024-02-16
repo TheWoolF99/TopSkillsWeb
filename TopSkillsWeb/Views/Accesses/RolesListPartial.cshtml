@@ -1,0 +1,59 @@
+﻿@model List<Core.Accesses.RoleElement>
+@{
+    bool edit = ViewBag.Edit ??= false;
+    bool delete = ViewBag.Delete ??= false;
+}
+<div class="card-header d-flex justify-content-between align-items-center">
+    <div class="GroupNameAccess">
+        <h5 class="form-label mb-0">@ViewBag.PermissionName</h5>
+       @*  @if (delete)
+        {
+            <button type="button" class="btn btn-icon btn-outline-danger accessBtn" onclick="onDelleteAcces('@ViewBag.PermissionId')">
+                <span class="tf-icons bx bx-trash"></span>
+            </button>
+        } *@
+    </div>
+    <small class="text-muted float-end">@Resource.Accesses</small>
+</div>
+<div class="card-body">
+    <ul class="list-group">
+        @if (Model.Count() > 0)
+        {
+            @foreach (var item in Model)
+            {
+                <li class="list-group-item d-flex align-items-center" style="justify-content: space-between;">
+                    <h6 class="form-label mb-0">@item.Name</h6>
+                    <div>
+                        @*Read*@
+                        <button @(edit? "" : "disabled") type="button" class="@(item.Read ? "btn btn-icon btn-outline-info" : "btn btn-icon btn-outline-secondary")" style="margin: 0 10px;" onclick="onToggleAccessTypeValue('@ViewBag.PermissionId','@item.Id',2)">
+                            <span class="tf-icons bx bx-search"></span>
+                        </button>
+                        @*Create*@
+                        <button @(edit? "" : "disabled") type="button" class="@(item.Add ? "btn btn-icon btn-outline-success" : "btn btn-icon btn-outline-secondary")" style="margin: 0 10px;" onclick="onToggleAccessTypeValue('@ViewBag.PermissionId','@item.Id',3)">
+                            <span class="tf-icons bx bx-plus"></span>
+                        </button>
+                        @*Edit*@
+                        <button @(edit? "" : "disabled") type="button" class="@(item.Edit ? "btn btn-icon btn-outline-warning" : "btn btn-icon btn-outline-secondary")" style="margin: 0 10px;" onclick="onToggleAccessTypeValue('@ViewBag.PermissionId','@item.Id',4)">
+                            <span class="tf-icons bx bx-pencil"></span>
+                        </button>
+                        @*Delete*@
+                        <button @(edit? "" : "disabled") type="button" class="@(item.Delete ? "btn btn-icon btn-outline-danger" : "btn btn-icon btn-outline-secondary")" style="margin: 0 10px;" onclick="onToggleAccessTypeValue('@ViewBag.PermissionId','@item.Id',5)">
+                            <span class="tf-icons bx bx-trash"></span>
+                        </button>
+                        @*AllAccess*@
+                        <button @(edit? "" : "disabled") type="button" class="@(item.AllAccess ? "btn btn-icon btn-outline-primary" : "btn btn-icon btn-outline-secondary")" style="margin: 0 10px;" onclick="onToggleAccessTypeValue('@ViewBag.PermissionId','@item.Id',1)">
+                            <span class="tf-icons bx bx-check"></span>
+                        </button>
+                    </div>
+                </li>
+            }
+        }
+        else
+        {
+            <li class="list-group-item d-flex align-items-center">
+                @Resource.EmptyEntry
+            </li>
+        }
+    </ul>
+</div>
+

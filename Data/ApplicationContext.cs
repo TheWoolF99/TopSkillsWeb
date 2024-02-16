@@ -8,35 +8,34 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Drawing;
 using System.Security;
 using Z.EntityFramework.Plus;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 
 namespace Data
 {
+
     public class ApplicationContext : IdentityDbContext<User, UserRole, string>
     {
         private readonly IHttpContextAccessor httpContextAccessor;
 
-        public ApplicationContext(DbContextOptions<ApplicationContext> options, IHttpContextAccessor httpContextAccessor)
-           : base(options)
+        public ApplicationContext(DbContextOptions<ApplicationContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
         {
-            Database.EnsureCreated();
-            this.httpContextAccessor = httpContextAccessor;
 
             AuditManager.DefaultConfiguration.AutoSavePreAction = (context, audit) =>
             {
-                var cont = (context as ApplicationContext);
-                cont.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
-                Console.BackgroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine(cont.ChangeTracker.DebugView.LongView);
-                Console.ResetColor();
-                cont.AuditEntries.AddRange(audit.Entries);
+                this.AuditEntries.AddRange(audit.Entries);
             };
+            Database.EnsureCreated();
+            this.httpContextAccessor = httpContextAccessor;
         }
-    
+
+
 
         public DbSet<UserAvatar> UserAvatars { get; set; }
         public DbSet<Course> Courses { get; set; }
@@ -66,54 +65,49 @@ namespace Data
         //public DbSet<GroupStudent> GroupStudents { get; set; }
 
 
-
+        #region переопределение методом Save EF для авто логов(не работает с Update\UpdateRange)
         public override int SaveChanges()
         {
-            this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
-
             var audit = new Audit();
+            audit.Configuration.IgnorePropertyUnchanged = true;
             if ((bool)httpContextAccessor.HttpContext?.User?.Identity.IsAuthenticated)
             {
                 audit.CreatedBy = httpContextAccessor.HttpContext?.User?.Identity?.Name;
             }
             audit.PreSaveChanges(this);
-            
             var rowAffecteds = base.SaveChanges();
             audit.PostSaveChanges();
-
             if (audit.Configuration.AutoSavePreAction != null)
             {
                 audit.Configuration.AutoSavePreAction(this, audit);
                 base.SaveChanges();
             }
-
             return rowAffecteds;
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
+            var oldCont = this.Database.GetDbConnection();
+            
 
+            //this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
             var audit = new Audit();
+            audit.Configuration.IgnorePropertyUnchanged = true;
             if ((bool)httpContextAccessor.HttpContext?.User?.Identity.IsAuthenticated)
             {
                 audit.CreatedBy = httpContextAccessor.HttpContext?.User?.Identity?.Name;
             }
             audit.PreSaveChanges(this);
-            
-
             var rowAffecteds = await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
             audit.PostSaveChanges();
-
             if (audit.Configuration.AutoSavePreAction != null)
             {
                 audit.Configuration.AutoSavePreAction(this, audit);
                 await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
             }
-
             return rowAffecteds;
         }
-
+        #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -158,8 +152,5 @@ namespace Data
             //    ]);
 
         }
-
-
-
     }
 }

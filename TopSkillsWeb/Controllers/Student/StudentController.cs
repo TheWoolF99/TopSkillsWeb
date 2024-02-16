@@ -39,7 +39,7 @@ namespace TopSkillsWeb.Controllers.Student
             ViewBag.Title = Resource.CreateStudent;
             if (StudentId != null)
             {
-                ViewBag.Title = Resource.EditCourse;
+                ViewBag.Title = Resource.EditStudent;
                 student = await _student.GetStudentAsync((int)StudentId);
             }
             return PartialView("ModalNewStudent", student);

@@ -106,6 +106,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Доступы.
+        /// </summary>
+        public static string Accesses {
+            get {
+                return ResourceManager.GetString("Accesses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Учетная запись.
         /// </summary>
         public static string Account {
@@ -120,6 +129,15 @@ namespace TopSkillsWeb.Resources {
         public static string AccountRegistration {
             get {
                 return ResourceManager.GetString("AccountRegistration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Добавить доступ.
+        /// </summary>
+        public static string AddAccesses {
+            get {
+                return ResourceManager.GetString("AddAccesses", resourceCulture);
             }
         }
         
@@ -205,6 +223,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Календарь.
+        /// </summary>
+        public static string Calendar {
+            get {
+                return ResourceManager.GetString("Calendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Отменить.
         /// </summary>
         public static string Cancel {
@@ -282,6 +309,15 @@ namespace TopSkillsWeb.Resources {
         public static string Create {
             get {
                 return ResourceManager.GetString("Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Создать доступ.
+        /// </summary>
+        public static string CreateAccess {
+            get {
+                return ResourceManager.GetString("CreateAccess", resourceCulture);
             }
         }
         
@@ -421,6 +457,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Записи отсутствуют.
+        /// </summary>
+        public static string EmptyEntry {
+            get {
+                return ResourceManager.GetString("EmptyEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Нет результатов.
         /// </summary>
         public static string EmptyResult {
@@ -525,6 +570,15 @@ namespace TopSkillsWeb.Resources {
         public static string Home {
             get {
                 return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Проигнорировать истекшие абонементы.
+        /// </summary>
+        public static string IgnoreExpiredAbonements {
+            get {
+                return ResourceManager.GetString("IgnoreExpiredAbonements", resourceCulture);
             }
         }
         
@@ -826,6 +880,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Поиск.
+        /// </summary>
+        public static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Сентябрь.
         /// </summary>
         public static string September {
@@ -849,6 +912,15 @@ namespace TopSkillsWeb.Resources {
         public static string ShowPassword {
             get {
                 return ResourceManager.GetString("ShowPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Список ролей.
+        /// </summary>
+        public static string ShowRolesList {
+            get {
+                return ResourceManager.GetString("ShowRolesList", resourceCulture);
             }
         }
         

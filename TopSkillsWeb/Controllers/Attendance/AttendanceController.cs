@@ -94,7 +94,7 @@ namespace TopSkillsWeb.Controllers.Attendance
         {
             
             var lst = await _aS.GetAttendanceByGroupIdAndDate(GroupId, DateTime.Parse(date));
-            ViewBag.Title = Resource.AttendanceStart + " - " + lst?.ElementAt(1).Group.Name;
+            ViewBag.Title = Resource.AttendanceStart + " - " + lst?.First().Group.Name;
             return PartialView("ModalStartAttendance", lst);
         }
 

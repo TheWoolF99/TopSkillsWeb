@@ -52,5 +52,7 @@ namespace Core
         {
             Groups = new List<Group>();
         }
+
+        
     }
 }
