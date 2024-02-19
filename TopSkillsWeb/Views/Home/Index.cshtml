@@ -14,28 +14,35 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div class="subheader">@Resource.Students</div>
-                            @* <div class="ms-auto lh-1">
-                            <div class="dropdown">
-                            <a class="dropdown-toggle text-secondary" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Last 7 days</a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                            <a class="dropdown-item active" href="#">Last 7 days</a>
-                            <a class="dropdown-item" href="#">Last 30 days</a>
-                            <a class="dropdown-item" href="#">Last 3 months</a>
-                            </div>
-                            </div>
-                            </div> *@
                         </div>
                         <div class="d-flex align-items-baseline">
-                            <div class="h1 mb-0 me-2">@ViewBag.TotalStudents</div>
+                            <div class="h1 mb-0 me-2" id="TotalCountStudentDBR"></div>
                             <div class="me-auto">
                                 <span class="text-green d-inline-flex align-items-center lh-1">
-                                    8% <!-- Download SVG icon from http://tabler-icons.io/i/trending-up -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 17l6 -6l4 4l8 -8"></path><path d="M14 7l7 0l0 7"></path></svg>
+                                    <span id="GrowthStudentDBR" class=""></span>
                                 </span>
                             </div>
                         </div>
                     </div>
                     <div id="chart-revenue-bg" class="chart-sm"></div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="subheader">@Resource.Attendance</div>
+                        </div>
+                        <div class="d-flex align-items-baseline">
+                            <div class="h1 mb-3 me-2" id="TotalCountAttendance"></div>
+                            <div class="me-auto">
+                                <span class="text-green d-inline-flex align-items-center lh-1">
+                                    <span id="GrowthAttendance"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="chart-Attendance" class="chart-sm" style="min-height: 40px;"></div>
                 </div>
             </div>
             <div class="col-12 pr-10">
@@ -65,8 +72,12 @@
 
 
 <script type="text/javascript">
-    var Chart = @Html.Raw(ViewBag.StudentChart);
-    $(document).ready(function () {
+    var ChartStudent = @Html.Raw(ViewBag.StudentChart);
+    var ChartAttendance = @Html.Raw(ViewBag.AttendanceChart);
+
+    function RenderChartStudent(){
+        $('#TotalCountStudentDBR').html(ChartStudent.TotalAll);
+        $('#GrowthStudentDBR').html(ChartStudent.Growth * -1).addClass(ChartStudent.ClassName);
         ConfigureChart('ru');
         window.ApexCharts && (new ApexCharts(document.getElementById('chart-revenue-bg'), {
             chart: {
@@ -95,7 +106,7 @@
             },
             series: [{
                 name: "@Html.Raw(Resource.Students)",
-                data: Chart.DataArray
+                data: ChartStudent.DataArray
             }],
             tooltip: {
                 theme: 'dark'
@@ -120,13 +131,78 @@
                     padding: 4
                 },
             },
-            labels: Chart.DateStringArray,
+            labels: ChartStudent.DateStringArray,
             colors: [tabler.getColor("primary")],
             legend: {
                 show: false,
             },
         })).render();
+    }
+    function RenderAttendanceChart(){
+        $('#TotalCountAttendance').html(ChartAttendance.TotalAll);
+        $('#GrowthAttendance').html(ChartAttendance.Growth * -1).addClass(ChartAttendance.ClassName);
+        window.ApexCharts && (new ApexCharts(document.getElementById('chart-Attendance'), {
+            chart: {
+                type: "bar",
+                fontFamily: 'inherit',
+                height: 40.0,
+                sparkline: {
+                    enabled: true
+                },
+                animations: {
+                    enabled: false
+                },
+            },
+            plotOptions: {
+                bar: {
+                    columnWidth: '50%',
+                }
+            },
+            dataLabels: {
+                enabled: false,
+            },
+            fill: {
+                opacity: 1,
+            },
+            series: [{
+                name: "@Html.Raw(Resource.Attendance)",
+                data: ChartAttendance.DataArray
+            }],
+            tooltip: {
+                theme: 'dark'
+            },
+            grid: {
+                strokeDashArray: 4,
+            },
+            xaxis: {
+                labels: {
+                    padding: 0,
+                },
+                tooltip: {
+                    enabled: false
+                },
+                axisBorder: {
+                    show: false,
+                },
+                type: 'datetime',
+            },
+            yaxis: {
+                labels: {
+                    padding: 4
+                },
+            },
+            labels: ChartAttendance.DateStringArray,
+            colors: [tabler.getColor("primary")],
+            legend: {
+                show: false,
+            },
+        })).render();
+    }
 
+
+    $(document).ready(function () {
+        RenderChartStudent();
+        RenderAttendanceChart();
         OnGetAttendanceToday();
         OnGetListExpiredStudent();
     });

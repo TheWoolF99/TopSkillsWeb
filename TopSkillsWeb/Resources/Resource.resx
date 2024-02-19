@@ -156,6 +156,9 @@
   <data name="AlreadyHaveAnAccount" xml:space="preserve">
     <value>Уже есть учетная запись?</value>
   </data>
+  <data name="AnErrorHasOccurred" xml:space="preserve">
+    <value>Возникла ошибка</value>
+  </data>
   <data name="April" xml:space="preserve">
     <value>Апрель</value>
   </data>
@@ -179,6 +182,9 @@
   </data>
   <data name="ClassesToday" xml:space="preserve">
     <value>Занятия на сегодня</value>
+  </data>
+  <data name="CompletedSuccessfully" xml:space="preserve">
+    <value>Выполнено успешно</value>
   </data>
   <data name="ConfrimPassword" xml:space="preserve">
     <value>Подтверждение пароля</value>
@@ -224,6 +230,9 @@
   </data>
   <data name="DontHaveAccount" xml:space="preserve">
     <value>Нет акаунта?</value>
+  </data>
+  <data name="E404" xml:space="preserve">
+    <value>Адрес не найден</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Редактировать</value>

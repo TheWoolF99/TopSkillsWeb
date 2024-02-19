@@ -1,5 +1,13 @@
+:root {
+    --red: #d63939;
+    --chart-up: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon ms-1' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='rgb(47,179,68)' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none'%3E%3C/path%3E%3Cpath d='M3 17l6 -6l4 4l8 -8'%3E%3C/path%3E%3Cpath d='M14 7l7 0l0 7'%3E%3C/path%3E%3C/svg%3E");
+    --chart-neutral: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon ms-1' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='rgb(245,159,0)' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none'%3E%3C/path%3E%3Cpath d='M5 12l14 0'%3E%3C/path%3E%3C/svg%3E");
+    --chart-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon ms-1' width='24' height='24' viewBox='0 0 24 24' stroke-width='2' stroke='rgb(214,57,57)' fill='none' stroke-linecap='round' stroke-linejoin='round' style='transform: scaleY(-1);'%3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none'%3E%3C/path%3E%3Cpath d='M3 17l6 -6l4 4l8 -8'%3E%3C/path%3E%3Cpath d='M14 7l7 0l0 7'%3E%3C/path%3E%3C/svg%3E");
+}
+
+
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 :root {
@@ -9,22 +17,22 @@ html {
 
 @media (min-width: 768px) {
     html {
-    font-size: 16px;
-  }
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
-  overflow: hidden;
+    margin-bottom: 60px;
+    overflow: hidden;
 }
 
 /*.vw100{
@@ -44,6 +52,7 @@ form#culture-switcher {
     display: flex;
     justify-content: center;
 }
+
     form#culture-switcher > .culture-switcher {
         font-size: 12px;
         text-align: start;
@@ -76,7 +85,7 @@ float: right;
 
 
 
-    /*@media not print {
+/*@media not print {
     @media (prefers-color-scheme: dark) {
         .theme-dark-auto .navbar {
             --tblr-navbar-border-color: #243049;
@@ -94,30 +103,32 @@ float: right;
 
 
 
-a{
+a {
     cursor: pointer !important;
 }
 
-    a:hover{
+    a:hover {
         /*text-decoration: underline !important;*/
     }
 
-    .EmtyResultTd {
-        text-align: center;
-    }
+.EmtyResultTd {
+    text-align: center;
+}
 
 /*---Настройка Select2 выпадающего списка----*/
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
     line-height: var(--select2-height) !important;
 }
+
 .select2-container--default, .select2-selection__rendered, .select2-selection.select2-selection--single, .select2-selection--single, .select2-selection--multiple, .select2-selection__arrow {
     height: var(--select2-height) !important;
-    
 }
-    .select2-container--default .select2-search--dropdown .select2-search__field{
-        border-radius:4px;
+
+    .select2-container--default .select2-search--dropdown .select2-search__field {
+        border-radius: 4px;
     }
+
     .select2-container--default .select2-selection--single .select2-selection__clear {
         height: -webkit-fill-available !important;
     }
@@ -154,8 +165,8 @@ a{
     direction: ltr;
 }
 
-.UserNameDiv:hover{
-    text-decoration:underline;
+.UserNameDiv:hover {
+    text-decoration: underline;
 }
 
 
@@ -165,27 +176,74 @@ a{
     min-width: max-content;
 }
 
-    #contextMenu .dropdown-menu{
+    #contextMenu .dropdown-menu {
         display: block;
     }
 
 ul.contextMenu, li.dropdown-item, .dropdown-item {
     min-width: max-content;
 }
-    .contextMenu,
-    .contextMenu ul {
-        list-style-type: none;
-    }
+
+.contextMenu,
+.contextMenu ul {
+    list-style-type: none;
+}
 
 
 
-.AbenementTBody td:first-child{
+.AbenementTBody td:first-child {
     text-indent: 10%;
 }
 
 .pr-10 {
     padding: 0 10px 0 0;
 }
+
 .pl-10 {
     padding: 0 0 0 10px;
+}
+
+
+.Decline, .Neutral, .Profit {
+    display: flex;
+    align-items: center;
+}
+
+    .Decline::after, .Neutral::after, .Profit::after {
+        display: flex;
+        align-items: center;
+        scale: 0.8;
+    }
+
+
+
+.Decline {
+    color: #d63939;
+    fill: #d63939;
+}
+
+    .Decline::after {
+        content: var(--chart-down);
+    }
+
+.Neutral {
+    color: rgb(245,159,0);
+    fill: rgb(245,159,0);
+}
+
+    .Neutral::after {
+        content: var(--chart-neutral);
+    }
+
+.Profit {
+    color: rgb(47,179,68);
+    fill: rgb(47,179,68);
+}
+
+    .Profit::after {
+        content: var(--chart-up);
+    }
+
+.padding-bottom-none{
+    padding-bottom: 0px;
 }

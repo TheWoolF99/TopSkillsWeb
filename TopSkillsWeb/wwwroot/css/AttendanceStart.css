@@ -1,5 +1,5 @@
 ﻿
-.card:has(.rowStudent:not(.Expired)) .AgreeTextAlert {
+.card:not(:has(tr.Expired)) .AgreeTextAlert {
     display: none;
 }
 

@@ -59,7 +59,7 @@ input.StudentCheckbox:checked + label {
 #Attendance .container-xl {
     padding: 0;
     overflow-y: auto;
-    max-height: 30vh;
-    height: 28.5vh;
+    max-height: 28.5vh;
+    height: max-content;
 }
 

@@ -178,6 +178,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Возникла ошибка.
+        /// </summary>
+        public static string AnErrorHasOccurred {
+            get {
+                return ResourceManager.GetString("AnErrorHasOccurred", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Апрель.
         /// </summary>
         public static string April {
@@ -246,6 +255,15 @@ namespace TopSkillsWeb.Resources {
         public static string ClassesToday {
             get {
                 return ResourceManager.GetString("ClassesToday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Выполнено успешно.
+        /// </summary>
+        public static string CompletedSuccessfully {
+            get {
+                return ResourceManager.GetString("CompletedSuccessfully", resourceCulture);
             }
         }
         
@@ -381,6 +399,15 @@ namespace TopSkillsWeb.Resources {
         public static string DontHaveAccount {
             get {
                 return ResourceManager.GetString("DontHaveAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Адрес не найден.
+        /// </summary>
+        public static string E404 {
+            get {
+                return ResourceManager.GetString("E404", resourceCulture);
             }
         }
         

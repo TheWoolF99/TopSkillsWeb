@@ -48,6 +48,9 @@ namespace Data.Repository
         public async Task AddNewAbonement(AbonementModel abonement)
         {
             var db = _context.Create(typeof(AbonementRepository));
+            var StandartRemainingVisits = db.GlobalOptions.Where(x => x.OptionName.ToLower() == "StandartRemainingVisits".ToLower()).FirstOrDefault()?.OptionValue;
+            StandartRemainingVisits ??= "4";
+            abonement.RemainingVisits = Convert.ToInt32(StandartRemainingVisits);
             await db.Abonements.AddAsync(abonement);
             await db.SaveChangesAsync();
         }
@@ -59,6 +62,24 @@ namespace Data.Repository
             await db.SaveChangesAsync();
         }
 
+
+        public async Task RefreshAbonement(int StudentId)
+        {
+            var db = _context.Create(typeof(AbonementRepository));
+            var abonement = db.Abonements.Where(x => x.StudentId == StudentId).FirstOrDefault();
+            var StandartRemainingVisits = db.GlobalOptions.Where(x=>x.OptionName.ToLower() == "StandartRemainingVisits".ToLower()).FirstOrDefault()?.OptionValue;
+            StandartRemainingVisits ??= "4";
+            if (abonement == null)
+                throw new Exception("Не найден абонемент студента");
+            if (abonement.RemainingVisits != 0)
+                throw new Exception("У студента еще не закончился абонемент");
+            if (abonement != null)
+            {
+                abonement.RemainingVisits = Convert.ToInt32(StandartRemainingVisits);
+                abonement.StartDate = DateTime.Now;
+            }
+            await db.SaveChangesAsync();
+        }
 
     }
 }

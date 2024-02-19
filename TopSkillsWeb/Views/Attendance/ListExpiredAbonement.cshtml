@@ -19,7 +19,7 @@
                                 <span title="@Resource.AbonementIsOver" class="ExpiredAbonementAlert"><i class='bx bx-error-alt'></i></span>
                                 @if (Update)
                                 {
-                                    <span title="@Resource.AbonementRefresh" class="ExpiredAbonementRefresh btn btn-ghost-success"><i class='bx bx-refresh'></i> @Resource.Refresh</span>
+                                    <span title="@Resource.AbonementRefresh" onclick="OnRefreshAbonement(@item.StudentId)" class="ExpiredAbonementRefresh btn btn-ghost-success"><i class='bx bx-refresh'></i> @Resource.Refresh</span>
                                 }
                             </div>
                             
@@ -45,5 +45,17 @@
     //         OpenModal();
     //     });
     // }
+
+    function OnRefreshAbonement(StudentId) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("OnRefreshAbonement", "Student")',
+            data: { StudentId: StudentId },
+            success: function (data) {
+                OnGetListExpiredStudent();
+            }
+        });
+    }
+
 
 </script>

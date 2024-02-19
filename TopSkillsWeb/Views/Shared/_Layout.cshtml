@@ -225,16 +225,16 @@
         $.ajaxSetup({
             error: function (jqXHR, textStatus, errorThrown, xhr, status, error) {
                 if (jqXHR.status == 401) {
-                    location.href = '@Url.Action("Login", "Authorization")?returnUrl=' + location.pathname;
+                    location.href = '@Url.Action("Login", "Account")?returnUrl=' + location.pathname;
                 }
                 else {
                     if (jqXHR.status == 404) {
-                        alert("@Html.Raw(Resource.EmptyResult). 404");
+                        AlertError("@Html.Raw(Resource.E404). 404");
                         $('#loading').hide();
                         $('#modalLoading').hide();
                     } else {
                         if (textStatus != 'abort') {
-                            alert("Text: " + textStatus + "\n Error: " + errorThrown + "\n Xhr: " + jqXHR.responseText);
+                            AlertError("Text: " + textStatus + "\n Error: " + errorThrown + "\n Xhr: " + jqXHR.responseText);
                             $('#loading').hide();
                             $('#modalLoading').hide();
                         }
@@ -283,8 +283,16 @@
             $('#modal_body').html(data);
             OpenModal();
         });
-
     }
+
+
+    function AlertError(message) {
+        $.get('@Url.Action("ShowModalError", "Home")', { message: message }, function (data) {
+            $('#modal_body').html(data);
+            OpenModal();
+        });
+    }
+
 
     function getRandomColor() {
         var letters = '0123456789ABCDEF';

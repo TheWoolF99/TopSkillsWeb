@@ -50,7 +50,8 @@ namespace TopSkillsWeb.Controllers.Student
             if (add)
             {
                 await _student.AddStudentAsync(Student);
-                
+                Student.Abonement.StudentId = Student.StudentId;
+                await _abonement.AddNewAbonement(Student.Abonement);
             }
             else
             {
@@ -66,6 +67,14 @@ namespace TopSkillsWeb.Controllers.Student
             var Students = await _student.GetAllStudentsAsync();
             return PartialView("RowsPart", Students);
         }
-        
+
+
+        public async Task<IActionResult> OnRefreshAbonement(int StudentId)
+        {
+            await _abonement.RefreshAbonement(StudentId);
+            return new EmptyResult();
+        }
+
+
     }
 }

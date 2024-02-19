@@ -18,6 +18,14 @@ namespace Data.Repository
             this._context = context;
         }
 
+        public async Task<IEnumerable<Attendance>> GetAllAttendance()
+        {
+            var db = _context.Create(typeof(AttendanceRepository));
+            var att = await db.Attendance.ToListAsync();
+            return att;
+        }
+
+
         public async Task<IEnumerable<Attendance>> GetAttendanceByGroupIdAndDate(int GroupId, DateTime Date)
         {
             var db = _context.Create(typeof(AttendanceRepository));

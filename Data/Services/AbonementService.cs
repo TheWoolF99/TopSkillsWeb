@@ -37,5 +37,11 @@ namespace Data.Services
         {
             await _abonement.UpdateAbonement(abonement);
         }
+
+        public async Task RefreshAbonement(int StudentId)
+        {
+            await _abonement.RefreshAbonement(StudentId);
+        }
+
     }
 }

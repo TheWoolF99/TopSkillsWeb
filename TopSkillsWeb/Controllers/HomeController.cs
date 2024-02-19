@@ -17,12 +17,14 @@ namespace TopSkillsWeb.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IRepository<User> us;
         private readonly StudentService _student;
+        private readonly AttendanceService _attendance;
 
-        public HomeController(ILogger<HomeController> logger, IRepository<User> us, StudentService _student)
+        public HomeController(ILogger<HomeController> logger, IRepository<User> us, StudentService _student, AttendanceService _attendance)
         {
             _logger = logger;
             this.us = us;
             this._student = _student;
+            this._attendance = _attendance;
         }
         public IActionResult Index()
         {
@@ -30,11 +32,19 @@ namespace TopSkillsWeb.Controllers
 
             var students = _student.GetAllStudentsAsync().Result;
             var studentsGroups = students.GroupBy(x => x.DateCreate);
-            ChartModel chart = new();
-            chart.DateStringArray = studentsGroups.Select(x => x.Key.ToString("yyy-MM-dd")).ToArray();
-            chart.DataArray = studentsGroups.Select(x => x.Count()).ToArray();
-            ViewBag.StudentChart = JsonConvert.SerializeObject(chart);
-            ViewBag.TotalStudents = students.Count();
+
+            var Attendance = _attendance.GetAllAttendance().Result;
+            var AttendanceGroups = Attendance.GroupBy(x => x.DateVisiting).Where(x=>x.Key != null);
+
+            ChartModel chartStudent = new();
+            chartStudent.chartElems = studentsGroups.Select(x => new ChartElem { Time = x.Key, Total = x.Count() }).ToList();
+
+            ChartModel chartAttendance = new();
+            chartAttendance.chartElems = studentsGroups.Select(x => new ChartElem { Time = x.Key, Total = x.Count() }).ToList();
+
+
+            ViewBag.StudentChart = JsonConvert.SerializeObject(chartStudent);
+            ViewBag.AttendanceChart = JsonConvert.SerializeObject(chartAttendance);
             return View(list);
         }
         public IActionResult Privacy()

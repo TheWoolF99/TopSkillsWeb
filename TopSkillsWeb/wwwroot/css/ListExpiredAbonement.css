@@ -1,4 +1,6 @@
-﻿ul.ListExpiredAbonement {
+﻿
+
+ul.ListExpiredAbonement {
     margin:0px;
     padding-left: 10px;
     padding-right: 10px;
@@ -48,8 +50,8 @@
 #ListExpiredStudent .container-xl {
     padding: 0;
     overflow-y: auto;
-    max-height: 30vh;
-    height: 28.5vh;
+    max-height: 28.5vh;
+    height: max-content;
 }
 
 .btnExpiredContainer {

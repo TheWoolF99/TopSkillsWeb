@@ -43,7 +43,7 @@ body {
 }
 
 body {
-    font-size: 100%;
+    /*font-size: 100%;*/
     line-height: 1.5;
     /*background: var(--body-background) !important;*/
     color: #444;
@@ -223,6 +223,7 @@ thead tr {
 
 
 .CalendarContainer {
+    font-size: 1rem;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
     border-radius: var(--border-radius);
     --bg-opacity: 1;

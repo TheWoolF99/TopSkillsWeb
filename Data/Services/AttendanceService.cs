@@ -17,6 +17,10 @@ namespace Data.Services
         public AttendanceService(IAttendance attendance) => this._attendance = attendance;
 
 
+        public async Task<IEnumerable<Attendance>> GetAllAttendance()
+        {
+            return await _attendance.GetAllAttendance();
+        }
 
         public async Task<IEnumerable<Attendance>> GetAttendanceByGroupIdAndDate(int GroupId, DateTime Date)
         {
