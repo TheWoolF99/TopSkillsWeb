@@ -11,7 +11,7 @@ namespace Interfaces.Student
     {
         Task<IEnumerable<Core.Student>> GetAllStudentsAsync();
         Task<Core.Student> GetStudentAsync(int id);
-        Task AddStudentAsync(Core.Student student);
+        Task<int> AddStudentAsync(Core.Student student);
         Task UpdateStudentAsync(Core.Student student);
         void UpdateRange(List<Core.Student> student);
         

@@ -40,7 +40,7 @@ namespace TopSkillsWeb.Controllers
             chartStudent.chartElems = studentsGroups.Select(x => new ChartElem { Time = x.Key, Total = x.Count() }).ToList();
 
             ChartModel chartAttendance = new();
-            chartAttendance.chartElems = studentsGroups.Select(x => new ChartElem { Time = x.Key, Total = x.Count() }).ToList();
+            chartAttendance.chartElems = AttendanceGroups.Select(x => new ChartElem { Time = x.Key, Total = x.Count() }).ToList();
 
 
             ViewBag.StudentChart = JsonConvert.SerializeObject(chartStudent);

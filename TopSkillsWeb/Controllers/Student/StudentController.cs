@@ -49,9 +49,10 @@ namespace TopSkillsWeb.Controllers.Student
             bool add = Student.StudentId == 0;
             if (add)
             {
-                await _student.AddStudentAsync(Student);
-                Student.Abonement.StudentId = Student.StudentId;
-                await _abonement.AddNewAbonement(Student.Abonement);
+                int newStudentId = await _student.AddStudentAsync(Student);
+                var Ab = new Abonement();
+                Ab.StudentId = newStudentId;
+                await _abonement.AddNewAbonement(Ab);
             }
             else
             {

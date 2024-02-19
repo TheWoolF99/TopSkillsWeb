@@ -26,9 +26,9 @@ namespace Data.Services
             return await _student.GetStudentAsync(id);
         }
 
-        public async Task AddStudentAsync(Student Student)
+        public async Task<int> AddStudentAsync(Student Student)
         {
-            await _student.AddStudentAsync(Student);
+            return await _student.AddStudentAsync(Student);
         }
 
         public async Task UpdateStudentAsync(Core.Student student)

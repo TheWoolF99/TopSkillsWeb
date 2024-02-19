@@ -35,11 +35,12 @@ namespace Data.Repository
         }
 
 
-        public async Task AddStudentAsync(Student student)
+        public async Task<int> AddStudentAsync(Student student)
         {
             var db = _context.Create(typeof(StudentRepository));
             await db.Students.AddAsync(student);
             await db.SaveChangesAsync();
+            return student.StudentId;
         }
 
         public async Task DeleteAsync(int id)
