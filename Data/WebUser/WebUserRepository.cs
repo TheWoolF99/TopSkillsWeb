@@ -36,8 +36,8 @@ namespace Data.WebUser
                     return true;
             }
             int RoleID = Convert.ToInt32(dbContext.AspNetRoles.Where(x => x.Name == roles[0]).FirstOrDefault().Id);
-            int AccessTypeId = dbContext.AccessTypes.Where(x => x.Code == AccessType).FirstOrDefault().TypeId;
-            UserPermissions? permission = dbContext.Permissions.Where(x => x.Name == permissionName).FirstOrDefault();
+            int AccessTypeId = dbContext.AccessTypes.Where(x => x.Code.ToLower() == AccessType.ToLower()).FirstOrDefault().TypeId;
+            UserPermissions? permission = dbContext.Permissions.Where(x => x.Name.ToLower() == permissionName.ToLower()).FirstOrDefault();
             if (permission == null)
             {
                 return false;

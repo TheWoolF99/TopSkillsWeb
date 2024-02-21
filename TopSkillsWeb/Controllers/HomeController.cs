@@ -56,6 +56,16 @@ namespace TopSkillsWeb.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public async Task<IActionResult> AccessDenied()
+        {
+            return View();
+        }
+        public async Task<IActionResult> NotFound()
+        {
+            return View();
+        }
+        
         public async Task<IActionResult> ShowModalError(string message)
         {
             return PartialView("ModalError", message);

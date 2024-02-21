@@ -1,8 +1,10 @@
 ﻿using Core;
 using Core.Abonement;
 using Data.Services;
+using Data.WebUser;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TopSkillsWeb.Attributes;
 using TopSkillsWeb.Resources;
 using StudentModel = Core.Student;
 
@@ -20,13 +22,16 @@ namespace TopSkillsWeb.Controllers.Student
         /// </summary>
         private readonly StudentService _student;
         private readonly AbonementService _abonement;
-        public StudentController(StudentService _sS, TeacherService _tS, AbonementService abonement)
+        private readonly WebUserService _webUser;
+        public StudentController(StudentService _sS, TeacherService _tS, AbonementService abonement, WebUserService _webUser)
         {
             this._student = _sS;
             this._teacher = _tS;
             this._abonement = abonement;
+            this._webUser = _webUser;
         }
 
+        [HasAccess("Students","read")]
         public async Task<IActionResult> Index()
         {
             return View(await _student.GetAllStudentsAsync());

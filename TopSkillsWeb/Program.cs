@@ -14,6 +14,7 @@ using Newtonsoft;
 using Newtonsoft.Json;
 using Data.WebUser;
 using AutoMapper;
+using Microsoft.AspNetCore.Http.Extensions;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -52,7 +53,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.Cookie.HttpOnly = true;
     options.ExpireTimeSpan = TimeSpan.FromMinutes(2000);
     options.LoginPath = "/Account/Login";
-    options.AccessDeniedPath = "/Home/AccesDenide";
+    options.AccessDeniedPath = "/Home/AccessDenied";
     options.SlidingExpiration = true;
 });
 builder.Services.Configure<RequestLocalizationOptions>(options =>
@@ -100,11 +101,21 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseRequestLocalization(app.Services.GetService<IOptions<RequestLocalizationOptions>>().Value);
 
+app.UseStatusCodePagesWithReExecute("/error", "?code={0}");
 
+app.Map("/error", ap => ap.Run(async context =>
+{
+    if(context.Response.StatusCode == 404)
+    {
+        context.Response.Redirect("/Home/NotFound");
+    }
+}));
 
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
+
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
