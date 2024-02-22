@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Org.BouncyCastle.Pqc.Crypto.Lms;
+using TopSkillsWeb.Attributes;
 using TopSkillsWeb.Resources;
 using CourseModel = Core.Course;
 
@@ -26,13 +27,14 @@ namespace TopSkillsWeb.Controllers.Course
             this._tS = _tS;
         }
 
-
+        [HasAccess("Course", "read")]
         public async Task<IActionResult> Index()
         {
             var Courses = await _course.GetAllCoursesAsync();
             return View(Courses);
         }
 
+        [HasAccess("Course", "create")]
         public async Task<IActionResult> GetModalAddEditCourse(int? CourseId = null)
         {
             ViewBag.TeacherList = new SelectList(await _tS.GetAllTeachersAsync(), "TeacherId", "FullName");
@@ -46,6 +48,8 @@ namespace TopSkillsWeb.Controllers.Course
             }
             return PartialView("ModalNewCourse", course);
         }
+
+        [HasAccess("Course", "create")]
         public async Task<IActionResult> OnAddUpdateCourse(CourseModel Course)
         {
             if (Course.CourseId == 0)
@@ -59,6 +63,8 @@ namespace TopSkillsWeb.Controllers.Course
             return RedirectToAction("ShowModalSuccess", "Home", new { message = Course.CourseId == 0? Resource.CourseAddDone : Resource.CourseEditDone });
         }
 
+
+        [HasAccess("Course", "read")]
         public async Task<IActionResult>  OnUpdateTableRows()
         {
             var Courses = await _course.GetAllCoursesAsync();

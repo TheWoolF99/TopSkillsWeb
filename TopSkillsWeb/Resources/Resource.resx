@@ -183,6 +183,9 @@
   <data name="ClassesToday" xml:space="preserve">
     <value>Занятия на сегодня</value>
   </data>
+  <data name="Close" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
   <data name="CompletedSuccessfully" xml:space="preserve">
     <value>Выполнено успешно</value>
   </data>
@@ -215,6 +218,9 @@
   </data>
   <data name="CreateGroup" xml:space="preserve">
     <value>Создать группу</value>
+  </data>
+  <data name="CreateLogin" xml:space="preserve">
+    <value>Создать Аккаунт</value>
   </data>
   <data name="CreateStudent" xml:space="preserve">
     <value>Добавить студента</value>
@@ -279,6 +285,9 @@
   <data name="ForgetPassword" xml:space="preserve">
     <value>Забыли пароль?</value>
   </data>
+  <data name="ForShowPasswordPressKeyCrl" xml:space="preserve">
+    <value>Для просмотра пароля зажмите ctrl находясь в поле пароля</value>
+  </data>
   <data name="Fri" xml:space="preserve">
     <value>Пт</value>
   </data>
@@ -330,11 +339,20 @@
   <data name="LoadingCalendar" xml:space="preserve">
     <value>Загрузка календаря</value>
   </data>
+  <data name="Logging" xml:space="preserve">
+    <value>Логирование</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Вход</value>
   </data>
   <data name="LoginInAccount" xml:space="preserve">
     <value>Вход в учетную запись</value>
+  </data>
+  <data name="Logins" xml:space="preserve">
+    <value>Аккаунты</value>
+  </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>Выйти</value>
   </data>
   <data name="March" xml:space="preserve">
     <value>Март</value>
@@ -375,6 +393,9 @@
   <data name="Password" xml:space="preserve">
     <value>Пароль</value>
   </data>
+  <data name="PasswordLengthError" xml:space="preserve">
+    <value>Пароль не может быть меньше 5 символов</value>
+  </data>
   <data name="Previous" xml:space="preserve">
     <value>Предыдущий</value>
   </data>
@@ -389,6 +410,12 @@
   </data>
   <data name="RememberMe" xml:space="preserve">
     <value>Запомнить меня?</value>
+  </data>
+  <data name="RoleAdded" xml:space="preserve">
+    <value>Роль добавлена</value>
+  </data>
+  <data name="RoleDeleted" xml:space="preserve">
+    <value>Роль удалена</value>
   </data>
   <data name="Sat" xml:space="preserve">
     <value>Сб</value>
@@ -464,6 +491,9 @@
   </data>
   <data name="UserName" xml:space="preserve">
     <value>Имя пользователя</value>
+  </data>
+  <data name="UserNameLengthError" xml:space="preserve">
+    <value>Имя пользователя не может быть меньше 5 символов</value>
   </data>
   <data name="Visits" xml:space="preserve">
     <value>Посещения</value>

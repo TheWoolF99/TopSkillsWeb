@@ -1,0 +1,110 @@
+﻿<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">@Resource.CreateLogin</h5>
+            <button type="button" class="btn-close" onclick="CloseModal()"></button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="mb-3">
+                        <label class="form-label">@Resource.UserName</label>
+                        <input id="UserNameInp" type="text" value="" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="mb-3">
+                        <label class="form-label">@Resource.Email</label>
+                        <input id="EmailInp" type="email" value="" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="mb-3">
+                        <label class="form-label">@Resource.Password</label>
+                        <input id="Password" type="password" placeholder="********" autocomplete="off" onkeydown="onKeyDown(event)" onkeyup="onKeyUp(event)" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="mb-3">
+                        <label class="form-label">@Resource.ConfrimPassword</label>
+                        <input id="ConfrimPassword" type="password" placeholder="********" autocomplete="off" onkeydown="onKeyDown(event)" onkeyup="onKeyUp(event)" class="form-control">
+                    </div>
+                </div>
+                <span class="alert-secondary">@Resource.ForShowPasswordPressKeyCrl</span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="OnCreateLogin()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+                @Resource.Create
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // $('#EmailInp').on('focus', function () { $(this).attr('type', 'email') });
+        // $('#Password, #ConfrimPassword').on('focus', function () { $(this).attr('type', 'password') });
+    });
+
+    function validate() {
+        switch (true) {
+            case !containsTextOrNumbers($('#UserNameInp').val()):
+                AlertError('Имя пользователя не может быть пустым');
+                return false;
+            case !containsTextOrNumbers($('#EmailInp').val()):
+                AlertError('Email не может быть пустым');
+                return false;
+            case $('#Password').val() != $('#ConfrimPassword').val():
+                AlertError('пароли не совпадают');
+                return false;
+
+            case $('#UserNameInp').val().length < 5:
+                AlertError('Имя пользователя не может быть меньше 5 символов');
+                return false;
+            case $('#Password').val().length < 5:
+                AlertError('Пароль не может быть меньше 5 символов');
+                return false;
+            default:
+                return true;
+        }
+    }
+
+
+    function OnCreateLogin() {
+        if (validate()) {
+            let Email = $('#EmailInp').val();
+            let UserName = $('#UserNameInp').val();
+            let Password = $('#Password').val();
+
+
+            $.post('@Url.Action("CreateNewLogin", "Account")', {
+                Email: Email,
+                UserName: UserName,
+                Password: Password
+            }, function (data) {
+                $('#modal_body').html(data);
+                OpenModal();
+                OnUpdateTableRows();
+            });
+        }
+    }
+
+
+    function onKeyDown(e) {
+        const ctrlKey = 17;
+        if (e.keyCode === ctrlKey) {
+            $('#Password, #ConfrimPassword').attr('type', 'text');
+        }
+    }
+
+    function onKeyUp(e) {
+        const ctrlKey = 17;
+        if (e.keyCode === ctrlKey) {
+            $('#Password, #ConfrimPassword').attr('type', 'password');
+        }
+    }
+
+</script>

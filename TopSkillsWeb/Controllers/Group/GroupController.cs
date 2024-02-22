@@ -10,6 +10,7 @@ using Core;
 using Newtonsoft.Json;
 using Interfaces.Course;
 using Microsoft.AspNetCore.Authorization;
+using TopSkillsWeb.Attributes;
 
 namespace TopSkillsWeb.Controllers.Group
 {
@@ -41,13 +42,13 @@ namespace TopSkillsWeb.Controllers.Group
             this._sS = sS;
         }
 
-
+        [HasAccess("Group", "read")]
         public IActionResult Index()
         {
             return View(_gS.GetAllGroupsAsync().Result);
         }
 
-
+        [HasAccess("Group", "create")]
         public async Task<IActionResult> GetModalAddEditGroup(int? GroupId = null)
         {
             ViewBag.CourseList = new SelectList(await _cS.GetAllCoursesAsync(), "CourseId", "Name");
@@ -69,6 +70,7 @@ namespace TopSkillsWeb.Controllers.Group
         }
 
 
+        [HasAccess("Group", "create")]
         public async Task<IActionResult> OnAddGroupStudents(GroupModel Group, List<int> StudentsIds)
         {
             bool add = Group.GroupId == 0;
@@ -85,6 +87,7 @@ namespace TopSkillsWeb.Controllers.Group
             return RedirectToAction("ShowModalSuccess", "Home", new { message = add ? Resource.GroupAddDone : Resource.GroupEditDone });
         }
 
+        [HasAccess("Group", "read")]
         public async Task<IActionResult> OnUpdateTableRows()
         {
             var Group = await _gS.GetAllGroupsAsync();

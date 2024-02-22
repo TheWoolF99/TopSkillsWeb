@@ -42,4 +42,36 @@ namespace Core.Logger
         public string? AfterValue { get; set; }
         public string OperationName { get; set; }
     }
+
+    public class LoggerLoginItem 
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ItemId { get; set; }
+
+        public string UserId { get; set; }
+        public string UserName { get; set; } 
+        public string Browser { get; set; }
+        public string BrowserVer { get; set; }
+        public string OperationName { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime Date { get; set; }
+    }
+
+
+    public class LoggerFilter
+    {
+        public DateTime DateStart { get; set; }
+        public DateTime DateEnd { get; set; }
+        public string? UserName { get; set; }
+
+        public LoggerFilter()
+        {
+            DateStart = DateTime.Now.AddDays(-7);
+            DateEnd =  DateTime.Now;
+            UserName = null;
+        }
+
+    }
+
 }

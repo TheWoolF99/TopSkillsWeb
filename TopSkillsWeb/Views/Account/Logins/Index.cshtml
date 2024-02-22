@@ -1,21 +1,18 @@
-﻿@model IEnumerable<Core.Group>
-@{
-    ViewData["Title"] = Resource.GroupsStudents;
-}
-<link rel="stylesheet" href="~/css/Group.css" />
+﻿@model IEnumerable<Core.Account.User>
+<link rel="stylesheet" href="~/css/Logins.css" />
 <div class="page-header d-print-none">
     <div class="container-xl">
         <div class="row g-2 align-items-center">
             <div class="col">
                 <h2 class="page-title">
-                    @Resource.GroupsStudents
+                    @Resource.Logins
                 </h2>
             </div>
             <div class="col-auto ms-auto d-print-none">
                 <div class="btn-list">
-                    <a onclick="OnGetModalEdit()" class="btn btn-primary d-none d-sm-inline-block">
+                    <a onclick="OnCreateNewLogin()" class="btn btn-primary d-none d-sm-inline-block">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
-                        @Resource.CreateGroup
+                        @Resource.CreateLogin
                     </a>
                 </div>
             </div>
@@ -29,14 +26,13 @@
             <table class="table table-vcenter card-table">
                 <thead>
                     <tr>
-                        <th>@Resource.GroupName</th>
-                        <th>@Resource.CourseName</th>
-                        <th>@Resource.TeacherName</th>
+                        <th>@Resource.UserName</th>
+                        <th>@Resource.Email</th>
                         <th class="w-1"></th>
                     </tr>
                 </thead>
-                <tbody id="GroupTbody">
-                    @await Html.PartialAsync("RowsPart", Model)
+                <tbody id="LoginsTbody">
+                    @await Html.PartialAsync("Logins/RowsPart", Model)
                 </tbody>
             </table>
         </div>
@@ -45,19 +41,26 @@
 
 
 <script type="text/javascript">
-    function OnGetModalEdit(id){
-        $.get('@Url.Action("GetModalAddEditGroup", "Group")', { GroupId: id}, function (data) {
+    function OnCreateNewLogin() 
+    {
+        $.get('@Url.Action("GetModalAddLogin", "Account")', null, function (data) {
             $('#modal_body').html(data);
             OpenModal();
         });
     }
 
     function OnUpdateTableRows() {
-        $.get('@Url.Action("OnUpdateTableRows", "Group")', null, function (data) {
-            $('#GroupTbody').html(data);
+        $.get('@Url.Action("OnUpdateTableRows", "Account")', null, function (data) {
+            $('#LoginsTbody').html(data);
         });
     }
-
+    
+    function OnGetModalEdit(UserName){
+        $.get('@Url.Action("GetRoleListForUser", "Account")', { UserName: UserName }, function (data) {
+            $('#modal_body').html(data);
+            OpenModal();
+        });
+    }
 
 
 </script>

@@ -7,6 +7,7 @@ using TopSkillsWeb.Resources;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
 using Data.WebUser;
+using TopSkillsWeb.Attributes;
 
 namespace TopSkillsWeb.Controllers.Attendance
 {
@@ -30,13 +31,14 @@ namespace TopSkillsWeb.Controllers.Attendance
 
         }
 
+        [HasAccess("Attendances", "read")]
         public IActionResult Index()
         {
             return View();
         }
 
 
-
+        [HasAccess("Attendances", "create")]
         public async Task<IActionResult> GetModalAddAttendance(string date)
         {
             
@@ -47,6 +49,7 @@ namespace TopSkillsWeb.Controllers.Attendance
         }
 
 
+        [HasAccess("Attendances", "create")]
         public async Task<IActionResult> CreateNewAttendance(AttendanceModel model)
         {
 
@@ -56,7 +59,7 @@ namespace TopSkillsWeb.Controllers.Attendance
         }
 
 
-
+        [HasAccess("Attendances", "read")]
         public async Task<JsonResult> GetCalendarData(string CurrentYear, string CurrentMounth)
         {
             
@@ -81,15 +84,23 @@ namespace TopSkillsWeb.Controllers.Attendance
             return new EmptyResult();
         }
 
+        
         public async Task<IActionResult> GetListAttendance(DateTime? date)
         {
             date ??= DateTime.Today;
             var lst = await _aS.GetAttendancesByDateRange((DateTime)date);
             if (lst.Count() > 0)
                 lst = lst?.DistinctBy(x => new { x.Group.GroupId, x.DateVisiting }).ToList();
+
+            if(!await _webUser.HasAccess(User.Identity.Name, "read", "Attendances"))
+            {
+                lst = new List<AttendanceModel>();
+            }
+
             return PartialView("AttendanceTable", lst);
         }
 
+        [HasAccess("Attendances", "update")]
         public async Task<IActionResult> GetStartAttendance(int GroupId, string date)
         {
             
@@ -98,6 +109,7 @@ namespace TopSkillsWeb.Controllers.Attendance
             return PartialView("ModalStartAttendance", lst);
         }
 
+        [HasAccess("Attendances", "update")]
         public async Task<IActionResult> OnStartAttendance(List<AttendanceModel> attendances)
         {
             try
@@ -111,10 +123,16 @@ namespace TopSkillsWeb.Controllers.Attendance
             }
         }
 
+
         public async Task<IActionResult> GetListExpiredStudent()
         {
             ViewBag.UpdateAbonementAccess = await _webUser.HasAccess(User.Identity.Name,"edit","RefreshAbonement");
-            return PartialView("ListExpiredAbonement", (await _abonement.GetAllAbonements())?.Where(x => x.RemainingVisits <= 0).ToList());
+            var model = (await _abonement.GetAllAbonements())?.Where(x => x.RemainingVisits <= 0).ToList();
+            if(!await _webUser.HasAccess(User.Identity.Name, "ListExpiredStudent", "read"))
+            {
+                model = new List<Core.Abonement.Abonement>();
+            }
+            return PartialView("ListExpiredAbonement", model);
         }
 
 

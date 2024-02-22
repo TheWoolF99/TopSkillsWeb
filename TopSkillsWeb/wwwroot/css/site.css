@@ -247,3 +247,20 @@ ul.contextMenu, li.dropdown-item, .dropdown-item {
 .padding-bottom-none{
     padding-bottom: 0px;
 }
+
+.table-responsive{
+    max-height: 40vh;
+    overflow-y: auto;
+}
+
+
+
+.card-table, .table {
+    border-collapse: collapse; /*make the table borders collapse to each other */
+    width: 100%;
+}
+
+    .card-table thead th, .table thead th {
+        position: sticky; /*make the table heads sticky */
+        top: 0px;
+    }

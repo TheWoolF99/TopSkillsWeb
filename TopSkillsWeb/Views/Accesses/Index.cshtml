@@ -85,7 +85,13 @@
     }
 
     //Отображение детализации доступа по ролям
-    function onShowPermissionDetail(PermissionId) {
+    function onShowPermissionDetail(PermissionId, e) {
+        if(e!=null){
+            $('.permission_item').removeClass('active');
+            $(e.currentTarget).addClass('active');
+        }
+       
+
         $('#Loading').show();
         $.get('@Url.Action("GetRolePermissionDetailPartial", "Accesses")', { PermissionId: PermissionId }, function(data) {
             if (data != "" && data != null) {

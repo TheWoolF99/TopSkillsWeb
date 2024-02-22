@@ -1,13 +1,16 @@
 ﻿using Core.Accesses;
 using Data.Services;
 using Data.WebUser;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Security;
+using TopSkillsWeb.Attributes;
 
 namespace TopSkillsWeb.Controllers.Accesses
 {
+    [Authorize]
     public class AccessesController : Controller
     {
         private readonly AccessesService _AccessesService;
@@ -19,12 +22,14 @@ namespace TopSkillsWeb.Controllers.Accesses
             this._webUser = _webUser;
         }
 
+        [HasAccess("Accesses", "read")]
         public async Task<IActionResult> Index()
         {
             ViewBag.Create = await _webUser.HasAccess(User.Identity.Name, "create", "Accesses");
             return View();
         }
 
+        [HasAccess("Accesses", "read")]
         public async Task<IActionResult> GetRolePermissionDetailPartial(int PermissionId)
         {
             try
@@ -46,18 +51,21 @@ namespace TopSkillsWeb.Controllers.Accesses
             {
                 throw new Exception(ex.Message);
             }
-
         }
+
         public async Task<IActionResult> ShowModalGlobalRolesList()
         {
             bool ExtraAccess = await _webUser.HasExtraAccess(User.Identity.Name);
             var model = await _AccessesService.GetGlobalRolesList(ExtraAccess);
             return PartialView("ModalGlobalRolesList", model);
         }
+
+        [HasAccess("Accesses", "create")]
         public async Task<IActionResult> ShowAddPermissionModal()
         {
             return PartialView("ModalAddPermission");
         }
+
         public async Task<IActionResult> RenderPermissionList()
         {
             try
@@ -75,6 +83,8 @@ namespace TopSkillsWeb.Controllers.Accesses
                 throw new Exception(ex.Message);
             }
         }
+
+        [HasAccess("Accesses", "create")]
         public async Task<IActionResult> CreatePermission(string PermissionCode, string PermissionName)
         {
             try
@@ -95,6 +105,8 @@ namespace TopSkillsWeb.Controllers.Accesses
                 throw new Exception(ex.Message);
             }
         }
+
+        [HasAccess("Accesses", "edit")]
         public async Task TogglePermissionAccessType(int PermissionID, int RoleID, int AccessTypeID)
         {
             try
@@ -107,8 +119,6 @@ namespace TopSkillsWeb.Controllers.Accesses
             }
 
         }
-
-
 
     }
 }

@@ -259,6 +259,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Закрыть.
+        /// </summary>
+        public static string Close {
+            get {
+                return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Выполнено успешно.
         /// </summary>
         public static string CompletedSuccessfully {
@@ -354,6 +363,15 @@ namespace TopSkillsWeb.Resources {
         public static string CreateGroup {
             get {
                 return ResourceManager.GetString("CreateGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Создать Аккаунт.
+        /// </summary>
+        public static string CreateLogin {
+            get {
+                return ResourceManager.GetString("CreateLogin", resourceCulture);
             }
         }
         
@@ -547,6 +565,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Для просмотра пароля зажмите ctrl находясь в поле пароля.
+        /// </summary>
+        public static string ForShowPasswordPressKeyCrl {
+            get {
+                return ResourceManager.GetString("ForShowPasswordPressKeyCrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Пт.
         /// </summary>
         public static string Fri {
@@ -700,6 +727,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Логирование.
+        /// </summary>
+        public static string Logging {
+            get {
+                return ResourceManager.GetString("Logging", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Вход.
         /// </summary>
         public static string Login {
@@ -714,6 +750,24 @@ namespace TopSkillsWeb.Resources {
         public static string LoginInAccount {
             get {
                 return ResourceManager.GetString("LoginInAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Аккаунты.
+        /// </summary>
+        public static string Logins {
+            get {
+                return ResourceManager.GetString("Logins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Выйти.
+        /// </summary>
+        public static string LogOut {
+            get {
+                return ResourceManager.GetString("LogOut", resourceCulture);
             }
         }
         
@@ -835,6 +889,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Пароль не может быть меньше 5 символов.
+        /// </summary>
+        public static string PasswordLengthError {
+            get {
+                return ResourceManager.GetString("PasswordLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Предыдущий.
         /// </summary>
         public static string Previous {
@@ -876,6 +939,24 @@ namespace TopSkillsWeb.Resources {
         public static string RememberMe {
             get {
                 return ResourceManager.GetString("RememberMe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Роль добавлена.
+        /// </summary>
+        public static string RoleAdded {
+            get {
+                return ResourceManager.GetString("RoleAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Роль удалена.
+        /// </summary>
+        public static string RoleDeleted {
+            get {
+                return ResourceManager.GetString("RoleDeleted", resourceCulture);
             }
         }
         
@@ -1101,6 +1182,15 @@ namespace TopSkillsWeb.Resources {
         public static string UserName {
             get {
                 return ResourceManager.GetString("UserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Имя пользователя не может быть меньше 5 символов.
+        /// </summary>
+        public static string UserNameLengthError {
+            get {
+                return ResourceManager.GetString("UserNameLengthError", resourceCulture);
             }
         }
         

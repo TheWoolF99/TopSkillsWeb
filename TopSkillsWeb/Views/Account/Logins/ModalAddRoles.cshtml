@@ -1,0 +1,50 @@
+﻿@model List<Core.Account.UserRole>
+@{
+    List<string> rolesUser = (List<string>)ViewBag.UserRoles;
+}
+
+
+<div class="modal-dialog modal-dm" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel2">@Resource.ShowRolesList</h5>
+            <button type="button"
+                    class="btn-close"
+                    onclick="CloseModal()"
+                    aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="demo-inline-spacing mt-3">
+                <ul class="list-group" style="max-height: 35vh;overflow-y: auto;">
+                    @foreach (var item in Model)
+                    {
+                        <li class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-auto"><input type="checkbox" class="form-check-input" onchange="OnSetRoles('@item.Name','@ViewBag.UserName')" @(rolesUser.Contains(@item.Name) ? "checked" : "") /></div>
+                                <div class="col text-truncate">
+                                    <div class="text-reset d-block">@item.Name - @item.Description</div>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" onclick="CloseModal()">
+                @Resource.Close
+            </button>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function OnSetRoles(RoleName, UserName)
+    {
+        $.get('@Url.Action("SetRoleUser", "Account")', { RoleName: RoleName, UserName: UserName }, function (data) {
+            $('#alert_body').html(data);
+            OpenAlert();
+        });
+    }
+</script>

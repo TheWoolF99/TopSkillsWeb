@@ -22,7 +22,7 @@
             @foreach (var item in Model)
             {
                 <li class="list-group-item d-flex align-items-center" style="justify-content: space-between;">
-                    <h6 class="form-label mb-0">@item.Name</h6>
+                    <h6 class="form-label mb-0">@(String.IsNullOrEmpty(item.Description)?item.Name:item.Description)</h6>
                     <div>
                         @*Read*@
                         <button @(edit? "" : "disabled") type="button" class="@(item.Read ? "btn btn-icon btn-outline-info" : "btn btn-icon btn-outline-secondary")" style="margin: 0 10px;" onclick="onToggleAccessTypeValue('@ViewBag.PermissionId','@item.Id',2)">

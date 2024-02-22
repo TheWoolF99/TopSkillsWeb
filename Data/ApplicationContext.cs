@@ -44,6 +44,7 @@ namespace Data
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Attendance> Attendance { get; set; }
         public DbSet<LoggerItem> Logger { get; set; }
+        public DbSet<LoggerLoginItem> LogAuth { get; set; }
         public DbSet<Abonement> Abonements { get; set; }
 
         public DbSet<GlobalOptions> GlobalOptions { get; set; }
@@ -140,6 +141,10 @@ namespace Data
             .HasDefaultValueSql("getdate()");
             modelBuilder.Entity<Attendance>().Property(b => b.DateCreate)
             .HasDefaultValueSql("getdate()");
+            modelBuilder.Entity<LoggerLoginItem>().Property(b => b.Date)
+            .HasDefaultValueSql("getdate()");
+            modelBuilder.Entity<LoggerItem>().Property(b => b.Date)
+            .HasDefaultValueSql("getdate()");
 
 
             //modelBuilder.Entity<AccessTypes>().HasData(
@@ -152,5 +157,6 @@ namespace Data
             //    ]);
 
         }
+
     }
 }

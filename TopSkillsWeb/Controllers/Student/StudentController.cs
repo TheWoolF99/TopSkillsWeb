@@ -37,7 +37,7 @@ namespace TopSkillsWeb.Controllers.Student
             return View(await _student.GetAllStudentsAsync());
         }
 
-
+        [HasAccess("Students", "create")]
         public async Task<IActionResult> GetModalAddEditStudent(int? StudentId = null)
         {
             StudentModel student = new();
@@ -49,6 +49,7 @@ namespace TopSkillsWeb.Controllers.Student
             }
             return PartialView("ModalNewStudent", student);
         }
+        [HasAccess("Students", "create")]
         public async Task<IActionResult> OnAddUpdateStudent(StudentModel Student)
         {
             bool add = Student.StudentId == 0;
@@ -67,14 +68,14 @@ namespace TopSkillsWeb.Controllers.Student
             return RedirectToAction("ShowModalSuccess", "Home", new { message = add? Resource.StudentAddDone : Resource.StudentEditDone });
         }
 
-
+        [HasAccess("Students", "read")]
         public async Task<IActionResult> OnUpdateTableRows()
         {
             var Students = await _student.GetAllStudentsAsync();
             return PartialView("RowsPart", Students);
         }
 
-
+        [HasAccess("RefreshAbonement", "update")]
         public async Task<IActionResult> OnRefreshAbonement(int StudentId)
         {
             await _abonement.RefreshAbonement(StudentId);

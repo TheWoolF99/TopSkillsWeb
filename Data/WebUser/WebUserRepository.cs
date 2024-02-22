@@ -81,6 +81,17 @@ namespace Data.WebUser
             return false;
         }
 
+        public async Task<IEnumerable<User>> GetAllUsers()
+        {
+            var dbContext = dbContextFactory.Create(typeof(WebUserRepository));
+            return await dbContext.AspNetUsers.Where(x=>x.NormalizedUserName != "OWNERAPP").ToListAsync();
+        }
+
+        public async Task<IEnumerable<UserRole>> GetAllRoles()
+        {
+            var dbContext = dbContextFactory.Create(typeof(WebUserRepository));
+            return await dbContext.AspNetRoles.ToListAsync();
+        }
 
         public async Task<IEnumerable<UserRolePermissions>> GetUserRolesPermissions(string UserName)
         {

@@ -14,5 +14,7 @@ namespace Data.WebUser
         public Task<string> GetUserRoles(string UserName);
         public Task<bool> HasExtraAccess(string UserName);
         public Task<IEnumerable<UserRolePermissions>> GetUserRolesPermissions(string UserName);
+        public Task<IEnumerable<User>> GetAllUsers();
+        public Task<IEnumerable<UserRole>> GetAllRoles();
     }
 }

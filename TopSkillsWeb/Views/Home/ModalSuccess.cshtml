@@ -2,7 +2,7 @@
 
 <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
     <div class="modal-content">
-        <button type="button" class="btn-close" onclick="CloseModal()" aria-label="Close"></button>
+        <button type="button" class="btn-close" id="CrossClose" onclick="CloseModal()" aria-label="Close"></button>
         <div class="modal-status bg-success"></div>
         <div class="modal-body text-center py-4">
             <!-- Download SVG icon from http://tabler-icons.io/i/circle-check -->
@@ -14,7 +14,7 @@
             <div class="w-100">
                 <div class="row">
                     <div class="col">
-                        <a onclick="CloseModal()" class="btn btn-success w-100">
+                        <a onclick="CloseModal()" id="closeModalBtn" class="btn btn-success w-100">
                             Ок
                         </a>
                     </div>

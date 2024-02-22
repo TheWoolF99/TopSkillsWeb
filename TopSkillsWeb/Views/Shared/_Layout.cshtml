@@ -56,7 +56,9 @@
                                 <vc:culture-switcher class="mt-3" />
                                 <div class="dropdown-divider"></div>
                                 <a asp-action="AccountSettings" asp-controller="Account" class="dropdown-item">@Resource.Settings</a>
-                                <a href="./sign-in.html" class="dropdown-item">Logout</a>
+                                <form method="post" asp-controller="Account" asp-action="Logout">
+                                    <input type="submit" class="dropdown-item" value="@Resource.LogOut" />
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -159,7 +161,13 @@
                                     </a>
                                     <div class="dropdown-menu">
                                          <a class="dropdown-item" asp-controller="Accesses" asp-action="Index">
-                                        @Resource.Accesses
+                                            @Resource.Accesses
+                                        </a>
+                                        <a class="dropdown-item" asp-controller="Logging" asp-action="Index">
+                                            @Resource.Logging
+                                        </a>
+                                        <a class="dropdown-item" asp-controller="Account" asp-action="Logins">
+                                            @Resource.Logins
                                         </a>
                                         @*<a class="dropdown-item" href="./changelog.html">
                                         Changelog
@@ -193,6 +201,8 @@
         </footer> *@
     </div>
     <div class="modal modal-blur fade" id="modal_body" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
+    <div class="modal modal-blur fade" id="alert_body" tabindex="-1" role="dialog" aria-hidden="true"></div>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/tabler.min.js" asp-append-version="true"></script>
     <script src="~/js/partTwo.min.js" asp-append-version="true"></script>
@@ -278,18 +288,36 @@
         $("#modal_body").addClass("show");
     }
 
+    function CloseAlert(){
+        $('#alert_body').hide();
+        $("#alert_body").removeClass("show");
+    }
+    function OpenAlert() {
+        $('#alert_body').show();
+        $("#alert_body").addClass("show");
+        $('#alert_body #closeModalBtn, #CrossClose').attr('onclick', 'CloseAlert()');
+    }
+
+    function AlertValidate(message) {
+        $.get('@Url.Action("ShowModalError", "Home")', { message: message }, function (data) {
+            $('#alert_body').html(data);
+            OpenAlert();
+        });
+
+    }
+
     function AlertSuccess(message) {
         $.get('@Url.Action("ShowModalSuccess", "Home")', { message: message }, function (data) {
-            $('#modal_body').html(data);
-            OpenModal();
+            $('#alert_body').html(data);
+            OpenAlert();
         });
     }
 
 
     function AlertError(message) {
         $.get('@Url.Action("ShowModalError", "Home")', { message: message }, function (data) {
-            $('#modal_body').html(data);
-            OpenModal();
+            $('#alert_body').html(data);
+            OpenAlert();
         });
     }
 

@@ -36,6 +36,15 @@ namespace Data.WebUser
         {
             return await webUser.GetUserRolesPermissions(UserName);
         }
+        public async Task<IEnumerable<User>> GetAllUsers()
+        {
+            return await webUser.GetAllUsers();
+        }
 
+
+        public async Task<IEnumerable<UserRole>> GetAllRoles()
+        {
+            return await webUser.GetAllRoles();
+        }
     }
 }

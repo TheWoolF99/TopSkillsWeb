@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using TopSkillsWeb.Attributes;
 using TopSkillsWeb.Resources;
 using TeacherModel = Core.Teacher;
 
@@ -25,12 +26,13 @@ namespace TopSkillsWeb.Controllers.Teacher
             this._teacher = _tS;
         }
 
+        [HasAccess("Teacher", "read")]
         public async Task<IActionResult> Index()
         {
             return View(await _teacher.GetAllTeachersAsync());
         }
 
-
+        [HasAccess("Teacher", "create")]
         public async Task<IActionResult> GetModalAddEditTeacher(int? TeacherId = null)
         {
             TeacherModel course = new();
@@ -42,6 +44,8 @@ namespace TopSkillsWeb.Controllers.Teacher
             }
             return PartialView("ModalNewTeacher", course);
         }
+
+        [HasAccess("Teacher", "create")]
         public async Task<IActionResult> OnAddUpdateTeacher(TeacherModel Teacher)
         {
             bool add = Teacher.TeacherId == 0;
@@ -56,6 +60,7 @@ namespace TopSkillsWeb.Controllers.Teacher
             return RedirectToAction("ShowModalSuccess", "Home", new { message = add? Resource.TeacherAddDone : Resource.TeacherEditDone });
         }
 
+        [HasAccess("Teacher", "read")]
         public async Task<IActionResult> OnUpdateTableRows()
         {
             var Teachers = await _teacher.GetAllTeachersAsync();

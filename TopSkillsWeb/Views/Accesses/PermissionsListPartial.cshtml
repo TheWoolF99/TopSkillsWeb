@@ -4,7 +4,7 @@
 {
     @foreach (var item in Model)
     {
-        <a onclick="onShowPermissionDetail('@item.PermissionId')" class="list-group-item list-group-item-action permission_item" style="cursor: pointer;">@item.Description</a>
+        <a onclick="onShowPermissionDetail('@item.PermissionId', event)" class="list-group-item list-group-item-action permission_item" style="cursor: pointer;">@item.Description</a>
     }
 }
 else

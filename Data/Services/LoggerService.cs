@@ -1,6 +1,8 @@
 ﻿
 using Core.Logger;
+using Data.Repository;
 using Interfaces.Logger;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +22,26 @@ namespace Data.Services
             await _log.AddLog(item);
         }
 
+        public async Task AddLog(LoggerLoginItem item)
+        {
+            await _log.AddLog(item);
+        }
 
+        public async Task<IEnumerable<LoggerLoginItem>> GetLogsAuth()
+        {
+            return await _log.GetLogsAuth();
+        }
+
+        public async Task<IEnumerable<LoggerLoginItem>> GetLogsAuthWithFilter(LoggerFilter filters)
+        {
+            var list = await _log.GetLogsAuth();
+            list = list.Where(x => x.Date.Date >= filters.DateStart.Date && x.Date.Date <= filters.DateEnd.Date).ToList();
+            if (!String.IsNullOrEmpty(filters.UserName))
+            {
+                list = list.Where(x => x.UserName.ToLower() == filters.UserName.ToLower()).ToList();
+            }
+            return list;
+        }
 
     }
 }

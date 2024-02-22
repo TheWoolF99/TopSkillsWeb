@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = Resource.Logging;
+}
+<link rel="stylesheet" href="~/css/Logging.css" />
+<div class="page-header d-print-none">
+    <div class="container-xl">
+        <div class="row g-2 align-items-center">
+            <div class="col">
+                <h2 class="page-title">
+                    @Resource.Logging
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="page-body">
+    <div class="container-xl">
+        <div class="card">
+            <div class="card-body">
+                <pre id="progress" style="width: max-content;">[                                                  ] 0%</pre>
+
+                <div id="LogContainer" class="LogContainer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        OnGetLogAuth();
+    });
+
+
+    function OnGetLogAuth() {
+        LoadingText();
+        $.get('@Url.Action("GetLogAuth", "Logging")', null, function (data) {
+            $('#LogContainer').html(data);
+            $('#progress').hide();
+        });
+    }
+
+    function LoadingText() {
+        for (let i = 0; i <= 100; i++) {
+            setTimeout(() => {
+                progressBar(i);
+                if (i === 100) {
+                    document.getElementById('progress').innerText += "\n";
+                }
+            }, i * 10);
+        }
+    }
+    function progressBar(percent) {
+        const width = 50;
+        const complete = Math.round(width * (percent / 100));
+        const incomplete = width - complete;
+        const bar = "[" + "█".repeat(complete) + " ".repeat(incomplete) + "]";
+
+        document.getElementById('progress').innerText = bar + " " + percent + "%";
+    }
+
+    
+
+    
+
+</script>

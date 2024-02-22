@@ -14,14 +14,14 @@
                 <ol class="list-group list-group-numbered" style="max-height: 35vh;overflow-y: auto;">
                     @foreach (var item in Model)
                     {
-                        <li class="list-group-item">@item.Name</li>
+                        <li class="list-group-item">@item.Name - @item.Description</li>
                     }
                 </ol>
             </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" onclick="CloseModal()">
-                Закрыть
+                @Resource.Close
             </button>
 
         </div>

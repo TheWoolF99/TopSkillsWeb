@@ -1,0 +1,12 @@
+﻿
+
+.LogContainer {
+    width: max-content;
+    min-width: 600px;
+}
+
+
+    .LogContainer > div {
+        height: 70vh;
+        overflow-y: auto;
+    }
