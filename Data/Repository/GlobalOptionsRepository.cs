@@ -1,4 +1,5 @@
 ﻿using Core;
+using Core.Mailer;
 using Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -51,6 +52,49 @@ namespace Data.Repository
             await db.GlobalOptions.AddAsync(option);
             await db.SaveChangesAsync();
         }
+
+        public async Task UpdateOptions(string OptionsName, string OptionValue)
+        {
+            var db = _context.Create(typeof(GlobalOptionsRepository));
+            var opt = db.GlobalOptions.Where(x => x.OptionName.ToLower() == OptionsName.ToLower()).FirstOrDefault();
+            if(opt != null)
+            {
+                opt.OptionValue = OptionValue;
+                await db.SaveChangesAsync();
+            }
+        }
+
+
+        public async Task<MailOption> GetMailOptionAsync()
+        {
+            List<string> listField = new() {"MailTo",
+                "MailToName",
+                "From",
+                "FromName",
+                "SMTPHost",
+                "SMTPPort",
+                "SMTPUseSSL",
+                "SMTPLogin",
+                "SMTPPassword"
+            };
+
+            var db = _context.Create(typeof(GlobalOptionsRepository));
+            var MailOption = db.GlobalOptions.Where(x => listField.Contains(x.OptionName)).ToDictionary(x=>x.OptionName, x=>x.OptionValue);
+            MailOption opt = new()
+            {
+                From = MailOption["From"],
+                FromName = MailOption["FromName"],
+                To = MailOption["MailTo"],
+                ToName = MailOption["MailToName"],
+                SMTPHost = MailOption["SMTPHost"],
+                SMTPPort = Convert.ToInt32(MailOption["SMTPPort"]),
+                SMTPUseSSL = Convert.ToBoolean(MailOption["SMTPUseSSL"]),
+                SMTPLogin = MailOption["SMTPLogin"],
+                SMTPPassword = MailOption["SMTPPassword"]
+            };
+            return opt;
+        }
+
 
     }
 }

@@ -286,6 +286,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Подключение.
+        /// </summary>
+        public static string Connect {
+            get {
+                return ResourceManager.GetString("Connect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Курс (направление).
         /// </summary>
         public static string Course {
@@ -745,6 +754,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Данные для входа.
+        /// </summary>
+        public static string LoginData {
+            get {
+                return ResourceManager.GetString("LoginData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Вход в учетную запись.
         /// </summary>
         public static string LoginInAccount {
@@ -768,6 +786,15 @@ namespace TopSkillsWeb.Resources {
         public static string LogOut {
             get {
                 return ResourceManager.GetString("LogOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Настройки почты.
+        /// </summary>
+        public static string MailSettings {
+            get {
+                return ResourceManager.GetString("MailSettings", resourceCulture);
             }
         }
         
@@ -907,6 +934,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Получатель.
+        /// </summary>
+        public static string Recipient {
+            get {
+                return ResourceManager.GetString("Recipient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Справочники.
         /// </summary>
         public static string References {
@@ -997,6 +1033,24 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Отпровитель.
+        /// </summary>
+        public static string Sender {
+            get {
+                return ResourceManager.GetString("Sender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Отправитель/Получатель.
+        /// </summary>
+        public static string SenderRecipient {
+            get {
+                return ResourceManager.GetString("SenderRecipient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Сентябрь.
         /// </summary>
         public static string September {
@@ -1038,6 +1092,33 @@ namespace TopSkillsWeb.Resources {
         public static string SignUp {
             get {
                 return ResourceManager.GetString("SignUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Порт SMTP сервера.
+        /// </summary>
+        public static string SMTPPort {
+            get {
+                return ResourceManager.GetString("SMTPPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Сервер SMTP.
+        /// </summary>
+        public static string SMTPServer {
+            get {
+                return ResourceManager.GetString("SMTPServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Имя SMTP сервера.
+        /// </summary>
+        public static string SMTPServerName {
+            get {
+                return ResourceManager.GetString("SMTPServerName", resourceCulture);
             }
         }
         
@@ -1141,6 +1222,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Проверить отправку письма.
+        /// </summary>
+        public static string TestSendMail {
+            get {
+                return ResourceManager.GetString("TestSendMail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Чт.
         /// </summary>
         public static string Thurs {
@@ -1191,6 +1281,15 @@ namespace TopSkillsWeb.Resources {
         public static string UserNameLengthError {
             get {
                 return ResourceManager.GetString("UserNameLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Использовать SSL?.
+        /// </summary>
+        public static string UseSSL {
+            get {
+                return ResourceManager.GetString("UseSSL", resourceCulture);
             }
         }
         

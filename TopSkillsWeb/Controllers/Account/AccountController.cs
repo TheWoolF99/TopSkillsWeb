@@ -1,6 +1,7 @@
 ﻿using Core;
 using Core.Account;
 using Core.Logger;
+using Core.Mailer;
 using Data.Repository;
 using Data.Services;
 using Data.WebUser;
@@ -124,7 +125,6 @@ namespace TopSkillsWeb.Controllers.Account
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-
             //Сначала выходим
             await _signInManager.SignOutAsync();
             //Записываем в лог
@@ -251,11 +251,37 @@ namespace TopSkillsWeb.Controllers.Account
                 case 1:
                     var RolesPermissions = await _webUser.GetUserRolesPermissions(User.Identity.Name);
                     return PartialView("Tabs/MyRolesAndPermissions", RolesPermissions);
+                case 2:
+                    if (User.IsInRole("OwnerApp")) 
+                    {
+                        var opt = await _options.GetMailOptionAsync();
+                        return PartialView("Tabs/MailOptions", opt);
+                    }
+                    else { return RedirectToAction("AccessDenied", "Home");}
                 case 3:
                     return PartialView("Tabs/FeedBackTabs", new FeedBackModel());
                 default: return PartialView();
             }
         }
+
+        [Authorize(Roles = "OwnerApp")]
+        public async Task<IActionResult> OnChangeMailerSetting(MailOption model)
+        {
+
+            foreach (var item in model.GetType().GetProperties())
+            {
+                if(item.Name == "SMTPLogin" | item.Name == "SMTPPassword")
+                {
+                    await _options.UpdateOptions(item.Name, AES_128_ECB.Encrypt_AES_128_ECB(item.GetValue(model).ToString()));
+                }
+                else
+                {
+                    await _options.UpdateOptions(item.Name, item.GetValue(model).ToString());
+                }
+            }
+            return RedirectToAction("ShowModalSuccess", "Home", new { message = Resources.Resource.Saved });
+        }
+
 
 
         [Authorize]

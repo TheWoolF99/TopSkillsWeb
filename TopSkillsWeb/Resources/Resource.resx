@@ -192,6 +192,9 @@
   <data name="ConfrimPassword" xml:space="preserve">
     <value>Подтверждение пароля</value>
   </data>
+  <data name="Connect" xml:space="preserve">
+    <value>Подключение</value>
+  </data>
   <data name="Course" xml:space="preserve">
     <value>Курс (направление)</value>
   </data>
@@ -345,6 +348,9 @@
   <data name="Login" xml:space="preserve">
     <value>Вход</value>
   </data>
+  <data name="LoginData" xml:space="preserve">
+    <value>Данные для входа</value>
+  </data>
   <data name="LoginInAccount" xml:space="preserve">
     <value>Вход в учетную запись</value>
   </data>
@@ -353,6 +359,9 @@
   </data>
   <data name="LogOut" xml:space="preserve">
     <value>Выйти</value>
+  </data>
+  <data name="MailSettings" xml:space="preserve">
+    <value>Настройки почты</value>
   </data>
   <data name="March" xml:space="preserve">
     <value>Март</value>
@@ -399,6 +408,9 @@
   <data name="Previous" xml:space="preserve">
     <value>Предыдущий</value>
   </data>
+  <data name="Recipient" xml:space="preserve">
+    <value>Получатель</value>
+  </data>
   <data name="References" xml:space="preserve">
     <value>Справочники</value>
   </data>
@@ -429,6 +441,12 @@
   <data name="Search" xml:space="preserve">
     <value>Поиск</value>
   </data>
+  <data name="Sender" xml:space="preserve">
+    <value>Отпровитель</value>
+  </data>
+  <data name="SenderRecipient" xml:space="preserve">
+    <value>Отправитель/Получатель</value>
+  </data>
   <data name="September" xml:space="preserve">
     <value>Сентябрь</value>
   </data>
@@ -443,6 +461,15 @@
   </data>
   <data name="SignUp" xml:space="preserve">
     <value>Зарегистрироваться</value>
+  </data>
+  <data name="SMTPPort" xml:space="preserve">
+    <value>Порт SMTP сервера</value>
+  </data>
+  <data name="SMTPServer" xml:space="preserve">
+    <value>Сервер SMTP</value>
+  </data>
+  <data name="SMTPServerName" xml:space="preserve">
+    <value>Имя SMTP сервера</value>
   </data>
   <data name="StudentAddDone" xml:space="preserve">
     <value>Студент успешно создан</value>
@@ -477,6 +504,9 @@
   <data name="Teachers" xml:space="preserve">
     <value>Учителя</value>
   </data>
+  <data name="TestSendMail" xml:space="preserve">
+    <value>Проверить отправку письма</value>
+  </data>
   <data name="Thurs" xml:space="preserve">
     <value>Чт</value>
   </data>
@@ -494,6 +524,9 @@
   </data>
   <data name="UserNameLengthError" xml:space="preserve">
     <value>Имя пользователя не может быть меньше 5 символов</value>
+  </data>
+  <data name="UseSSL" xml:space="preserve">
+    <value>Использовать SSL?</value>
   </data>
   <data name="Visits" xml:space="preserve">
     <value>Посещения</value>

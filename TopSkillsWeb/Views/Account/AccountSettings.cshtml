@@ -10,7 +10,10 @@
                     <div class="list-group list-group-transparent">
                         <a onclick="OnChangeTabSettings(0, event)" class="list-group-item list-group-item-action d-flex align-items-center active">@Resource.Account</a>
                         <a onclick="OnChangeTabSettings(1, event)" class="list-group-item list-group-item-action d-flex align-items-center">@Resource.MyRoles</a>
-                        @*<a title="В процессе разработки" class="list-group-item list-group-item-action d-flex align-items-center disabled">Стронние сервисы</a> *@
+                        @if (User.IsInRole("OwnerApp"))
+                        {
+                            <a onclick="OnChangeTabSettings(2, event)" class="list-group-item list-group-item-action d-flex align-items-center">@Resource.MailSettings</a>
+                        }
                     </div>
                     <h4 class="subheader mt-4">@Resource.Support</h4>
                     <div class="list-group list-group-transparent">
@@ -98,7 +101,7 @@
                     }
                 },
                 error: function (xhr) {
-                    AlertValidate(xhr.respomseText);
+                    AlertValidate(xhr.responseText);
                 }
             });
 

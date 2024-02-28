@@ -1,4 +1,5 @@
 ﻿using Core;
+using Core.Mailer;
 using Interfaces;
 using Interfaces.Abonement;
 using Microsoft.EntityFrameworkCore;
@@ -30,10 +31,24 @@ namespace Data.Services
             await _options.UpdateOptions(option);
         }
 
+        public async Task UpdateOptions(string OptionsName, string OptionValue)
+        {
+            await _options.UpdateOptions(OptionsName, OptionValue);
+        }
+
         public async Task AddOptions(GlobalOptions option)
         {
             await _options.AddOptions(option);
         }
+
+        public async Task<MailOption> GetMailOptionAsync()
+        {
+            var opt =  await _options.GetMailOptionAsync();
+            opt.SMTPLogin = AES_128_ECB.Decrypt_AES_128_ECB(opt.SMTPLogin);
+            opt.SMTPPassword = AES_128_ECB.Decrypt_AES_128_ECB(opt.SMTPPassword);
+            return opt;
+        }
+
     }
 }
 

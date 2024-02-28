@@ -1,13 +1,16 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 
-namespace WebYukon.Presentation.Models
+namespace Core
 {
     public class AES_128_ECB
     {
         private static string GetSecretKey()
         {
-            return "huypizdabukkake6";
+            string str = "kB7isBKMVmhQMgLWlXz9iQkjNVnPB0Wh";
+            return Regex.Replace(str, @"\s+", String.Empty);
         }
 
         public static string Encrypt_AES_128_ECB(string plainText, string? Key = null)
@@ -38,7 +41,10 @@ namespace WebYukon.Presentation.Models
 
         public static string Decrypt_AES_128_ECB(string plainText, string? Key = null)
         {
-
+            if(!Convert.TryFromBase64String(plainText,new Span<byte>(new byte[plainText.Length]), out int bytesParsed))
+            {
+                return plainText;
+            }
 
             // Convert the plain text to a byte array
             //byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);

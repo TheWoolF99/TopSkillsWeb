@@ -1,0 +1,163 @@
+﻿@model Core.Mailer.MailOption
+
+
+<div class="card-body">
+    <h2 class="mb-4">@Resource.MailSettings</h2>
+    
+    <h3 class="card-title mt-4">@Resource.SenderRecipient</h3>
+
+    <div class="mb-3 row">
+        <label class="col-3 col-form-label required">@Resource.Sender</label>
+        <div class="col">
+            <input id="MailFrom" type="email" class="form-control" placeholder="Email" value="@Model.From">
+        </div>
+        <div class="col">
+            <input id="MailFromName" type="text" class="form-control" placeholder="@Resource.FirstName" value="@Model.FromName">
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label class="col-3 col-form-label required">@Resource.Recipient</label>
+        <div class="col">
+            <input id="MailTo" type="email" class="form-control" placeholder="Email" value="@Model.To">
+        </div>
+        <div class="col">
+            <input id="MailToName" type="text" class="form-control" placeholder="@Resource.FirstName" value="@Model.ToName">
+        </div>
+    </div>
+
+
+
+    <h3 class="card-title mt-4">@Resource.SMTPServer</h3>
+
+    <div class="mb-3 row">
+        <label class="col-3 col-form-label required">@Resource.LoginData</label>
+        <div class="col">
+            <input id="SMTPLogin" type="email" class="form-control" placeholder="SMTPLogin" value="@Model.SMTPLogin">
+            <small class="form-hint">Login</small>
+        </div>
+        <div class="col">
+            <input id="SMTPPassword" type="text" class="form-control" placeholder="SMTPPassword" value="@Model.SMTPPassword">
+            <small class="form-hint">Password</small>
+        </div>
+    </div>
+
+    <div class="form-label">@Resource.Connect</div>
+    <div class="table-responsive mb-4">
+        <table class="table card-table table-vcenter">
+            <thead>
+                <tr>
+                    <th>@Resource.SMTPServerName</th>
+                    <th>@Resource.SMTPPort</th>
+                    <th>@Resource.UseSSL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <input id="SMTPServerHost" type="text" class="form-control" value="@Model.SMTPHost">
+                    </td>
+                    <td>
+                        <input id="SMTPServerPort" type="text" class="form-control" value="@Model.SMTPPort">
+                    </td>
+                    <td>
+                        <input id="SMTPServerUseSSL" type="checkbox" class="form-check-input m-0 align-middle" @(Model.SMTPUseSSL ? "checked" : "")>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a onclick="GetTestSend()" class="btn btn-ghost-info">
+        @Resource.TestSendMail
+    </a>
+
+</div>
+<div class="card-footer bg-transparent mt-auto">
+    <div class="btn-list justify-content-end">
+        <a asp-controller="Home" asp-action="Index" class="btn">
+            Отмена
+        </a>
+        <a onclick="onSaveMailerChanges();" class="btn btn-primary">
+            @Resource.Save
+        </a>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    function GetTestSend() {
+        if (confirm('Вы сохранили изменения?')) {
+
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetTestSendMail", "Mailer")',
+                success: function (data) {
+                    if (data.code == '200') {
+                        AlertSuccess('Успех! Проверьте почту');
+                    }
+                    else {
+                        AlertError(data.result);
+                    }
+                },
+                error: function (xhr, data) {
+                    AlertError(xhr.responseText);
+                }
+            });
+        }
+    }
+
+    function validate(){
+        var ValidField = true;
+        
+        if (!validateEmail($('#MailTo').val()) || !validateEmail($('#MailFrom').val()) )
+        {
+            ValidField = false;
+        }
+        
+        if (!containsTextOrNumbers($('#MailToName').val())
+            || !containsTextOrNumbers($('#MailFromName').val())
+            || !containsTextOrNumbers(GetSMTPServerHostValue())
+            || !containsTextOrNumbers($('#SMTPServerPort').val())
+            || !containsTextOrNumbers($('#SMTPLogin').val())
+            || !containsTextOrNumbers($('#SMTPPassword').val())
+        ) 
+        { 
+            ValidField = false;
+        }
+        return ValidField;
+    }
+
+
+    function GetSMTPServerHostValue() 
+    { 
+        return $('#SMTPServerHost').val().replace('http://', '').replace('https://', '');
+    }
+
+    function onSaveMailerChanges()
+    {
+        if (validate()) {
+            OptionMail = {}
+            OptionMail["To"] = $('#MailTo').val();
+            OptionMail["ToName"] = $('#MailToName').val();
+            OptionMail["From"] = $('#MailFrom').val();
+            OptionMail["FromName"] = $('#MailFromName').val();
+            OptionMail["SMTPHost"] = GetSMTPServerHostValue();
+            OptionMail["SMTPPort"] = $('#SMTPServerPort').val();
+            OptionMail["SMTPUseSSL"] = $('#SMTPServerUseSSL').prop('checked');
+            OptionMail["SMTPLogin"] = $('#SMTPLogin').val();
+            OptionMail["SMTPPassword"] = $('#SMTPPassword').val();
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("OnChangeMailerSetting", "Account")',
+                data: OptionMail,
+                success: function (data) {
+                    $('#modal_body').html(data);
+                    OpenModal();
+                }
+            });
+        }
+    }
+
+</script>

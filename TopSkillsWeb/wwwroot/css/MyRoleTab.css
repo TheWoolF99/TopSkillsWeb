@@ -12,3 +12,9 @@
     li.PermissionElement:not(:first-child) {
         border-top: var(--tblr-border-width) var(--tblr-border-style) var(--tblr-border-color-translucent) !important;
     }
+
+
+.PermissionList {
+    max-height: 65vh;
+    overflow-y: auto;
+}
