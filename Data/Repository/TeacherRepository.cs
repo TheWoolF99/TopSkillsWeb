@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Z.EntityFramework.Plus;
 
 namespace Data.Repository
 {
@@ -50,7 +51,7 @@ namespace Data.Repository
         public async Task DeleteAsync(int id)
         {
             var db = _context.Create(typeof(TeacherRepository));
-
+            await db.Teachers.Where(x => x.TeacherId == id).DeleteAsync();
             await db.SaveChangesAsync();
         }
     }

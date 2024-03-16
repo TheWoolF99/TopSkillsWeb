@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<Core.Group>
 @{
     ViewData["Title"] = Resource.GroupsStudents;
+    bool edit = ViewBag.Edit ??= false;
+    bool delete = ViewBag.Delete ??= false;
 }
 <link rel="stylesheet" href="~/css/Group.css" />
 <div class="page-header d-print-none">
@@ -32,7 +34,14 @@
                         <th>@Resource.GroupName</th>
                         <th>@Resource.CourseName</th>
                         <th>@Resource.TeacherName</th>
-                        <th class="w-1"></th>
+                        @if (edit)
+                        {
+                            <th class="w-1"></th>
+                        }
+                        @if (delete)
+                        {
+                            <th class="w-1"></th>
+                        }
                     </tr>
                 </thead>
                 <tbody id="GroupTbody">
@@ -47,6 +56,13 @@
 <script type="text/javascript">
     function OnGetModalEdit(id){
         $.get('@Url.Action("GetModalAddEditGroup", "Group")', { GroupId: id}, function (data) {
+            $('#modal_body').html(data);
+            OpenModal();
+        });
+    }
+
+    function OnGetConfrimDelete(id) {
+        $.get('@Url.Action("ConfirmDeleteGroup", "Group")', { GroupId: id }, function (data) {
             $('#modal_body').html(data);
             OpenModal();
         });

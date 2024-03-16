@@ -51,6 +51,12 @@ namespace Data.Services
         {
             await _group.UpdateGroupWithStudents(groupId, StudentsIds);
         }
+
+        public async Task DeleteAsync(int id)
+        {
+            await _group.DeleteAsync(id);
+        }
+
     }
 
     

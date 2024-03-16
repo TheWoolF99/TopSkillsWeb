@@ -13,6 +13,7 @@ namespace Interfaces.Student
         Task<Core.Student> GetStudentAsync(int id);
         Task<int> AddStudentAsync(Core.Student student);
         Task UpdateStudentAsync(Core.Student student);
+        Task DeleteAsync(int id);
         void UpdateRange(List<Core.Student> student);
         
     }

@@ -14,5 +14,6 @@ namespace Interfaces.Attendance
         Task<IEnumerable<AttendanceModel>> GetAttendancesByDateRange(DateTime date);
         Task<bool> OnAddAttendanceByDateAndGroupId(AttendanceModel attendance);
         Task OnStartAttendance(List<AttendanceModel> attendances);
+        Task OnDeleteAttendance(int AttendanceId);
     }
 }

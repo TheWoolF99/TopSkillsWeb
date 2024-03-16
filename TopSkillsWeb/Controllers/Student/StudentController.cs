@@ -34,6 +34,10 @@ namespace TopSkillsWeb.Controllers.Student
         [HasAccess("Students","read")]
         public async Task<IActionResult> Index()
         {
+            string name = User.Identity.Name;
+            ViewBag.Edit = await _webUser.HasAccess(name, "edit", "Students");
+            ViewBag.Delete = await _webUser.HasAccess(name, "delete", "Students");
+
             return View(await _student.GetAllStudentsAsync());
         }
 
@@ -71,11 +75,28 @@ namespace TopSkillsWeb.Controllers.Student
         [HasAccess("Students", "read")]
         public async Task<IActionResult> OnUpdateTableRows()
         {
+            string name = User.Identity.Name;
+            ViewBag.Edit = await _webUser.HasAccess(name, "edit", "Students");
+            ViewBag.Delete = await _webUser.HasAccess(name, "delete", "Students");
             var Students = await _student.GetAllStudentsAsync();
             return PartialView("RowsPart", Students);
         }
 
-        [HasAccess("RefreshAbonement", "update")]
+        [HasAccess("Students", "delete")]
+        public async Task<IActionResult> ConfirmDeleteStudent(int StudentId)
+        {
+            return PartialView("ConfirmDelete", StudentId);
+        }
+
+        [HasAccess("Students", "delete")]
+        public async Task<IActionResult> OnDeleteStudent(int StudentId)
+        {
+            await _student.DeleteAsync(StudentId);
+            return new EmptyResult();
+        }
+
+
+        [HasAccess("RefreshAbonement", "edit")]
         public async Task<IActionResult> OnRefreshAbonement(int StudentId)
         {
             await _abonement.RefreshAbonement(StudentId);

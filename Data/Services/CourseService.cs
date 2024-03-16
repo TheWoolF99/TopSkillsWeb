@@ -42,5 +42,10 @@ namespace Data.Services
             await _course.UpdateCourseAsync(course);
         }
 
+        public async Task DeleteAsync(int id)
+        {
+            await _course.DeleteAsync(id);
+        }
+
     }
 }

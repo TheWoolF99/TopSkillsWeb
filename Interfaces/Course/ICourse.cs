@@ -12,6 +12,7 @@ namespace Interfaces.Course
         Task<Core.Course> GetCourseAsync(int id);
         Task AddCourseAsync(Core.Course course);
         Task UpdateCourseAsync(Core.Course course);
+        Task DeleteAsync(int id);
 
     }
 }

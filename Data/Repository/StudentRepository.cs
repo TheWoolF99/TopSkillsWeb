@@ -46,6 +46,7 @@ namespace Data.Repository
         public async Task DeleteAsync(int id)
         {
             var db = _context.Create(typeof(StudentRepository));
+            await db.Students.Where(x => x.StudentId == id).DeleteAsync();
             await db.SaveChangesAsync();
         }
 

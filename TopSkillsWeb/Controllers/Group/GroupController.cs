@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Interfaces.Course;
 using Microsoft.AspNetCore.Authorization;
 using TopSkillsWeb.Attributes;
+using Data.WebUser;
 
 namespace TopSkillsWeb.Controllers.Group
 {
@@ -33,19 +34,26 @@ namespace TopSkillsWeb.Controllers.Group
         /// Сервис для работы с студентами
         /// </summary>
         private readonly StudentService _sS;
+        private readonly WebUserService _webUser;
 
-        public GroupController(GroupService groupService, CourseService courseService, TeacherService teacherService, StudentService sS)
+        public GroupController(GroupService groupService, CourseService courseService, TeacherService teacherService, StudentService sS, WebUserService webUser)
         {
             this._gS = groupService;
             this._cS = courseService;
             this._tS = teacherService;
             this._sS = sS;
+            _webUser = webUser;
+
         }
 
         [HasAccess("Group", "read")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_gS.GetAllGroupsAsync().Result);
+            string name = User.Identity.Name;
+            ViewBag.Edit = await _webUser.HasAccess(name, "edit", "Group");
+            ViewBag.Delete = await _webUser.HasAccess(name, "delete", "Course");
+
+            return View(await _gS.GetAllGroupsAsync());
         }
 
         [HasAccess("Group", "create")]
@@ -90,9 +98,27 @@ namespace TopSkillsWeb.Controllers.Group
         [HasAccess("Group", "read")]
         public async Task<IActionResult> OnUpdateTableRows()
         {
+            string name = User.Identity.Name;
+            ViewBag.Edit = await _webUser.HasAccess(name, "edit", "Group");
+            ViewBag.Delete = await _webUser.HasAccess(name, "delete", "Group");
+
             var Group = await _gS.GetAllGroupsAsync();
             return PartialView("RowsPart", Group);
         }
 
+
+
+        [HasAccess("Group", "delete")]
+        public async Task<IActionResult> ConfirmDeleteGroup(int GrouptId)
+        {
+            return PartialView("ConfirmDelete", GrouptId);
+        }
+
+        [HasAccess("Group", "delete")]
+        public async Task<IActionResult> OnDeleteGroup(int GrouptId)
+        {
+            await _gS.DeleteAsync(GrouptId);
+            return new EmptyResult();
+        }
     }
 }

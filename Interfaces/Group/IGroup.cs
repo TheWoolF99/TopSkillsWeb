@@ -16,5 +16,6 @@ namespace Interfaces.Group
         Task Update(Core.Group group);
         Task AddGroupStudentsAsync(IEnumerable<GroupStudent> groupStudents);
         Task UpdateGroupWithStudents(int groupId, List<int> StudentsIds);
+        Task DeleteAsync(int id);
     }
 }

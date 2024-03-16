@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
 using Data.WebUser;
 using TopSkillsWeb.Attributes;
+using Core;
 
 namespace TopSkillsWeb.Controllers.Attendance
 {
@@ -52,8 +53,14 @@ namespace TopSkillsWeb.Controllers.Attendance
         [HasAccess("Attendances", "create")]
         public async Task<IActionResult> CreateNewAttendance(AttendanceModel model)
         {
-
-            var AddDone = await _aS.OnAddAttendanceByDateAndGroupId(model);
+            try
+            {
+                var AddDone = await _aS.OnAddAttendanceByDateAndGroupId(model);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("ShowModalError", "Home", new { message = ex.Message });
+            }
 
             return new EmptyResult();
         }
@@ -100,7 +107,7 @@ namespace TopSkillsWeb.Controllers.Attendance
             return PartialView("AttendanceTable", lst);
         }
 
-        [HasAccess("Attendances", "update")]
+        [HasAccess("Attendances", "edit")]
         public async Task<IActionResult> GetStartAttendance(int GroupId, string date)
         {
             
@@ -109,7 +116,7 @@ namespace TopSkillsWeb.Controllers.Attendance
             return PartialView("ModalStartAttendance", lst);
         }
 
-        [HasAccess("Attendances", "update")]
+        [HasAccess("Attendances", "edit")]
         public async Task<IActionResult> OnStartAttendance(List<AttendanceModel> attendances)
         {
             try
@@ -128,7 +135,7 @@ namespace TopSkillsWeb.Controllers.Attendance
         {
             ViewBag.UpdateAbonementAccess = await _webUser.HasAccess(User.Identity.Name,"edit","RefreshAbonement");
             var model = (await _abonement.GetAllAbonements())?.Where(x => x.RemainingVisits <= 0).ToList();
-            if(!await _webUser.HasAccess(User.Identity.Name, "ListExpiredStudent", "read"))
+            if(!await _webUser.HasAccess(User.Identity.Name, "read" ,"ListExpiredStudent" ))
             {
                 model = new List<Core.Abonement.Abonement>();
             }
@@ -143,8 +150,19 @@ namespace TopSkillsWeb.Controllers.Attendance
             if(StudentsAbonementExpired.Count>0) 
                 return PartialView("ListExpiredAbonement", StudentsAbonementExpired); 
             else
-                return new EmptyResult(); 
+                return new EmptyResult();
+        }
 
+        [HasAccess("Attendances", "delete")]
+        public async Task<IActionResult> ConfirmDeleteAttendance(int AttendanceId)
+        {
+            return PartialView("ConfirmDelete", AttendanceId);
+        }
+        [HasAccess("Attendances", "delete")]
+        public async Task<IActionResult> OnDeleteAttendance(int AttendanceId)
+        {
+            await _aS.OnDeleteAttendance(AttendanceId);
+            return new EmptyResult();
         }
 
 

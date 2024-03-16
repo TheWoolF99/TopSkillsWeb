@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Z.EntityFramework.Plus;
 
 namespace Data.Repository
 {
@@ -38,6 +39,11 @@ namespace Data.Repository
             var db = _context.Create(typeof(AttendanceRepository));
             var Group = db.Groups.Include(s=>s.Students).ThenInclude(a=>a.Abonement).Where(x => x.GroupId == attendance.Group.GroupId).FirstOrDefault();
             List<Attendance> attendances = new();
+            if (Group.Students.Count() == 0)
+            {
+                throw new Exception("В группе нет студентов. Посещение не добавлено");
+            }
+
             foreach (var item in Group.Students)
             {
                 attendances.Add(new()
@@ -115,7 +121,19 @@ namespace Data.Repository
             await db.SaveChangesAsync();
         }
 
-
+        public async Task OnDeleteAttendance(int AttendanceId)
+        {
+            var db = _context.Create(typeof(AttendanceRepository));
+            var Attendance = db.Attendance.Where(x => x.AttendanceId == AttendanceId).Include(g => g.Group).FirstOrDefault();
+            if (Attendance != null)
+            {
+                await db.Attendance.Where(x => x.DateVisiting == Attendance.DateVisiting && x.Group.GroupId == Attendance.Group.GroupId).DeleteAsync();
+            }
+            else
+            {
+                throw new Exception("Группа не найдена");
+            }
+        }
 
 
 

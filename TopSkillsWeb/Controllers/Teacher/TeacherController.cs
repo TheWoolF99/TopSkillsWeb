@@ -1,4 +1,5 @@
 ﻿using Data.Services;
+using Data.WebUser;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -19,16 +20,22 @@ namespace TopSkillsWeb.Controllers.Teacher
         /// Сервис для работы с преподавателями
         /// </summary>
         private readonly TeacherService _teacher;
+        private readonly WebUserService _webUser;
 
-        public TeacherController(CourseService _course, TeacherService _tS)
+        public TeacherController(CourseService _course, TeacherService _tS, WebUserService _webUser)
         {
             this._course = _course;
             this._teacher = _tS;
+            this._webUser = _webUser;
         }
 
         [HasAccess("Teacher", "read")]
         public async Task<IActionResult> Index()
         {
+            string name = User.Identity.Name;
+            ViewBag.Edit = await _webUser.HasAccess(name, "edit", "Teacher");
+            ViewBag.Delete = await _webUser.HasAccess(name, "delete", "Teacher");
+
             return View(await _teacher.GetAllTeachersAsync());
         }
 
@@ -63,8 +70,26 @@ namespace TopSkillsWeb.Controllers.Teacher
         [HasAccess("Teacher", "read")]
         public async Task<IActionResult> OnUpdateTableRows()
         {
+            string name = User.Identity.Name;
+            ViewBag.Edit = await _webUser.HasAccess(name, "edit", "Teacher");
+            ViewBag.Delete = await _webUser.HasAccess(name, "delete", "Teacher");
             var Teachers = await _teacher.GetAllTeachersAsync();
             return PartialView("RowsPart", Teachers);
         }
+
+
+        [HasAccess("Teacher", "delete")]
+        public async Task<IActionResult> ConfirmDeleteTeacher(int TeachertId)
+        {
+            return PartialView("ConfirmDelete", TeachertId);
+        }
+
+        [HasAccess("Teacher", "delete")]
+        public async Task<IActionResult> OnDeleteTeacher(int TeachertId)
+        {
+            await _teacher.DeleteAsync(TeachertId);
+            return new EmptyResult();
+        }
+
     }
 }

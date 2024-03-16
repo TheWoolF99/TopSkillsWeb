@@ -48,5 +48,11 @@ namespace Data.Services
             await _attendance.OnStartAttendance(attendances);
         }
 
+
+        public async Task OnDeleteAttendance(int AttendanceId)
+        {
+            await _attendance.OnDeleteAttendance(AttendanceId);
+        }
+
     }
 }

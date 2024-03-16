@@ -232,6 +232,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Вы уверены?.
+        /// </summary>
+        public static string AUShure {
+            get {
+                return ResourceManager.GetString("AUShure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Календарь.
         /// </summary>
         public static string Calendar {
@@ -273,6 +282,51 @@ namespace TopSkillsWeb.Resources {
         public static string CompletedSuccessfully {
             get {
                 return ResourceManager.GetString("CompletedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Вы действительно хотите удалить посещения?.
+        /// </summary>
+        public static string ConfrimDeleteAttendance {
+            get {
+                return ResourceManager.GetString("ConfrimDeleteAttendance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Вы действительно хотите удалить курс?.
+        /// </summary>
+        public static string ConfrimDeleteCourse {
+            get {
+                return ResourceManager.GetString("ConfrimDeleteCourse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Вы действительно хотите удалить группу?.
+        /// </summary>
+        public static string ConfrimDeleteGroup {
+            get {
+                return ResourceManager.GetString("ConfrimDeleteGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Вы действительно хотите удалить студента?.
+        /// </summary>
+        public static string ConfrimDeleteStudent {
+            get {
+                return ResourceManager.GetString("ConfrimDeleteStudent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Вы действительно хотите удалить учителя?.
+        /// </summary>
+        public static string ConfrimDeleteTeacher {
+            get {
+                return ResourceManager.GetString("ConfrimDeleteTeacher", resourceCulture);
             }
         }
         
@@ -417,6 +471,15 @@ namespace TopSkillsWeb.Resources {
         public static string December {
             get {
                 return ResourceManager.GetString("December", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Удалить.
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
             }
         }
         

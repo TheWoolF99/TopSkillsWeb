@@ -110,8 +110,14 @@
             url: '@Url.Action("CreateNewAttendance", "Attendance")',
             data: { model: Attendance },
             success: function (data) {
-                $('#modal_body').html(data);
-                CloseModal();
+                if(data.length>0){
+                    $('#modal_body').html(data);
+                    OpenModal();
+                }
+                else
+                {
+                    CloseModal();
+                }
                 UpdateCalendarData();
             }
         });

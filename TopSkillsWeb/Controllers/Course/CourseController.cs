@@ -1,4 +1,5 @@
 ﻿using Data.Services;
+using Data.WebUser;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -20,16 +21,23 @@ namespace TopSkillsWeb.Controllers.Course
         /// Сервис для работы с преподавателями
         /// </summary>
         private readonly TeacherService _tS;
+        private readonly WebUserService _webUser;
 
-        public CourseController(CourseService course, TeacherService _tS)
+        public CourseController(CourseService course, TeacherService _tS, WebUserService webUser)
         {
             this._course = course;
             this._tS = _tS;
+            _webUser = webUser;
+
         }
 
         [HasAccess("Course", "read")]
         public async Task<IActionResult> Index()
         {
+            string name = User.Identity.Name;
+            ViewBag.Edit = await _webUser.HasAccess(name, "edit", "Course");
+            ViewBag.Delete = await _webUser.HasAccess(name, "delete", "Course");
+
             var Courses = await _course.GetAllCoursesAsync();
             return View(Courses);
         }
@@ -67,10 +75,27 @@ namespace TopSkillsWeb.Controllers.Course
         [HasAccess("Course", "read")]
         public async Task<IActionResult>  OnUpdateTableRows()
         {
+            string name = User.Identity.Name;
+            ViewBag.Edit = await _webUser.HasAccess(name, "edit", "Course");
+            ViewBag.Delete = await _webUser.HasAccess(name, "delete", "Course");
+
             var Courses = await _course.GetAllCoursesAsync();
             return PartialView("RowsPart", Courses);
         }
 
+
+        [HasAccess("Course", "delete")]
+        public async Task<IActionResult> ConfirmDeleteCourse(int CoursetId)
+        {
+            return PartialView("ConfirmDelete", CoursetId);
+        }
+
+        [HasAccess("Course", "delete")]
+        public async Task<IActionResult> OnDeleteCourse(int CoursetId)
+        {
+            await _course.DeleteAsync(CoursetId);
+            return new EmptyResult();
+        }
 
     }
 }

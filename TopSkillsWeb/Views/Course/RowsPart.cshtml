@@ -1,14 +1,27 @@
 ﻿@model IEnumerable<Core.Course>
+@{
+    bool edit = ViewBag.Edit ??= false;
+    bool delete = ViewBag.Delete ??= false;
+}
+
 @if (Model != null && Model.Count() > 0)
 {
     @foreach (var item in Model)
     {
         <tr>
             <td>@item.Name</td>
-
-            <td>
-                <a onclick="OnGetModalEdit(@item.CourseId)">@Resource.Edit</a>
-            </td>
+            @if (edit)
+            {
+                <td>
+                    <a onclick="OnGetModalEdit(@item.CourseId)"><i title="@Resource.Edit" class="ti ti-edit"></i>  @* @Resource.Edit *@</a>
+                </td>
+            }
+            @if (delete)
+            {
+                <td>
+                    <a onclick="OnGetConfrimDelete(@item.CourseId)"> <i title="@Resource.Delete" class="ti ti-trash"></i> @* @Resource.Delete *@</a>
+                </td>
+            }
         </tr>
     }
 }

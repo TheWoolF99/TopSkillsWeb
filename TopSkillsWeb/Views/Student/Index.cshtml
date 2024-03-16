@@ -1,7 +1,12 @@
 ﻿@model IEnumerable<Core.Student>
 @{
     ViewData["Title"] = Resource.Students;
+    
+    bool edit = ViewBag.Edit ??= false;
+    bool delete = ViewBag.Delete ??= false;
 }
+
+
 <div class="page-header d-print-none">
     <div class="container-xl">
         <div class="row g-2 align-items-center">
@@ -30,7 +35,14 @@
                     <tr>
                         <th>@Resource.StudentName</th>
                         <th>@Resource.Age</th>
-                        <th class="w-1"></th>
+                        @if (edit)
+                        {
+                            <th class="w-1"></th>
+                        }
+                        @if (delete)
+                        {
+                            <th class="w-1"></th>
+                        }
                     </tr>
                 </thead>
                 <tbody id="StudentTbody">
@@ -50,12 +62,21 @@
         });
     }
 
+    function OnGetConfrimDelete(id) {
+        $.get('@Url.Action("ConfirmDeleteStudent", "Student")', { StudentId: id }, function (data) {
+            $('#modal_body').html(data);
+            OpenModal();
+        });
+    }
+
     function OnUpdateTableRows(){
         $.get('@Url.Action("OnUpdateTableRows", "Student")', null, function (data) {
             $('#StudentTbody').html(data);
         });
     }
 
+
+    
 
 
 </script>

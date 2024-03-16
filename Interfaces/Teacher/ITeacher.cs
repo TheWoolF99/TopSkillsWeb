@@ -12,5 +12,6 @@ namespace Interfaces.Teacher
         Task<Core.Teacher> GetTeacherAsync(int id);
         Task AddTeacherAsync(Core.Teacher teacher);
         Task UpdateTeacherAsync(Core.Teacher teacher);
+        Task DeleteAsync(int id);
     }
 }

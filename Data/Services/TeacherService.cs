@@ -34,5 +34,11 @@ namespace Data.Services
         {
             await _teacher.UpdateTeacherAsync(teacher);
         }
+
+        public async Task DeleteAsync(int id)
+        {
+            await _teacher.DeleteAsync(id);
+        }
+
     }
 }

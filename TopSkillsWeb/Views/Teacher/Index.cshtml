@@ -1,6 +1,9 @@
 ﻿@model IEnumerable<Core.Teacher>
 @{
     ViewData["Title"] = Resource.Teachers;
+    bool edit = ViewBag.Edit ??= false;
+    bool delete = ViewBag.Delete ??= false;
+
 }
 <div class="page-header d-print-none">
     <div class="container-xl">
@@ -29,7 +32,14 @@
                 <thead>
                     <tr>
                         <th>@Resource.TeacherName</th>
-                        <th class="w-1"></th>
+                        @if (edit)
+                        {
+                            <th class="w-1"></th>
+                        }
+                        @if (delete)
+                        {
+                            <th class="w-1"></th>
+                        }
                     </tr>
                 </thead>
                 <tbody id="TeacherTbody">
@@ -44,6 +54,13 @@
 <script type="text/javascript">
     function OnGetModalEdit(id) {
         $.get('@Url.Action("GetModalAddEditTeacher", "Teacher")', { TeacherId: id }, function (data) {
+            $('#modal_body').html(data);
+            OpenModal();
+        });
+    }
+
+    function OnGetConfrimDelete(id) {
+        $.get('@Url.Action("ConfirmDeleteTeacher", "Teacher")', { TeacherId: id }, function (data) {
             $('#modal_body').html(data);
             OpenModal();
         });

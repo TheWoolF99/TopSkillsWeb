@@ -41,7 +41,13 @@ namespace Data.Services
             _student.UpdateRange(student);
         }
 
-        
+        public async Task DeleteAsync(int id)
+        {
+           await _student.DeleteAsync(id);
+        }
+
+
+
 
     }
 }

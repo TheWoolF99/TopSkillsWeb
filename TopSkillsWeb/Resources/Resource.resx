@@ -174,6 +174,9 @@
   <data name="August" xml:space="preserve">
     <value>Август</value>
   </data>
+  <data name="AUShure" xml:space="preserve">
+    <value>Вы уверены?</value>
+  </data>
   <data name="Calendar" xml:space="preserve">
     <value>Календарь</value>
   </data>
@@ -188,6 +191,21 @@
   </data>
   <data name="CompletedSuccessfully" xml:space="preserve">
     <value>Выполнено успешно</value>
+  </data>
+  <data name="ConfrimDeleteAttendance" xml:space="preserve">
+    <value>Вы действительно хотите удалить посещения?</value>
+  </data>
+  <data name="ConfrimDeleteCourse" xml:space="preserve">
+    <value>Вы действительно хотите удалить курс?</value>
+  </data>
+  <data name="ConfrimDeleteGroup" xml:space="preserve">
+    <value>Вы действительно хотите удалить группу?</value>
+  </data>
+  <data name="ConfrimDeleteStudent" xml:space="preserve">
+    <value>Вы действительно хотите удалить студента?</value>
+  </data>
+  <data name="ConfrimDeleteTeacher" xml:space="preserve">
+    <value>Вы действительно хотите удалить учителя?</value>
   </data>
   <data name="ConfrimPassword" xml:space="preserve">
     <value>Подтверждение пароля</value>
@@ -236,6 +254,9 @@
   </data>
   <data name="December" xml:space="preserve">
     <value>Декабрь</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Удалить</value>
   </data>
   <data name="DontHaveAccount" xml:space="preserve">
     <value>Нет акаунта?</value>

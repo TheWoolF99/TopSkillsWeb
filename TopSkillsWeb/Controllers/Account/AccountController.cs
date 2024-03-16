@@ -197,7 +197,7 @@ namespace TopSkillsWeb.Controllers.Account
         }
 
         [Authorize]
-        [HasAccess("Accesses", "update")]
+        [HasAccess("Accesses", "edit")]
         public async Task<IActionResult> GetRoleListForUser(string UserName) 
         {
             var model = await _webUser.GetAllRoles();
@@ -211,7 +211,7 @@ namespace TopSkillsWeb.Controllers.Account
         }
 
         [Authorize]
-        [HasAccess("Accesses", "update")]
+        [HasAccess("Accesses", "edit")]
         public async Task<IActionResult> SetRoleUser(string RoleName, string UserName)
         {
             var user = await _userManager.FindByNameAsync(UserName);
