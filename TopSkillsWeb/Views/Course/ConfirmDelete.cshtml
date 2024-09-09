@@ -33,7 +33,7 @@
 
 <script>
     function OnDeleteCourse(id) {
-        $.get('@Url.Action("OnDeleteCourse", "Course")', { CoursetId: id }, function (data) {
+        $.get('@Url.Action("OnDeleteCourse", "Course")', { CourseId: id }, function (data) {
             CloseModal();
             OnUpdateTableRows();
         });

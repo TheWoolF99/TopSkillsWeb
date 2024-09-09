@@ -3,6 +3,8 @@ using Core.Logger;
 using Data.Repository;
 using Interfaces.Logger;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +16,7 @@ namespace Data.Services
     public class LoggerService
     {
         private readonly ILoggerRep _log;
-
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         public LoggerService(ILoggerRep logger) => this._log = logger;
 
         public async Task AddLog(LoggerItem item)
@@ -22,6 +24,12 @@ namespace Data.Services
             await _log.AddLog(item);
         }
 
+        public void AddNLog(string Message)
+        {
+            logger.Info(Message);
+        }
+
+        
         public async Task AddLog(LoggerLoginItem item)
         {
             await _log.AddLog(item);

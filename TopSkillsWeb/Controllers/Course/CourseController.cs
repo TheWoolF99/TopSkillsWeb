@@ -85,15 +85,15 @@ namespace TopSkillsWeb.Controllers.Course
 
 
         [HasAccess("Course", "delete")]
-        public async Task<IActionResult> ConfirmDeleteCourse(int CoursetId)
+        public async Task<IActionResult> ConfirmDeleteCourse(int CourseId)
         {
-            return PartialView("ConfirmDelete", CoursetId);
+            return PartialView("ConfirmDelete", CourseId);
         }
 
         [HasAccess("Course", "delete")]
-        public async Task<IActionResult> OnDeleteCourse(int CoursetId)
+        public async Task<IActionResult> OnDeleteCourse(int CourseId)
         {
-            await _course.DeleteAsync(CoursetId);
+            await _course.DeleteAsync(CourseId);
             return new EmptyResult();
         }
 

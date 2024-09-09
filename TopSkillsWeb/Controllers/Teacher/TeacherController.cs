@@ -79,15 +79,15 @@ namespace TopSkillsWeb.Controllers.Teacher
 
 
         [HasAccess("Teacher", "delete")]
-        public async Task<IActionResult> ConfirmDeleteTeacher(int TeachertId)
+        public async Task<IActionResult> ConfirmDeleteTeacher(int TeacherId)
         {
-            return PartialView("ConfirmDelete", TeachertId);
+            return PartialView("ConfirmDelete", TeacherId);
         }
 
         [HasAccess("Teacher", "delete")]
-        public async Task<IActionResult> OnDeleteTeacher(int TeachertId)
+        public async Task<IActionResult> OnDeleteTeacher(int TeacherId)
         {
-            await _teacher.DeleteAsync(TeachertId);
+            await _teacher.DeleteAsync(TeacherId);
             return new EmptyResult();
         }
 

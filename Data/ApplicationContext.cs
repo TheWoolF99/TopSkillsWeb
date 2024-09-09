@@ -110,6 +110,12 @@ namespace Data
         }
         #endregion
 
+
+        protected override void OnConfiguring(DbContextOptionsBuilder builder)
+        {
+            //builder.LogTo(Console.WriteLine, );
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

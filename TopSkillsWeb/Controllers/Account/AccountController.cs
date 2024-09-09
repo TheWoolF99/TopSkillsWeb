@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using NLog;
 using TopSkillsWeb.Attributes;
 using UAParser;
 //using UAParser;
@@ -24,6 +25,7 @@ namespace TopSkillsWeb.Controllers.Account
         private readonly LoggerService _log;
         private readonly GlobalOptionsService _options;
         private readonly WebUserService _webUser;
+        private Logger logger = LogManager.GetCurrentClassLogger();
 
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, PhotoService _photo, LoggerService log, GlobalOptionsService opts, WebUserService webUser)
         {
@@ -79,6 +81,7 @@ namespace TopSkillsWeb.Controllers.Account
             if (User.Identity.IsAuthenticated)
             {
                 await _log.AddLog(GetLogItem("Вход"));
+                _log.AddNLog("Вход");
                 if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
                 {
                     return Redirect(returnUrl);
@@ -103,6 +106,8 @@ namespace TopSkillsWeb.Controllers.Account
                 if (result.Succeeded)
                 {
                     await _log.AddLog(GetLogItem("Вход"));
+                    _log.AddNLog($"[{model.Email}] Выполнил вход");
+                    logger.Error($"[{model.Email}] Выполнил вход");
                     // проверяем, принадлежит ли URL приложению
                     if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
                     {

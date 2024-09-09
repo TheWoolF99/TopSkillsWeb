@@ -109,15 +109,15 @@ namespace TopSkillsWeb.Controllers.Group
 
 
         [HasAccess("Group", "delete")]
-        public async Task<IActionResult> ConfirmDeleteGroup(int GrouptId)
+        public async Task<IActionResult> ConfirmDeleteGroup(int GroupId)
         {
-            return PartialView("ConfirmDelete", GrouptId);
+            return PartialView("ConfirmDelete", GroupId);
         }
 
         [HasAccess("Group", "delete")]
-        public async Task<IActionResult> OnDeleteGroup(int GrouptId)
+        public async Task<IActionResult> OnDeleteGroup(int GroupId)
         {
-            await _gS.DeleteAsync(GrouptId);
+            await _gS.DeleteAsync(GroupId);
             return new EmptyResult();
         }
     }

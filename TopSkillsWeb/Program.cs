@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 using Data.WebUser;
 using AutoMapper;
 using Microsoft.AspNetCore.Http.Extensions;
+using NLog.Web;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -69,6 +70,8 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.SupportedCultures = SuppotredCultures;
     options.SupportedUICultures = SuppotredCultures;
 });
+builder.WebHost.UseNLog();
+
 
 
 #region Servises
