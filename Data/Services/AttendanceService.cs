@@ -49,9 +49,9 @@ namespace Data.Services
         }
 
 
-        public async Task OnDeleteAttendance(int AttendanceId)
+        public async Task OnDeleteAttendance(int groupId, DateTime date)
         {
-            await _attendance.OnDeleteAttendance(AttendanceId);
+            await _attendance.OnDeleteAttendance(groupId, date);
         }
 
     }

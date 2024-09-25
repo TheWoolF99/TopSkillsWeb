@@ -1,10 +1,13 @@
-﻿@model int
+﻿@model ContextParametrs
 
 <ul class="contextMenu dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
     <li>
-        <a class="dropdown-item" onclick="onCopyElement(@Model)">Перенести</a>
+        <a class="dropdown-item" onclick="onCopyElement(@Model.GroupId)">Перенести</a>
     </li>
     <li>
-        <a class="dropdown-item" onclick="OnGetConfrimDeleteAttendance(@Model)">@Resource.Delete</a>
+        <a class="dropdown-item" onclick="OnGetConfrimDeleteAttendance(@Model.GroupId, '@Model.Date.ToString("yyyy.MM.dd")')">@Resource.Delete</a>
+    </li>
+    <li>
+        <a class="dropdown-item" onclick="OnGetEditAttendance(@Model.GroupId, '@Model.Date.ToString("yyyy.MM.dd")')">@Resource.EditAttendance</a>
     </li>
 </ul>

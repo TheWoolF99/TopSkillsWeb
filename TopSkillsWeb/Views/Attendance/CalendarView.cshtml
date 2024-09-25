@@ -1,4 +1,4 @@
-﻿<link rel="stylesheet" href="~/css/CalendarTask.css" />
+﻿<link rel="stylesheet" href="~/css/CalendarTask.css" asp-append-version="true"/>
 <div class="calendar-wrapper">
     <span class="loadingCalendar">
         <div class="SpinnerTextContainer">
@@ -11,6 +11,9 @@
     <div id="divCal"></div>
 </div>
 <script type="text/javascript">
+    var groupIdForDelete;
+    var dateForDelete;
+
     var c;
    
     
@@ -267,7 +270,7 @@
             let color = e.Group.Color;
             color ??= getRandomColor();
             let passed = e.DateClose != null ? "passed" : "";
-            let html = '<div class="taskElement ' + passed + '" oncontextmenu="OnGetContextMenuTask(' + e.AttendanceId + ', event); return false;"   onclick="OnGetModalEditTask(' + e.AttendanceId + ')" style="background-color: ' + color + '70">';
+            let html = '<div class="taskElement ' + passed + '" oncontextmenu="OnGetContextMenuTask(' + e.Group.GroupId + ',\'' + dt.format() + '\', event); return false;"   onclick="OnGetModalEditTask(' + e.AttendanceId + ')" style="background-color: ' + color + '70">';
             html += '<span class="taskName">' + e.Group.Name + '</span>'
             html +='</div>'
             $('#TaskLst-' + (mounth+1) + '-' + day).append(html);
@@ -287,8 +290,8 @@
         console.log(id);
     }
 
-    function OnGetContextMenuTask(id, e){
-        $.get('@Url.Action("ShowContextMenu", "Attendance")', { id: id }, function (data) {
+    function OnGetContextMenuTask(groupId, date, e){
+        $.get('@Url.Action("ShowContextMenu", "Attendance")', { groupId: groupId, date: date }, function (data) {
             document.getElementById("contextMenu").innerHTML = data;
         });
         $("#contextMenu").css({
@@ -300,9 +303,18 @@
     }
 
 
+    function OnGetEditAttendance(groupId, date) {
+        $.get('@Url.Action("OnEditAttendance", "Attendance")', { groupId: groupId, date: date }, function (data) {
+            $('#modal_body').html(data);
+            OpenModal();
+        });
+    }
 
-    function OnGetConfrimDeleteAttendance(id) {
-        $.get('@Url.Action("ConfirmDeleteAttendance", "Attendance")', { AttendanceId: id }, function (data) {
+    function OnGetConfrimDeleteAttendance(groupId, date) {
+        groupIdForDelete = groupId;
+        dateForDelete = date;
+
+        $.get('@Url.Action("ConfirmDeleteAttendance", "Attendance")', { groupId: groupId, date: date }, function (data) {
             $('#modal_body').html(data);
             OpenModal();
         });

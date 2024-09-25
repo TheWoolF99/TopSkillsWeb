@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Authorization;
 using Data.WebUser;
 using TopSkillsWeb.Attributes;
 using Core;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using TopSkillsWeb.Models;
 
 namespace TopSkillsWeb.Controllers.Attendance
 {
@@ -84,11 +87,9 @@ namespace TopSkillsWeb.Controllers.Attendance
         }
 
 
-        public async Task<IActionResult> ShowContextMenu(int id)
+        public async Task<IActionResult> ShowContextMenu(int groupId, DateTime date)
         {
-
-            return PartialView("ContextMenu", id);
-            return new EmptyResult();
+            return PartialView("ContextMenu", new ContextParametrs() { GroupId = groupId, Date = date});
         }
 
         
@@ -130,6 +131,15 @@ namespace TopSkillsWeb.Controllers.Attendance
             }
         }
 
+        [HasAccess("Attendances", "edit")]
+        public async Task<IActionResult> OnEditAttendance(int GroupId, string date)
+        {
+            var lst = await _aS.GetAttendanceByGroupIdAndDate(GroupId, DateTime.Parse(date));
+            ViewBag.Title = Resource.EditAttendance + " - " + lst?.First().Group.Name;
+
+            return PartialView("ModalStartAttendance", lst);
+        }
+
 
         public async Task<IActionResult> GetListExpiredStudent()
         {
@@ -154,17 +164,18 @@ namespace TopSkillsWeb.Controllers.Attendance
         }
 
         [HasAccess("Attendances", "delete")]
-        public async Task<IActionResult> ConfirmDeleteAttendance(int AttendanceId)
+        public async Task<IActionResult> ConfirmDeleteAttendance()
         {
-            return PartialView("ConfirmDelete", AttendanceId);
+            return PartialView("ConfirmDelete");
         }
         [HasAccess("Attendances", "delete")]
-        public async Task<IActionResult> OnDeleteAttendance(int AttendanceId)
+        public async Task<IActionResult> OnDeleteAttendance(int groupId, DateTime date)
         {
-            await _aS.OnDeleteAttendance(AttendanceId);
+            await _aS.OnDeleteAttendance(groupId, date);
             return new EmptyResult();
         }
 
+        
 
     }
 }

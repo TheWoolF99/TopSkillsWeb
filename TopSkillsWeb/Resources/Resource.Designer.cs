@@ -511,6 +511,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Редактировать посещаемость.
+        /// </summary>
+        public static string EditAttendance {
+            get {
+                return ResourceManager.GetString("EditAttendance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Изменить курс.
         /// </summary>
         public static string EditCourse {

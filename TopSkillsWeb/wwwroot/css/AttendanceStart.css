@@ -11,3 +11,38 @@
 /*.card:has(.rowStudent.Expired) .AgreeTextAlert {
     display: block;
 }*/
+
+
+input.StudentCheckbox {
+    display: none;
+}
+
+    input.StudentCheckbox:not(:checked) + label {
+        background: transparent;
+    }
+
+    input.StudentCheckbox:checked + label {
+        color: var(--tblr-primary);
+        background: rgba(var(--tblr-primary-rgb),.04);
+        border-color: var(--tblr-primary);
+    }
+
+.form-selectgroup-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+}
+
+.card-body:has(#Attendance) {
+    overflow-y: hidden;
+}
+
+#Attendance .container-xl {
+    padding: 0;
+    overflow-y: auto;
+    max-height: 28.5vh;
+    height: max-content;
+}

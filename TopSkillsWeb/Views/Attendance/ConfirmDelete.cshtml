@@ -1,6 +1,4 @@
-﻿@model int
-
-<div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+﻿<div class="modal-dialog modal-sm modal-dialog-centered" role="document">
     <div class="modal-content">
         <button type="button" class="btn-close" id="CrossClose" onclick="CloseModal()" aria-label="Close"></button>
         <div class="modal-status bg-danger"></div>
@@ -19,7 +17,7 @@
                         </a>
                     </div>
                     <div class="col">
-                        <a onclick="onDeleteAttendance(@Model)" id="closeModalBtn" class="btn btn-danger w-100" data-bs-dismiss="modal">
+                        <a onclick="onDeleteAttendance()" id="closeModalBtn" class="btn btn-danger w-100" data-bs-dismiss="modal">
                             @Resource.Delete
                         </a>
                     </div>
@@ -32,8 +30,11 @@
 
 
 <script>
-    function onDeleteAttendance(AttendanceId) {
-        $.get('@Url.Action("OnDeleteAttendance", "Attendance")', { AttendanceId: AttendanceId }, function (data) {
+    function onDeleteAttendance() {
+        let groupId = groupIdForDelete;
+        let date = dateForDelete;
+
+        $.get('@Url.Action("OnDeleteAttendance", "Attendance")', { groupId: groupId, date: date }, function (data) {
             CloseModal();
             UpdateCalendarData();
         });

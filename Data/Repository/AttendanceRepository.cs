@@ -110,32 +110,33 @@ namespace Data.Repository
                 x.DateClose = DateTime.Now;
                 var attendanceNew = attendances.Where(a => a.AttendanceId == x.AttendanceId).FirstOrDefault();
                 ///вычтем занятие из абонемента если IsPresent не 2(по уважительной причине)
-                if (attendanceNew!=null && attendanceNew.IsPresent != 2)
+                if (attendanceNew != null && attendanceNew.IsPresent != 2)
                 {
                     var abonement = abonements.Where(ab => ab.StudentId == x.Student.StudentId).FirstOrDefault();
-                    if(abonement!=null && !(abonement.RemainingVisits <= 0))
-                        abonement.RemainingVisits = --abonement.RemainingVisits;
+                    if (abonement != null && !(abonement.RemainingVisits <= 0))
+                    {
+                        //если ошиблись, и ученика не было по факту, возвращаем занятие в абонемент 
+                        if (x.IsPresent == 1 & attendanceNew.IsPresent == 0)
+                        {
+                            abonement.RemainingVisits++;
+                        }
+                        else if(x.IsPresent != attendanceNew.IsPresent)
+                        {
+                            abonement.RemainingVisits--;
+                        }
+                    }
                 }
+                
                 x.IsPresent = attendanceNew != null ? attendanceNew.IsPresent : 0;
             });
             await db.SaveChangesAsync();
         }
 
-        public async Task OnDeleteAttendance(int AttendanceId)
+        public async Task OnDeleteAttendance(int groupId, DateTime date)
         {
             var db = _context.Create(typeof(AttendanceRepository));
-            var Attendance = db.Attendance.Where(x => x.AttendanceId == AttendanceId).Include(g => g.Group).FirstOrDefault();
-            if (Attendance != null)
-            {
-                await db.Attendance.Where(x => x.DateVisiting == Attendance.DateVisiting && x.Group.GroupId == Attendance.Group.GroupId).DeleteAsync();
-            }
-            else
-            {
-                throw new Exception("Группа не найдена");
-            }
+            await db.Attendance.Where(x => x.DateVisiting == date && x.Group.GroupId == groupId).DeleteAsync();
         }
-
-
 
     }
 }
