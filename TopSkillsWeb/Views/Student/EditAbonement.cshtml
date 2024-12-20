@@ -1,0 +1,53 @@
+﻿@using Core
+@model int
+
+
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">@Resource.EditCountVisits</h5>
+            <button type="button" class="btn-close" onclick="CloseModal()"></button>
+        </div>
+        <div class="modal-body">
+            <div class="col">
+                <label class="form-label">@Resource.Visits</label>
+                <input id="countVisitsAbonement" type="number" min="0" class="form-control" value="@Model">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn me-auto" onclick="CloseModal()">@Resource.Cancel</button>
+            <button type="button" class="btn btn-primary" onclick="OnChangeCountVisits(@ViewBag.StudentId)">
+                    @Resource.Save
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    function OnChangeCountVisits(studentId) {
+        let countVisits = $("#countVisitsAbonement").val();
+        if (countVisits < 0) {
+            alert('Количество посещений не может быть меньше 0!')
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("OnUpdateCountAbonementStudent", "Student")',
+            data: { studentId: studentId, countVisits: countVisits },
+            success: function (data) {
+                if (data.length > 0) {
+                    $('#modal_body').html(data);
+                    OpenModal();
+                }
+                else {
+                    CloseModal();
+                }
+                OnUpdateTableRows();
+            }
+        });
+    }
+
+</script>

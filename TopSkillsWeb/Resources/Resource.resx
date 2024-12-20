@@ -270,6 +270,9 @@
   <data name="EditAttendance" xml:space="preserve">
     <value>Редактировать посещаемость</value>
   </data>
+  <data name="EditCountVisits" xml:space="preserve">
+    <value>Редактировать количество посещений</value>
+  </data>
   <data name="EditCourse" xml:space="preserve">
     <value>Изменить курс</value>
   </data>
@@ -302,6 +305,9 @@
   </data>
   <data name="EnableLightMode" xml:space="preserve">
     <value>Включить светлую тему</value>
+  </data>
+  <data name="ErrorOccurred" xml:space="preserve">
+    <value>Произошла ошибка</value>
   </data>
   <data name="February" xml:space="preserve">
     <value>Февраль</value>

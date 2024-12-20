@@ -520,6 +520,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Редактировать количество посещений.
+        /// </summary>
+        public static string EditCountVisits {
+            get {
+                return ResourceManager.GetString("EditCountVisits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Изменить курс.
         /// </summary>
         public static string EditCourse {
@@ -615,6 +624,15 @@ namespace TopSkillsWeb.Resources {
         public static string EnableLightMode {
             get {
                 return ResourceManager.GetString("EnableLightMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Произошла ошибка.
+        /// </summary>
+        public static string ErrorOccurred {
+            get {
+                return ResourceManager.GetString("ErrorOccurred", resourceCulture);
             }
         }
         

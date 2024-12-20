@@ -24,6 +24,7 @@ namespace Data.Services
         {
             return await _abonement.GetAbonementStudent(StudentId);
         }
+
         public async Task<IEnumerable<Abonement>> GetAbonementGroupStudents(int groupId)
         {
             return await _abonement.GetAbonementGroupStudents(groupId);
@@ -33,9 +34,15 @@ namespace Data.Services
         {
             await _abonement.AddNewAbonement(abonement);
         }
+
         public async Task UpdateAbonement(Abonement abonement)
         {
             await _abonement.UpdateAbonement(abonement);
+        }
+
+        public async Task UpdateCountAbonementByStudentId(int studentId, int countVisits)
+        {
+            await _abonement.UpdateCountAbonementByStudentId(studentId, countVisits);
         }
 
         public async Task RefreshAbonement(int StudentId)

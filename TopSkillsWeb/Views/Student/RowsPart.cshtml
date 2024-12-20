@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<Core.Student>
 @{
+    bool editAbonement = ViewBag.EditAbonement ??= false;
     bool edit = ViewBag.Edit ??= false;
     bool delete = ViewBag.Delete ??= false;
 }
@@ -12,6 +13,13 @@
         <tr>
             <td>@item.FullName</td>
             <td>@item.Age</td>
+            <td>@item.Abonement?.RemainingVisits</td>
+            @if (editAbonement)
+            {
+                <td>
+                    <a onclick="OnGetModalEditAbonement(@item.StudentId)"><i title="@Resource.Edit @Resource.Abonement" class="ti ti-credit-card"></i>  @* @Resource.Edit *@</a>
+                </td>
+            }
             @if (edit)
             {
                 <td>

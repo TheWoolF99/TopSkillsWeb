@@ -14,6 +14,7 @@ namespace Interfaces.Abonement
         Task<AbonementModel?> GetAbonementStudent(int StudentId);
         Task AddNewAbonement(AbonementModel abonement);
         Task UpdateAbonement(AbonementModel abonement);
+        Task UpdateCountAbonementByStudentId(int studentId, int countVisits);
         Task RefreshAbonement(int StudentId);
     }
 }

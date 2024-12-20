@@ -63,6 +63,16 @@ namespace Data.Repository
         }
 
 
+        public async Task UpdateCountAbonementByStudentId(int studentId, int countVisits)
+        {
+            var db = _context.Create(typeof(AbonementRepository));
+            var abonement = await db.Abonements.FirstOrDefaultAsync(x=>x.StudentId == studentId);
+            if(abonement != null)
+                abonement.RemainingVisits = countVisits;
+
+            await db.SaveChangesAsync();
+        }
+
         public async Task RefreshAbonement(int StudentId)
         {
             var db = _context.Create(typeof(AbonementRepository));

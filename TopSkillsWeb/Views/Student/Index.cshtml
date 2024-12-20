@@ -4,6 +4,7 @@
     
     bool edit = ViewBag.Edit ??= false;
     bool delete = ViewBag.Delete ??= false;
+    bool editAbonement = ViewBag.EditAbonement ??= false;
 }
 
 
@@ -35,6 +36,11 @@
                     <tr>
                         <th>@Resource.StudentName</th>
                         <th>@Resource.Age</th>
+                        <th>@Resource.Visits</th>
+                        @if (editAbonement)
+                        {
+                            <th class="w-1"></th>
+                        }
                         @if (edit)
                         {
                             <th class="w-1"></th>
@@ -54,7 +60,7 @@
 </div>
 
 
-<script type="text/javascript">
+<script type="text/javascript" >
     function OnGetModalEdit(id) {
         $.get('@Url.Action("GetModalAddEditStudent", "Student")', { StudentId: id }, function (data) {
             $('#modal_body').html(data);
@@ -80,3 +86,16 @@
 
 
 </script>
+
+@if (editAbonement)
+{
+    <script type="text/javascript" >
+        function OnGetModalEditAbonement(studentId) {
+            $.get('@Url.Action("GetModalEditAbonementStudent", "Student")', { StudentId: studentId }, function (data) {
+                $('#modal_body').html(data);
+                OpenModal();
+            });
+        }
+        
+    </script>
+}

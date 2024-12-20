@@ -264,9 +264,9 @@
             let dt = new Date(e.DateVisiting);
             let mounth = dt.getMonth();
             let day = dt.getDate();
-            console.log(dt, 'background: #222; color: #bada55');
-            console.log(mounth, 'background: #222; color: #bada55');
-            console.log(day, 'background: #222; color: #bada55');
+            //console.log('%c' + dt, 'background: #222; color: #bada55');
+            //console.log('%c' + mounth, 'background: #222; color: #bada55');
+            //console.log('%c' + day, 'background: #222; color: #bada55');
             let color = e.Group.Color;
             color ??= getRandomColor();
             let passed = e.DateClose != null ? "passed" : "";
@@ -275,7 +275,7 @@
             html +='</div>'
             $('#TaskLst-' + (mounth+1) + '-' + day).append(html);
         })
-        console.log(data);
+        //console.log(data);
         $('.loadingCalendar').hide();
     }
 

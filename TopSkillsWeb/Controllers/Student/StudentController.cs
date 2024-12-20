@@ -37,6 +37,7 @@ namespace TopSkillsWeb.Controllers.Student
             string name = User.Identity.Name;
             ViewBag.Edit = await _webUser.HasAccess(name, "edit", "Students");
             ViewBag.Delete = await _webUser.HasAccess(name, "delete", "Students");
+            ViewBag.EditAbonement = await _webUser.HasAccess(name, "edit", "ManualEditAbonement");
 
             return View(await _student.GetAllStudentsAsync());
         }
@@ -78,6 +79,8 @@ namespace TopSkillsWeb.Controllers.Student
             string name = User.Identity.Name;
             ViewBag.Edit = await _webUser.HasAccess(name, "edit", "Students");
             ViewBag.Delete = await _webUser.HasAccess(name, "delete", "Students");
+            ViewBag.EditAbonement = await _webUser.HasAccess(name, "edit", "ManualEditAbonement");
+
             var Students = await _student.GetAllStudentsAsync();
             return PartialView("RowsPart", Students);
         }
@@ -103,6 +106,27 @@ namespace TopSkillsWeb.Controllers.Student
             return new EmptyResult();
         }
 
+
+        public async Task<IActionResult> GetModalEditAbonementStudent(int StudentId)
+        {
+            var abonement = await _abonement.GetAbonementStudent(StudentId);
+            ViewBag.StudentId = StudentId;
+            return PartialView("EditAbonement", abonement.RemainingVisits);
+        }
+
+        [HasAccess("ManualEditAbonement", "edit")]
+        public async Task<IActionResult> OnUpdateCountAbonementStudent(int studentId, int countVisits)
+        {
+            try
+            {
+                await _abonement.UpdateCountAbonementByStudentId(studentId, countVisits);
+            }
+            catch(Exception ex)
+            {
+                return RedirectToAction("ShowModalError", "Home", new { message = Resource.ErrorOccurred });
+            }
+            return new EmptyResult();
+        }
 
     }
 }
