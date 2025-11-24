@@ -11,6 +11,7 @@
     <link runat="server" rel="icon" href="~/logo.ico" type="image/ico" />
 </head>
 <body class=" d-flex flex-column">
+    @await Html.PartialAsync("_Christmas")
     <script src="~/js/change-theme.min.js"></script>
     <div class="page page-center">
         <div class="container container-tight py-4">
@@ -87,4 +88,31 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form');
+            const submitButton = form.querySelector('button[type="submit"]');
+
+            form.addEventListener('submit', function () {
+                submitButton.disabled = true;
+                submitButton.innerHTML = '@Html.Raw(Resource.Loading + "...")';
+                submitButton.style.opacity = '0.6';
+            });
+
+            const validationSummary = document.querySelector('[asp-validation-summary="ModelOnly"]');
+            if (validationSummary && validationSummary.innerHTML.trim() !== '') {
+                submitButton.disabled = false;
+                submitButton.style.opacity = '1';
+            }
+
+            const errorSpans = form.querySelectorAll('span[style*="color: red"]');
+            errorSpans.forEach(span => {
+                if (span.innerHTML.trim() !== '') {
+                    submitButton.disabled = false;
+                    submitButton.style.opacity = '1';
+                }
+            });
+        });
+    </script>
 </body>

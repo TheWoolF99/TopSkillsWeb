@@ -1,10 +1,5 @@
-﻿using Data.Migrations;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using Z.EntityFramework.Plus;
-
 
 namespace Data
 {
@@ -28,13 +23,7 @@ namespace Data
                 dbContexts[repositoryType] = services.GetService<ApplicationContext>();
             }
 
-            
             return dbContexts[repositoryType];
         }
-
-
-        
-
     }
-
 }

@@ -6,7 +6,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Data.Services
 {
@@ -15,7 +17,6 @@ namespace Data.Services
         private readonly IAttendance _attendance;
 
         public AttendanceService(IAttendance attendance) => this._attendance = attendance;
-
 
         public async Task<IEnumerable<Attendance>> GetAllAttendance()
         {
@@ -42,17 +43,19 @@ namespace Data.Services
             return await _attendance.OnAddAttendanceByDateAndGroupId(attendance);
         }
 
-
         public async Task OnStartAttendance(List<Attendance> attendances)
         {
             await _attendance.OnStartAttendance(attendances);
         }
-
 
         public async Task OnDeleteAttendance(int groupId, DateTime date)
         {
             await _attendance.OnDeleteAttendance(groupId, date);
         }
 
+        public async Task<List<AttendanceDeductionLog>> GetStudentDeductionHistory(int? studentId)
+        {
+            return await _attendance.GetStudentDeductionHistory(studentId);
+        }
     }
 }

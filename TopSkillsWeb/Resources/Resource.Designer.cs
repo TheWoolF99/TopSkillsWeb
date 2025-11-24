@@ -133,6 +133,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Действие.
+        /// </summary>
+        public static string Action {
+            get {
+                return ResourceManager.GetString("Action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Добавить доступ.
         /// </summary>
         public static string AddAccesses {
@@ -453,6 +462,15 @@ namespace TopSkillsWeb.Resources {
         public static string CreateTeacher {
             get {
                 return ResourceManager.GetString("CreateTeacher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Дата.
+        /// </summary>
+        public static string Date {
+            get {
+                return ResourceManager.GetString("Date", resourceCulture);
             }
         }
         
@@ -817,6 +835,15 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Загрузка.
+        /// </summary>
+        public static string Loading {
+            get {
+                return ResourceManager.GetString("Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Загрузка календаря.
         /// </summary>
         public static string LoadingCalendar {
@@ -1123,7 +1150,7 @@ namespace TopSkillsWeb.Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Отпровитель.
+        ///   Ищет локализованную строку, похожую на Отправитель.
         /// </summary>
         public static string Sender {
             get {

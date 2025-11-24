@@ -1,24 +1,20 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using TopSkillsWeb.Models;
-using Core;
-using Data.Repository;
-using Data;
-using Microsoft.AspNetCore.Localization;
-using System.Globalization;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Options;
 using Core.Account;
+using Data;
 using Data.Services;
-using Newtonsoft;
-using Newtonsoft.Json;
 using Data.WebUser;
-using AutoMapper;
-using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using NLog.Web;
-
+using System.Globalization;
+using TopSkillsWeb.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseCustomSerilog();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddNewtonsoftJson(o => { o.SerializerSettings.MaxDepth = Int32.MaxValue; o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; });
 
@@ -42,7 +38,6 @@ builder.Services.AddIdentity<User, UserRole>(opts =>
     opts.Password.RequireUppercase = false; // требуются ли символы в верхнем регистре
     opts.Password.RequireDigit = false; // требуются ли цифры
 }).AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
-
 
 builder.Services.AddMvc().AddJsonOptions(options =>
 {
@@ -72,9 +67,8 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 });
 builder.WebHost.UseNLog();
 
-
-
 #region Servises
+
 builder.Services.AddScoped<PhotoService>();
 builder.Services.AddScoped<GroupService>();
 builder.Services.AddScoped<CourseService>();
@@ -86,9 +80,14 @@ builder.Services.AddScoped<AbonementService>();
 builder.Services.AddScoped<GlobalOptionsService>();
 builder.Services.AddScoped<WebUserService>();
 builder.Services.AddScoped<AccessesService>();
-#endregion
+
+#endregion Servises
 
 var app = builder.Build();
+
+//app.UseGlobalExceptionHandling();
+
+app.UseCustomRequestLogging();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -108,7 +107,7 @@ app.UseStatusCodePagesWithReExecute("/error", "?code={0}");
 
 app.Map("/error", ap => ap.Run(async context =>
 {
-    if(context.Response.StatusCode == 404)
+    if (context.Response.StatusCode == 404)
     {
         context.Response.Redirect("/Home/NotFound");
     }
@@ -117,7 +116,6 @@ app.Map("/error", ap => ap.Run(async context =>
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
-
 
 app.MapControllerRoute(
     name: "default",

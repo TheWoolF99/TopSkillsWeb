@@ -1,0 +1,25 @@
+﻿/* Кастомные стили для таблицы */
+.table-hover tbody tr:hover {
+    background-color: var(--tblr-bg-surface-secondary);
+}
+
+.badge {
+    font-size: 0.75rem;
+}
+
+
+/* Статусы */
+.status-absent {
+    background-color: var(--tblr-gray-200);
+    color: var(--tblr-gray-700);
+}
+
+.status-present {
+    background-color: var(--tblr-green-lt);
+    color: var(--tblr-green);
+}
+
+.status-excused {
+    background-color: var(--tblr-blue-lt);
+    color: var(--tblr-blue);
+}

@@ -1,12 +1,6 @@
 ﻿using Core.Logger;
-using Interfaces.Attendance;
 using Interfaces.Logger;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.Repository
 {
@@ -14,8 +8,7 @@ namespace Data.Repository
     {
         private DbContextFactory _context;
 
-        public LoggerRepository(DbContextFactory context)=>this._context=context;
-
+        public LoggerRepository(DbContextFactory context) => this._context = context;
 
         public async Task AddLog(LoggerItem item)
         {
@@ -36,9 +29,5 @@ namespace Data.Repository
             var db = _context.Create(typeof(LoggerRepository));
             return await db.LogAuth.ToListAsync();
         }
-
-        
-
-
     }
 }

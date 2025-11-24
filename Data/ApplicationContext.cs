@@ -16,17 +16,14 @@ using System.Security;
 using Z.EntityFramework.Plus;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
-
 namespace Data
 {
-
     public class ApplicationContext : IdentityDbContext<User, UserRole, string>
     {
         private readonly IHttpContextAccessor httpContextAccessor;
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
         {
-
             AuditManager.DefaultConfiguration.AutoSavePreAction = (context, audit) =>
             {
                 this.AuditEntries.AddRange(audit.Entries);
@@ -34,8 +31,6 @@ namespace Data
             Database.EnsureCreated();
             this.httpContextAccessor = httpContextAccessor;
         }
-
-
 
         public DbSet<UserAvatar> UserAvatars { get; set; }
         public DbSet<Course> Courses { get; set; }
@@ -51,9 +46,11 @@ namespace Data
 
         //Логирование
         public DbSet<AuditEntry> AuditEntries { get; set; }
+
         public DbSet<AuditEntryProperty> AuditEntryProperties { get; set; }
 
         #region Accesses
+
         public DbSet<User> AspNetUsers { get; set; }
         public DbSet<UserRole> AspNetRoles { get; set; }
         public virtual DbSet<IdentityUserRole<string>> AspNetUserRoles { get; set; }
@@ -61,12 +58,14 @@ namespace Data
         public DbSet<UserPermissions> Permissions { get; set; }
         public DbSet<AccessTypes> AccessTypes { get; set; }
         public DbSet<RolePermissions> RolePermissions { get; set; }
-        #endregion
 
+        #endregion Accesses
+
+        public DbSet<AttendanceDeductionLog> AttendanceLogs { get; set; }
         //public DbSet<GroupStudent> GroupStudents { get; set; }
 
-
         #region переопределение методом Save EF для авто логов(не работает с Update\UpdateRange)
+
         public override int SaveChanges()
         {
             var audit = new Audit();
@@ -89,7 +88,6 @@ namespace Data
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var oldCont = this.Database.GetDbConnection();
-            
 
             //this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
             var audit = new Audit();
@@ -108,8 +106,8 @@ namespace Data
             }
             return rowAffecteds;
         }
-        #endregion
 
+        #endregion переопределение методом Save EF для авто логов(не работает с Update\UpdateRange)
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
@@ -133,7 +131,6 @@ namespace Data
             //    .WithMany(c => c.GroupStudents)
             //    .HasForeignKey(sc => sc.GroupId);
 
-            
             modelBuilder.Entity<Abonement>()
                 .HasOne(s => s.Student)
                 .WithOne(s => s.Abonement);
@@ -152,17 +149,14 @@ namespace Data
             modelBuilder.Entity<LoggerItem>().Property(b => b.Date)
             .HasDefaultValueSql("getdate()");
 
-
             //modelBuilder.Entity<AccessTypes>().HasData(
             //    [
-            //        new AccessTypes(1, "Полный доступ",     "All"), 
+            //        new AccessTypes(1, "Полный доступ",     "All"),
             //        new AccessTypes(2, "Просмотр",          "read"),
             //        new AccessTypes(3, "Добавление",        "create"),
             //        new AccessTypes(4, "Редактирование",    "edit"),
-            //        new AccessTypes(5, "Удаление",          "delete") 
+            //        new AccessTypes(5, "Удаление",          "delete")
             //    ]);
-
         }
-
     }
 }

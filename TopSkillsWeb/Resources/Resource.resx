@@ -141,6 +141,9 @@
   <data name="AccountRegistration" xml:space="preserve">
     <value>Регистрация учетной записи</value>
   </data>
+  <data name="Action" xml:space="preserve">
+    <value>Действие</value>
+  </data>
   <data name="AddAccesses" xml:space="preserve">
     <value>Добавить доступ</value>
   </data>
@@ -248,6 +251,9 @@
   </data>
   <data name="CreateTeacher" xml:space="preserve">
     <value>Добавить учителя</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Дата</value>
   </data>
   <data name="DateAbonementStart" xml:space="preserve">
     <value>Дата абонемента</value>
@@ -369,6 +375,9 @@
   <data name="Lng" xml:space="preserve">
     <value>ru</value>
   </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Загрузка</value>
+  </data>
   <data name="LoadingCalendar" xml:space="preserve">
     <value>Загрузка календаря</value>
   </data>
@@ -472,7 +481,7 @@
     <value>Поиск</value>
   </data>
   <data name="Sender" xml:space="preserve">
-    <value>Отпровитель</value>
+    <value>Отправитель</value>
   </data>
   <data name="SenderRecipient" xml:space="preserve">
     <value>Отправитель/Получатель</value>

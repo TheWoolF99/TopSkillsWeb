@@ -1,0 +1,202 @@
+﻿@using Core
+@model List<AttendanceDeductionLog>
+
+@functions {
+    private string GetStatusText(int status)
+    {
+        return status switch
+        {
+            0 => "Отсутствовал",
+            1 => "Присутствовал",
+            2 => "По уважительной",
+            _ => "Неизвестно"
+        };
+    }
+
+    private string GetStatusBadgeClass(int status)
+    {
+        return status switch
+        {
+            0 => "badge bg-gray-lt",
+            1 => "badge bg-green-lt",
+            2 => "badge bg-blue-lt",
+            _ => "badge bg-secondary"
+        };
+    }
+}
+<link rel="stylesheet" href="~/css/AttendanceLogs.css" asp-append-version="true" />
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">История списаний посещений</h3>
+        <div class="card-actions">
+            <div class="">
+                <label class="form-label">@Resource.Students</label>
+                @Html.DropDownList("StudentsSelectList", (SelectList)ViewBag.StudentsSelectList, htmlAttributes: new { @id = "StudentsSelectList", @class = "form-select" })
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-vcenter table-nowrap" id="logsTable">
+                <thead>
+                    <tr>
+                        <th class="w-1">#</th>
+                        <th>Дата и время</th>
+                        <th>Студент</th>
+                        <th>Группа</th>
+                        <th>Курс</th>
+                        <th>Тип операции</th>
+                        <th>Статус</th>
+                        <th>Баланс</th>
+                        <th>Исполнитель</th>
+                        <th>Комментарий</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Any())
+                    {
+                        foreach (var log in Model)
+                        {
+                            <tr>
+                                <td>@log.AttendanceDeductionLogId</td>
+                                <td class="text-nowrap">
+                                    <div>@log.OperationDate.ToString("dd.MM.yyyy")</div>
+                                    <small class="text-muted">@log.OperationDate.ToString("HH:mm")</small>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <span class="avatar avatar-sm me-2" style="background-image: url(https://ui-avatars.com/api?name=@log.Student?.FullName&background=random)"></span>
+                                        <div>
+                                            <div>@log.Student?.ShortName</div>
+                                            <small class="text-muted">ID: @log.StudentId</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-blue-lt">@log.Group?.Name</span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-blue-lt">@log.Group?.Cource?.Name</span>
+                                </td>
+                                <td>
+                                    @switch (log.OperationType)
+                                    {
+                                        case DeductionType.Deduction:
+                                            <span class="badge bg-red-lt d-flex">
+                                                <i class="ti ti-minus"></i> Списание
+                                            </span>
+                                            break;
+                                        case DeductionType.Refund:
+                                            <span class="badge bg-green-lt d-flex">
+                                                <i class="ti ti-plus"></i> Возврат
+                                            </span>
+                                            break;
+                                        case DeductionType.Correction:
+                                            <span class="badge bg-orange-lt d-flex">
+                                                <i class="ti ti-adjustments"></i> Корректировка
+                                            </span>
+                                            break;
+                                        case DeductionType.Refresh:
+                                            <span class="badge bg-green-lt d-flex">
+                                                <i class="ti ti-refresh"></i> Обновление
+                                            </span>
+                                            break;
+                                    }
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        @if (log.PreviousStatus != log.NewStatus)
+                                        {
+                                            <span class="text-muted me-1">@GetStatusText(log.PreviousStatus)</span>
+                                            <i class="ti ti-arrow-right text-muted mx-1"></i>
+                                        }
+                                        <span class="@GetStatusBadgeClass(log.NewStatus)">@GetStatusText(log.NewStatus)</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <span class="text-muted me-1">@log.BalanceBefore</span>
+                                        <i class="ti ti-arrow-right text-muted mx-1"></i>
+                                        <strong>@log.BalanceAfter</strong>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="text-muted">@log.PerformedBy</div>
+                                </td>
+                                <td class="text-wrap">
+                                    @if (!string.IsNullOrEmpty(log.Comment))
+                                    {
+                                        <span class="text-muted">@log.Comment</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">—</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="9" class="text-center py-4">
+                                <div class="empty">
+                                    <div class="empty-icon">
+                                        <i class="ti ti-history" style="font-size: 3rem;"></i>
+                                    </div>
+                                    <p class="empty-title">Нет данных</p>
+                                    <p class="empty-subtitle text-muted">
+                                        История списаний пока пуста
+                                    </p>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#StudentsSelectList").select2({
+            closeOnSelect: true,
+            language: "@Resource.Lng",
+            placeholder: "@Html.Raw(Resource.Students)",
+            allowHtml: true,
+            allowClear: true,
+            width: "100%"
+        });
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const studentIdFromUrl = urlParams.get('studentId');
+        if (studentIdFromUrl) {
+            $('#StudentsSelectList').val(studentIdFromUrl).trigger('change');
+        } else {
+            $('#StudentsSelectList').val(null).trigger('change');
+        }
+
+        $('#StudentsSelectList').on('change', findStudentAttendancesLog);
+    });
+
+    function findStudentAttendancesLog() {
+        const studentId = $("#StudentsSelectList").val();
+        reloadPageWithStudentId(studentId);
+    }
+
+    function reloadPageWithStudentId(studentId) {
+        const url = new URL(window.location.href);
+
+        if (studentId && studentId !== '') {
+            url.searchParams.set('studentId', studentId);
+        } else {
+            url.searchParams.delete('studentId');
+        }
+
+        window.location.href = url.toString();
+    }
+
+</script>

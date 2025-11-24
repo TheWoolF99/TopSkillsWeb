@@ -1,11 +1,8 @@
 ﻿using Core;
+using Core.Logger;
 using Interfaces.Attendance;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Z.EntityFramework.Plus;
 
 namespace Data.Repository
@@ -13,10 +10,18 @@ namespace Data.Repository
     public class AttendanceRepository : IAttendance
     {
         private DbContextFactory _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AttendanceRepository(DbContextFactory context)
+        public AttendanceRepository(DbContextFactory context,
+            IHttpContextAccessor httpContextAccessor)
         {
             this._context = context;
+            this._httpContextAccessor = httpContextAccessor;
+        }
+
+        private string? GetCurrentUserName()
+        {
+            return _httpContextAccessor.HttpContext?.User?.Identity?.Name;
         }
 
         public async Task<IEnumerable<Attendance>> GetAllAttendance()
@@ -26,18 +31,17 @@ namespace Data.Repository
             return att;
         }
 
-
         public async Task<IEnumerable<Attendance>> GetAttendanceByGroupIdAndDate(int GroupId, DateTime Date)
         {
             var db = _context.Create(typeof(AttendanceRepository));
-            var Attendance = await db.Attendance.Include(s => s.Student).ThenInclude(a=>a.Abonement).Include(g => g.Group).Where(x=>x.Group.GroupId == GroupId & x.DateVisiting == Date).ToListAsync();
+            var Attendance = await db.Attendance.Include(s => s.Student).ThenInclude(a => a.Abonement).Include(g => g.Group).Where(x => x.Group.GroupId == GroupId & x.DateVisiting == Date).ToListAsync();
             return Attendance;
         }
 
         public async Task<bool> OnAddAttendanceByDateAndGroupId(Attendance attendance)
         {
             var db = _context.Create(typeof(AttendanceRepository));
-            var Group = db.Groups.Include(s=>s.Students).ThenInclude(a=>a.Abonement).Where(x => x.GroupId == attendance.Group.GroupId).FirstOrDefault();
+            var Group = db.Groups.Include(s => s.Students).ThenInclude(a => a.Abonement).Where(x => x.GroupId == attendance.Group.GroupId).FirstOrDefault();
             List<Attendance> attendances = new();
             if (Group.Students.Count() == 0)
             {
@@ -56,7 +60,7 @@ namespace Data.Repository
 
             try
             {
-                if(db.Attendance.Where(x=>x.Group == Group && x.DateVisiting == attendance.DateVisiting).Count() == 0)
+                if (db.Attendance.Where(x => x.Group == Group && x.DateVisiting == attendance.DateVisiting).Count() == 0)
                 {
                     await db.Attendance.AddRangeAsync(attendances);
                     await db.SaveChangesAsync();
@@ -67,13 +71,11 @@ namespace Data.Repository
                     throw new Exception("На данную дату уже есть посещение этой группы");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message, ex);
             }
         }
-
-
 
         public async Task<IEnumerable<Attendance>> GetAttendancesByDateRange(DateTime start, DateTime end)
         {
@@ -81,7 +83,8 @@ namespace Data.Repository
 
             var Atts = await db.Attendance
                 .Include(g => g.Group).Where(x => x.DateVisiting >= start & x.DateVisiting <= end)
-                .Select(x => new Attendance{
+                .Select(x => new Attendance
+                {
                     AttendanceId = x.AttendanceId,
                     DateClose = x.DateClose,
                     DateVisiting = x.DateVisiting,
@@ -105,6 +108,7 @@ namespace Data.Repository
             var attendanceIds = attendances.Select(x => x.AttendanceId);
             var attendancesDB = db.Attendance.Include(s => s.Student).Include(g => g.Group).Where(x => attendanceIds.Contains(x.AttendanceId)).ToList();
             var abonements = db.Abonements.ToList();
+            var deductionLogs = new List<AttendanceDeductionLog>();
             attendancesDB.ForEach(x =>
             {
                 x.DateClose = DateTime.Now;
@@ -115,20 +119,52 @@ namespace Data.Repository
                     var abonement = abonements.Where(ab => ab.StudentId == x.Student.StudentId).FirstOrDefault();
                     if (abonement != null && !(abonement.RemainingVisits <= 0))
                     {
-                        //если ошиблись, и ученика не было по факту, возвращаем занятие в абонемент 
+                        var log = new AttendanceDeductionLog
+                        {
+                            AttendanceId = x.AttendanceId,
+                            AbonementId = abonement.StudentId,
+                            StudentId = x.Student.StudentId,
+                            GroupId = x.Group.GroupId,
+                            PreviousStatus = x.IsPresent,
+                            NewStatus = attendanceNew.IsPresent,
+                            BalanceBefore = abonement.RemainingVisits,
+                            OperationDate = DateTime.Now,
+                            PerformedBy = GetCurrentUserName() ?? "System",
+                            VisitsCount = 1
+                        };
+
+                        //если ошиблись, и ученика не было по факту, возвращаем занятие в абонемент
                         if (x.IsPresent == 1 & attendanceNew.IsPresent == 0)
                         {
                             abonement.RemainingVisits++;
+                            log.OperationType = DeductionType.Refund;
+                            log.Comment = "Возврат занятия: отмена отметки присутствия";
                         }
-                        else if(x.IsPresent != attendanceNew.IsPresent)
+                        else if (x.IsPresent != attendanceNew.IsPresent)
                         {
                             abonement.RemainingVisits--;
+                            log.OperationType = DeductionType.Deduction;
+                            log.Comment = "Списание занятия за посещение";
                         }
+                        else
+                        {
+                            log.OperationType = DeductionType.NoChange;
+                            log.Comment = "Изменение статуса без списания/возврата";
+                        }
+
+                        log.BalanceAfter = abonement.RemainingVisits;
+                        deductionLogs.Add(log);
                     }
                 }
-                
+
                 x.IsPresent = attendanceNew != null ? attendanceNew.IsPresent : 0;
             });
+
+            if (deductionLogs.Any())
+            {
+                db.AttendanceLogs.AddRange(deductionLogs);
+            }
+
             await db.SaveChangesAsync();
         }
 
@@ -138,5 +174,54 @@ namespace Data.Repository
             await db.Attendance.Where(x => x.DateVisiting == date && x.Group.GroupId == groupId).DeleteAsync();
         }
 
+        public async Task<List<AttendanceDeductionLog>> GetStudentDeductionHistory(int? studentId)
+        {
+            var db = _context.Create(typeof(AttendanceRepository));
+
+            var attendanceLogs = db.AttendanceLogs
+                .Include(a => a.Attendance)
+                .Include(a => a.Student)
+                .Include(g => g.Group).ThenInclude(g => g.Cource)
+                .Where(x => !studentId.HasValue || x.StudentId == studentId)
+                .ToList();
+
+            var convertedAbonementLogs = await db.Logger
+            .Where(x => x.ServiceName == nameof(AbonementRepository))
+            .Join(db.Students,
+                  log => Convert.ToInt32(log.ObjectInfo),
+                  student => student.StudentId,
+                  (log, student) => new { Log = log, Student = student })
+            .Where(x => !studentId.HasValue || x.Student.StudentId == studentId)
+            .Select(x => ConvertToAttendanceDeductionLog(x.Log, x.Student))
+            .ToListAsync();
+
+            return
+            [
+                .. attendanceLogs
+                                    .Concat(convertedAbonementLogs)
+                                    .OrderByDescending(x => x.OperationDate),
+            ];
+        }
+
+        private static AttendanceDeductionLog ConvertToAttendanceDeductionLog(LoggerItem logItem, Student student = null)
+        {
+            int.TryParse(logItem.AfterValue, out int balanceAfter);
+            int.TryParse(logItem.BeforeValue, out int balanceBefore);
+            int.TryParse(logItem.ObjectInfo, out int studentId);
+
+            return new AttendanceDeductionLog
+            {
+                AttendanceDeductionLogId = -logItem.ItemId,
+                OperationDate = logItem.Date,
+                PerformedBy = logItem.UserName,
+                Comment = logItem.OperationName,
+                OperationType = DeductionType.Refresh,
+                VisitsCount = 0,
+                StudentId = studentId,
+                Student = student,
+                BalanceAfter = balanceAfter,
+                BalanceBefore = balanceBefore,
+            };
+        }
     }
 }

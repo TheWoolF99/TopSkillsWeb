@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Logger
 {
@@ -16,48 +11,54 @@ namespace Core.Logger
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ItemId { get; set; }
+
         /// <summary>
-        /// Id пользователя IdentityUser 
+        /// Id пользователя IdentityUser
         /// </summary>
         public string UserId { get; set; }
+
         /// <summary>
-        /// UserName пользователя IdentityUser 
+        /// UserName пользователя IdentityUser
         /// </summary>
         public string UserName { get; set; }
+
         /// <summary>
         /// Генерируется автоматически при добавлении записи в базу
         /// </summary>
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime Date { get; set; }
+
         /// <summary>
         /// Имя сервиса где были изменения
         /// </summary>
         public string ServiceName { get; set; }
+
         /// <summary>
         /// Название таблицы в которой были изменения
         /// </summary>
         public string? TableName { get; set; }
+
         public string? ObjectInfo { get; set; }
         public string? BeforeValue { get; set; }
         public string? AfterValue { get; set; }
         public string OperationName { get; set; }
     }
 
-    public class LoggerLoginItem 
+    public class LoggerLoginItem
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ItemId { get; set; }
 
         public string UserId { get; set; }
-        public string UserName { get; set; } 
+        public string UserName { get; set; }
         public string Browser { get; set; }
         public string BrowserVer { get; set; }
         public string OperationName { get; set; }
+
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime Date { get; set; }
     }
-
 
     public class LoggerFilter
     {
@@ -68,10 +69,8 @@ namespace Core.Logger
         public LoggerFilter()
         {
             DateStart = DateTime.Now.AddDays(-7);
-            DateEnd =  DateTime.Now;
+            DateEnd = DateTime.Now;
             UserName = null;
         }
-
     }
-
 }
